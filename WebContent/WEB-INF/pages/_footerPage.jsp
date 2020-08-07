@@ -3,6 +3,6 @@
 <!DOCTYPE html>
 <html>
 <footer>
-    <small>&copy; Copyright 2020 - <%=MyUtils.getYear()%>, AFC Aldermaston, website provided by BSWDI</small>
+    <small>&copy; Copyright 2020 - <%=MyUtils.getYear()%>, AFC Aldermaston, website provided by <a href="http://bswdi.co.uk" style="text-decoration: underline;">BSWDI</a></small>
 </footer>
 </html>
