@@ -16,7 +16,7 @@ import com.bswdi.utils.*;
 /**
  * Delete news servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/deletenews"})

@@ -15,7 +15,7 @@ import com.bswdi.utils.*;
 /**
  * Reset password servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/resetpassword"})

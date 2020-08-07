@@ -12,7 +12,7 @@ import com.bswdi.beans.*;
 /**
  * Utilities for database and queries
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @SuppressWarnings("unused")
@@ -195,7 +195,8 @@ public class DBUtils {
         String sql = "SELECT * FROM NEWS ORDER BY ID DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
-        return getNewsMethodSingle(rs);
+        if (rs.next()) return getNewsMethodSingle(rs);
+        else return null;
     }
 
     /**
@@ -206,17 +207,15 @@ public class DBUtils {
      * @throws SQLException SQLException
      */
     private static News getNewsMethodSingle(ResultSet rs) throws SQLException {
-        if (rs.next()) {
-            int id;
-            String title, image, content;
-            long date;
-            id = rs.getInt("ID");
-            title = rs.getString("TITLE");
-            image = rs.getString("IMAGE");
-            content = rs.getString("CONTENT");
-            date = rs.getLong("DATE");
-            return new News(id, title, image, content, date);
-        } else return null;
+        int id;
+        String title, image, content;
+        long date;
+        id = rs.getInt("ID");
+        title = rs.getString("TITLE");
+        image = rs.getString("IMAGE");
+        content = rs.getString("CONTENT");
+        date = rs.getLong("DATE");
+        return new News(id, title, image, content, date);
     }
 
     /**
@@ -354,7 +353,8 @@ public class DBUtils {
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
-        return getPlayerMethod(rs);
+        if (rs.next()) return getPlayerMethod(rs);
+        else return null;
     }
 
     /**
@@ -365,20 +365,18 @@ public class DBUtils {
      * @throws SQLException SQLException
      */
     private static Players getPlayerMethod(ResultSet rs) throws SQLException {
-        if (rs.next()) {
-            int id, teamID;
-            String name, image, position;
-            long dateOfBirth;
-            boolean captain;
-            id = rs.getInt("ID");
-            name = rs.getString("NAME");
-            image = rs.getString("IMAGE");
-            dateOfBirth = Long.parseLong(rs.getString("DATE_OF_BIRTH"));
-            position = rs.getString("POSITION");
-            captain = rs.getBoolean("CAPTAIN");
-            teamID = rs.getInt("TEAM_ID");
-            return new Players(id, name, image, dateOfBirth, position, captain, teamID);
-        } else return null;
+        int id, teamID;
+        String name, image, position;
+        long dateOfBirth;
+        boolean captain;
+        id = rs.getInt("ID");
+        name = rs.getString("NAME");
+        image = rs.getString("IMAGE");
+        dateOfBirth = Long.parseLong(rs.getString("DATE_OF_BIRTH"));
+        position = rs.getString("POSITION");
+        captain = rs.getBoolean("CAPTAIN");
+        teamID = rs.getInt("TEAM_ID");
+        return new Players(id, name, image, dateOfBirth, position, captain, teamID);
     }
 
     /**
@@ -516,7 +514,8 @@ public class DBUtils {
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
-        return getTeamMethod(rs);
+        if (rs.next()) return getTeamMethod(rs);
+        else return null;
     }
 
     /**
@@ -527,23 +526,21 @@ public class DBUtils {
      * @throws SQLException SQLException
      */
     private static Teams getTeamMethod(ResultSet rs) throws SQLException {
-        if (rs.next()) {
-            int id, ages;
-            String name, league, division, leagueTable, fixtures, coach, teamPhoto;
-            boolean active, youth;
-            id = rs.getInt("ID");
-            name = rs.getString("NAME");
-            league = rs.getString("LEAGUE");
-            division = rs.getString("DIVISION");
-            leagueTable = rs.getString("LEAGUE_TABLE");
-            fixtures = rs.getString("FIXTURES");
-            coach = rs.getString("COACH");
-            teamPhoto = rs.getString("TEAM_PHOTO");
-            active = rs.getBoolean("ACTIVE");
-            youth = rs.getBoolean("YOUTH");
-            ages = rs.getInt("AGES");
-            return new Teams(id, name, league, division, leagueTable, fixtures, coach, teamPhoto, active, youth, ages);
-        } else return null;
+        int id, ages;
+        String name, league, division, leagueTable, fixtures, coach, teamPhoto;
+        boolean active, youth;
+        id = rs.getInt("ID");
+        name = rs.getString("NAME");
+        league = rs.getString("LEAGUE");
+        division = rs.getString("DIVISION");
+        leagueTable = rs.getString("LEAGUE_TABLE");
+        fixtures = rs.getString("FIXTURES");
+        coach = rs.getString("COACH");
+        teamPhoto = rs.getString("TEAM_PHOTO");
+        active = rs.getBoolean("ACTIVE");
+        youth = rs.getBoolean("YOUTH");
+        ages = rs.getInt("AGES");
+        return new Teams(id, name, league, division, leagueTable, fixtures, coach, teamPhoto, active, youth, ages);
     }
 
     /**
@@ -671,8 +668,8 @@ public class DBUtils {
     private static List<Sponsors> getSponsorsMethod(ResultSet rs) throws SQLException {
         List<Sponsors> list = new ArrayList<>();
         while (rs.next()) {
-            Sponsors sponsors = getSponsorMethod(rs);
-            list.add(sponsors);
+            Sponsors sponsor = getSponsorMethod(rs);
+            list.add(sponsor);
         }
         return list;
     }
@@ -690,7 +687,8 @@ public class DBUtils {
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
-        return getSponsorMethod(rs);
+        if (rs.next()) return getSponsorMethod(rs);
+        else return null;
     }
 
     /**
@@ -701,17 +699,15 @@ public class DBUtils {
      * @throws SQLException SQLException
      */
     private static Sponsors getSponsorMethod(ResultSet rs) throws SQLException {
-        if (rs.next()) {
-            int id;
-            String name, website, image, purpose, teamID;
-            id = rs.getInt("ID");
-            name = rs.getString("NAME");
-            website = rs.getString("WEBSITE");
-            image = rs.getString("IMAGE");
-            purpose = rs.getString("PURPOSE");
-            teamID = rs.getString("TEAM_ID");
-            return new Sponsors(id, name, website, image, purpose, teamID);
-        } else return null;
+        int id;
+        String name, website, image, purpose, teamID;
+        id = rs.getInt("ID");
+        name = rs.getString("NAME");
+        website = rs.getString("WEBSITE");
+        image = rs.getString("IMAGE");
+        purpose = rs.getString("PURPOSE");
+        teamID = rs.getString("TEAM_ID");
+        return new Sponsors(id, name, website, image, purpose, teamID);
     }
 
     /**
@@ -864,7 +860,8 @@ public class DBUtils {
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, email);
         ResultSet rs = pstm.executeQuery();
-        return getUserMethod(rs);
+        if (rs.next()) return getUserMethod(rs);
+        else return null;
     }
 
     /**
@@ -908,17 +905,15 @@ public class DBUtils {
      * @throws SQLException SQLException
      */
     private static Users getUserMethod(ResultSet rs) throws SQLException {
-        if (rs.next()) {
-            String name, email, phone, image;
-            int teamID, role;
-            name = rs.getString("NAME");
-            email = rs.getString("EMAIL");
-            phone = rs.getString("PHONE");
-            teamID = rs.getInt("TEAM_ID");
-            role = rs.getInt("ROLE");
-            image = rs.getString("IMAGE");
-            return new Users(name, email, phone, teamID, role, image);
-        } else return null;
+        String name, email, phone, image;
+        int teamID, role;
+        name = rs.getString("NAME");
+        email = rs.getString("EMAIL");
+        phone = rs.getString("PHONE");
+        teamID = rs.getInt("TEAM_ID");
+        role = rs.getInt("ROLE");
+        image = rs.getString("IMAGE");
+        return new Users(name, email, phone, teamID, role, image);
     }
 
     /**
@@ -1083,7 +1078,8 @@ public class DBUtils {
     public static List<WhatsOn> queryWhatsOnEventDate(Connection con) throws SQLException {
         String sql = "SELECT * FROM WHATSON WHERE DATE_OF_EVENT >= ?";
         PreparedStatement pstm = con.prepareStatement(sql);
-        pstm.setLong(1, MyUtils.getEpoch());
+        long epoch = MyUtils.getEpoch();
+        pstm.setLong(1, epoch);
         ResultSet rs = pstm.executeQuery();
         return getWhatsOnMethodMultiple(rs);
     }
@@ -1117,7 +1113,8 @@ public class DBUtils {
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
-        return getWhatsOnMethodSingle(rs);
+        if (rs.next()) return getWhatsOnMethodSingle(rs);
+        else return null;
     }
 
     /**
@@ -1132,7 +1129,8 @@ public class DBUtils {
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setLong(1, MyUtils.getEpoch());
         ResultSet rs = pstm.executeQuery();
-        return getWhatsOnMethodSingle(rs);
+        if (rs.next()) return getWhatsOnMethodSingle(rs);
+        else return null;
     }
 
     /**
@@ -1143,18 +1141,16 @@ public class DBUtils {
      * @throws SQLException SQLException
      */
     private static WhatsOn getWhatsOnMethodSingle(ResultSet rs) throws SQLException {
-        if (rs.next()) {
-            int id;
-            String title, image, content;
-            long date, dateOfEvent;
-            id = rs.getInt("ID");
-            title = rs.getString("TITLE");
-            image = rs.getString("IMAGE");
-            content = rs.getString("CONTENT");
-            date = rs.getLong("DATE");
-            dateOfEvent = rs.getLong("DATE_OF_EVENT");
-            return new WhatsOn(id, title, image, content, date, dateOfEvent);
-        } else return null;
+        int id;
+        String title, image, content;
+        long date, dateOfEvent;
+        id = rs.getInt("ID");
+        title = rs.getString("TITLE");
+        image = rs.getString("IMAGE");
+        content = rs.getString("CONTENT");
+        date = rs.getLong("DATE");
+        dateOfEvent = rs.getLong("DATE_OF_EVENT");
+        return new WhatsOn(id, title, image, content, date, dateOfEvent);
     }
 
     /**

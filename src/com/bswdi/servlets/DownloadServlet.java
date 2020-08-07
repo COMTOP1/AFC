@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Download servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/download"})

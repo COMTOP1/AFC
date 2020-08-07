@@ -17,7 +17,7 @@ import com.bswdi.utils.MyUtils;
 /**
  * Players Servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/players"})

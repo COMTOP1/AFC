@@ -17,7 +17,7 @@ import com.bswdi.utils.MyUtils;
 /**
  * Account servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/account"})

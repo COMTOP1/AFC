@@ -21,7 +21,7 @@ import com.bswdi.utils.*;
 /**
  * Add sponsor servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/addsponsor"})

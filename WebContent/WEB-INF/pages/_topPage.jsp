@@ -2,27 +2,15 @@
 <%@ page import="com.bswdi.utils.*, com.bswdi.beans.Users, java.sql.Connection" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="keywords" content="afc,A.F.C.,AFC,aldermaston,football">
-    <meta name="description" content="AFC Aldermaston Football Club website">
-    <meta name="abstract" content="AFC Aldermaston">
-    <meta http-equiv="Content-Language" content="EN-GB">
-    <meta name="author" content="Liam Burnand">
-    <meta name="distribution" content="Global">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="copyright"
-          content="© Copyright 2020 - <%=MyUtils.getYear()%>, AFC Aldermaston, website provided by Liam Burnand">
-</head>
 <body>
 <div id="topPage">
     <img id="mainImage" class="faImage" style="float: right; height: 125px; width: 150px;" src="images/facs.jpeg">
     <img id="mainImage" src="images/AFC.png" alt="images/AFC.png">
     <header><h1>AFC ALDERMASTON</h1></header>
 </div>
-<div id="menuBarAlert" style="z-index: 1;">This Website is still under construction, please report any bugs to
+<!--<div id="menuBarAlert" style="z-index: 1;">This Website is still under construction, please report any bugs to
     webmaster@afcaldermaston.co.uk
-</div>
+</div>-->
 <%
     String email = MyUtils.getEmailInCookie(request);
     Connection con = MyUtils.getStoredConnection(request);
@@ -99,7 +87,7 @@
         </div>
     </div>
     <div id="rightSide"
-         style="color: white;<%if (email != null && !email.equals("")) {%> width: <%if (user.getRole() > 4 || user.getRole() == 1) {%>290px;<%} else {%>150px;<%}}%>">
+         style="color: white;<%if (email != null && !email.equals("")) {%> width: <%if (user.getRole() > 4 || user.getRole() == 1) {%>300px;<%} else {%>150px;<%}}%>">
         <%if (email == null || email.equals("")) {%>
         <div class="button" align="right">
             <a href="login" style="color: white;">Login</a>

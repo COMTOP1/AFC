@@ -21,7 +21,7 @@ import com.bswdi.utils.MyUtils;
 /**
  * JDBC filter
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebFilter(filterName = "jdbcFilter", urlPatterns = {"/*"})

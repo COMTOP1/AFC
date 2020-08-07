@@ -15,7 +15,7 @@ import com.bswdi.beans.Users;
 /**
  * Utilities for java and user data
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 public class MyUtils {

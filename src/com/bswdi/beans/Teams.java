@@ -3,7 +3,7 @@ package com.bswdi.beans;
 /**
  * Team object
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 public class Teams {

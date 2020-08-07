@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Contact servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/contact"})

@@ -11,11 +11,11 @@
     <meta name="description" content="AFC Aldermaston Football Club website">
     <meta name="abstract" content="AFC Aldermaston">
     <meta http-equiv="Content-Language" content="EN-GB">
-    <meta name="author" content="Liam Burnand">
+    <meta name="author" content="BSWDI">
     <meta name="distribution" content="Global">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="copyright"
-          content="© Copyright 2020 - <%=MyUtils.getYear()%>, AFC Aldermaston, website provided by Liam Burnand">
+          content="© Copyright 2020 - <%=MyUtils.getYear()%>, AFC Aldermaston, website provided by BSWDI">
     <title>Official website of AFC Aldermaston - Gallery</title>
     <style>
         .row > .column {
@@ -246,10 +246,10 @@
         }
 
         function showSlides(n) {
-            const i;
-            const slides = document.getElementsByClassName("mySlides");
-            const dots = document.getElementsByClassName("demo");
-            const captionText = document.getElementById("caption");
+        	var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
             if (n > slides.length) {
                 slideIndex = 1
             }
@@ -280,7 +280,5 @@
        class="fa fa-twitter"></a>
 </div>
 </body>
-<footer>
-    <small>&copy; Copyright 2020 - <%=MyUtils.getYear()%>, AFC Aldermaston, website provided by Liam Burnand</small>
-</footer>
+<jsp:include page="_footerPage.jsp"/>
 </html>

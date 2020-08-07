@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Encoding filter
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebFilter(filterName = "encodingFilter", urlPatterns = {"/*"})

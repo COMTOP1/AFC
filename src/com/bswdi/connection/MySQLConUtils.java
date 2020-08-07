@@ -7,7 +7,7 @@ import java.sql.SQLException;
 /**
  * MySQL connection utilities
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 public class MySQLConUtils {

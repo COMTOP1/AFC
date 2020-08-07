@@ -3,7 +3,7 @@ package com.bswdi.beans;
 /**
  * User class
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  * @see #MANAGER
  * @see #SECRETARY

@@ -25,7 +25,7 @@ import com.bswdi.utils.*;
 /**
  * Add what's on servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/addwhatson"})

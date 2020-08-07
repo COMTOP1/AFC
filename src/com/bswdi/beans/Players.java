@@ -6,7 +6,7 @@ import java.time.Period;
 /**
  * Player object
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 public class Players {

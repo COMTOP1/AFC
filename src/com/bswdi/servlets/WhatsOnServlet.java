@@ -17,7 +17,7 @@ import com.bswdi.utils.MyUtils;
 /**
  * What's on servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/whatson"})

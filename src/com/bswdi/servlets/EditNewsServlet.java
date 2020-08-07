@@ -21,7 +21,7 @@ import com.bswdi.utils.*;
 /**
  * Edit news servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/editnews"})

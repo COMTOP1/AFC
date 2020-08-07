@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * User filter
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebFilter(filterName = "userFilter", urlPatterns = {"/*"})

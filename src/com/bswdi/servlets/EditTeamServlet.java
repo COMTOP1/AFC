@@ -21,7 +21,7 @@ import com.bswdi.utils.*;
 /**
  * Edit team servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/editteam"})

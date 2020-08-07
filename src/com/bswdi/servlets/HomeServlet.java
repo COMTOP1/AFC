@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Home servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/home"})

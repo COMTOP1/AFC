@@ -2,7 +2,6 @@ package com.bswdi.startup;
 
 import java.sql.Connection;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import com.bswdi.connection.ConnectionUtils;
@@ -11,7 +10,7 @@ import com.bswdi.utils.DBUtils;
 /**
  * SQL Time zone adjust
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 public class SQLTimeZone extends HttpServlet {

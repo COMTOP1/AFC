@@ -19,7 +19,7 @@ import com.bswdi.utils.*;
 /**
  * Cookie filter
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebFilter(filterName = "cookieFilter", urlPatterns = {"/*"})

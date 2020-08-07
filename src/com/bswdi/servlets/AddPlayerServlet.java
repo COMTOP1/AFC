@@ -26,7 +26,7 @@ import com.bswdi.utils.*;
 /**
  * Add player servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/addplayer"})

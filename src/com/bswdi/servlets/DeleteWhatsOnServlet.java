@@ -16,7 +16,7 @@ import com.bswdi.utils.*;
 /**
  * Delete what's on servlet
  *
- * @author Liam Burnand
+ * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/deletewhatson"})
