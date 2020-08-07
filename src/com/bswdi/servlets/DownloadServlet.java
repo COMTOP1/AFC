@@ -64,6 +64,7 @@ public class DownloadServlet extends HttpServlet {
                 break;
         }
         try {
+            //String filepath = "C:\\Users\\ADMIN\\Desktop\\Code\\Java\\AFC\\";
             String filepath = "/Users/liam/Desktop/Code/Java/AFC/";
             response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
             FileInputStream fileInputStream = new FileInputStream(filepath + filename);
