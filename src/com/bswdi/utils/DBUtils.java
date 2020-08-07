@@ -181,7 +181,8 @@ public class DBUtils {
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
-        return getNewsMethodSingle(rs);
+        if (rs.next()) return getNewsMethodSingle(rs);
+        else return null;
     }
 
     /**
