@@ -128,9 +128,10 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
+     * @param action action
      * @throws SQLException SQLException
      */
-    public static void backupImage(Connection con, int id, String action) throws SQLException {
+    private static void backupImage(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO IMAGES_BACKUP (ID, IMAGE, CAPTION, ACTION) SELECT ID, IMAGE, CAPTION, ? FROM IMAGES WHERE ID = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
@@ -285,9 +286,10 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
+     * @param action action
      * @throws SQLException SQLException
      */
-    public static void backupNews(Connection con, int id, String action) throws SQLException {
+    private static void backupNews(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO NEWS_BACKUP (ID, TITLE, IMAGE, CONTENT, DATE, ACTION) SELECT ID, TITLE, IMAGE, CONTENT, DATE, ? FROM NEWS WHERE ID = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
@@ -448,9 +450,10 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
+     * @param action action
      * @throws SQLException SQLException
      */
-    public static void backupPlayer(Connection con, int id, String action) throws SQLException {
+    private static void backupPlayer(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO PLAYERS_BACKUP (ID, NAME, IMAGE, DATE_OF_BIRTH, POSITION, CAPTAIN, TEAM_ID, ACTION) SELECT ID, NAME, IMAGE, DATE_OF_BIRTH, POSITION, CAPTAIN, TEAM_ID, ? FROM PLAYERS WHERE ID = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
@@ -616,9 +619,10 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
+     * @param action action
      * @throws SQLException SQLException
      */
-    public static void backupTeam(Connection con, int id, String action) throws SQLException {
+    private static void backupTeam(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO TEAMS_BACKUP (ID, NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, TEAM_PHOTO, ACTIVE, YOUTH, AGES, ACTION) SELECT ID, NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, TEAM_PHOTO, ACTIVE, YOUTH, AGES, ? FROM TEAMS WHERE ID = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
@@ -778,9 +782,10 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
+     * @param action action
      * @throws SQLException SQLException
      */
-    public static void backupSponsor(Connection con, int id, String action) throws SQLException {
+    private static void backupSponsor(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO SPONSORS_BACKUP (ID, NAME, WEBSITE, IMAGE, PURPOSE, TEAM_ID, ACTION) SELECT ID, NAME, WEBSITE, IMAGE, PURPOSE, TEAM_ID, ? FROM SPONSORS WHERE ID = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
@@ -1045,9 +1050,10 @@ public class DBUtils {
      *
      * @param con   connection
      * @param email email
+     * @param action action
      * @throws SQLException SQLException
      */
-    public static void backupUser(Connection con, String email, String action) throws SQLException {
+    private static void backupUser(Connection con, String email, String action) throws SQLException {
         String sql = "INSERT INTO USERS_BACKUP (NAME, EMAIL, PHONE, TEAM_ID, ROLE, IMAGE, PASSWORD, TEMP, ACTION) SELECT NAME, EMAIL, PHONE, TEAM_ID, ROLE, IMAGE, PASSWORD, TEMP, ? FROM USERS WHERE EMAIL = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
@@ -1221,9 +1227,10 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
+     * @param action action
      * @throws SQLException SQLException
      */
-    public static void backupWhatsOn(Connection con, int id, String action) throws SQLException {
+    private static void backupWhatsOn(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO WHATSON_BACKUP (ID, TITLE, IMAGE, CONTENT, DATE, DATE_OF_EVENT, ACTION) SELECT ID, TITLE, IMAGE, CONTENT, DATE, DATE_OF_EVENT, ? FROM WHATSON WHERE ID = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
