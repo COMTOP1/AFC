@@ -1,5 +1,6 @@
 package com.bswdi.servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -54,6 +55,13 @@ public class DeleteDocumentServlet extends HttpServlet {
         Connection con = MyUtils.getStoredConnection(request);
         try {
             DBUtils.deleteDocument(con, Integer.parseInt(request.getParameter("id")));
+            //String filepath = "C:\\Users\\ADMIN\\Desktop\\Code\\Java\\AFC\\FileStore\\";
+            //String filepath = System.getProperty("catalina.home") + "/FileStore";
+            String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
+            File file = new File(filepath);
+            boolean deleted;
+            deleted = file.delete();
+            if (!deleted) request.getSession().setAttribute("error", "Couldn't delete file from file system");
             response.sendRedirect("documents");
         } catch (Exception e) {
             e.printStackTrace();
