@@ -48,6 +48,7 @@ public class EditPlayerServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
+            assert user != null;
             if (user.getRole() > 0) {
                 Players player = DBUtils.findPlayer(con, id);
                 request.getSession().setAttribute("player", player);

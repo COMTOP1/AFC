@@ -37,6 +37,7 @@ public class DeletePlayerServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
+            assert user != null;
             if (user.getRole() > 0) {
                 request.setAttribute("id", id);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/deletePlayerConfirmationPage.jsp");

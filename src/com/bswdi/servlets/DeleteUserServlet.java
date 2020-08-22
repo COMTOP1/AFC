@@ -37,6 +37,7 @@ public class DeleteUserServlet extends HttpServlet {
         try {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
+            assert user != null;
             if ((user.getRole() == 1 || user.getRole() > 4) && !Objects.equals(email, "liamb1216@gmail.com")) {
                 request.setAttribute("email", email1);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/deleteUserConfirmationPage.jsp");

@@ -43,6 +43,7 @@ public class EditTeamServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
+            assert user != null;
             if (user.getRole() == 1 || user.getRole() > 4) {
                 Teams team = DBUtils.findTeam(con, id);
                 request.getSession().setAttribute("team", team);

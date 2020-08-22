@@ -42,6 +42,7 @@ public class AddTeamServlet extends HttpServlet {
         try {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
+            assert user != null;
             if (user.getRole() == 1 || user.getRole() > 4) {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addTeamPage.jsp");
                 dispatcher.forward(request, response);

@@ -46,6 +46,7 @@ public class AddWhatsOnServlet extends HttpServlet {
         try {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
+            assert user != null;
             if (user.getRole() > 0) {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addWhatsOnPage.jsp");
                 dispatcher.forward(request, response);

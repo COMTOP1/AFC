@@ -42,6 +42,7 @@ public class EditUserServlet extends HttpServlet {
         try {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
+            assert user != null;
             if (((user.getRole() == 1 || user.getRole() > 4) && !email1.equals("liamb1216@gmail.com")) || user.getRole() == 6) {
                 Users user1 = DBUtils.findUser(con, email1);
                 request.getSession().setAttribute("user", user1);

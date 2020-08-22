@@ -18,6 +18,7 @@ import com.bswdi.beans.Users;
  * @author BSWDI
  * @version 1.0
  */
+@SuppressWarnings("unused")
 public class MyUtils {
     /**
      * Attribute for connection

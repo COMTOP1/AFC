@@ -46,6 +46,7 @@ public class EditWhatsOnServlet extends HttpServlet {
         try {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
+            assert user != null;
             if (user.getRole() > 0) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 WhatsOn whatsOn = DBUtils.findWhatsOn(con, id);

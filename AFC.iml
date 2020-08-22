@@ -28,19 +28,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="lib">
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/WebContent/WEB-INF/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="jdk" jdkName="Java SE 8 [1.8.0_251]" jdkType="JavaSDK" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="lib1" level="project" />
     <orderEntry type="library" name="font-awesome" level="application" />
-    <orderEntry type="library" name="MySQL" level="application" />
+    <orderEntry type="library" name="MySQL" level="project" />
   </component>
 </module>

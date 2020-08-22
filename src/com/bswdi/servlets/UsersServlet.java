@@ -39,6 +39,7 @@ public class UsersServlet extends HttpServlet {
             if (email == null) response.sendRedirect("home");
             else {
                 Users user = DBUtils.findUser(con, email);
+                assert user != null;
                 if (user.getRole() > 4 || user.getRole() == 1) {
                     RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/usersPage.jsp");
                     dispatcher.forward(request, response);
