@@ -22,7 +22,7 @@ public class DBUtils {
      * Sets time zone
      *
      * @param con connection
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void SQLTimeZone(Connection con) throws SQLException {
         String sql1 = "SET GLOBAL time_zone = '+00:00';", sql2 = "SET @@global.time_zone = '+00:00';";
@@ -32,11 +32,136 @@ public class DBUtils {
     }
 
     /**
+     * Returns documents
+     * @param con connection
+     * @return List<Documents> list
+     * @throws SQLException SQL exception
+     */
+    public static List<Documents> queryDocuments(Connection con) throws SQLException {
+        String sql = "SELECT * FROM DOCUMENTS";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        return getDocumentsMethod(rs);
+    }
+
+    /**
+     * Get documents method
+     *
+     * @param rs result set
+     * @return List<Documents> list
+     * @throws SQLException SQL exception
+     */
+    private static List<Documents> getDocumentsMethod(ResultSet rs) throws SQLException {
+        List<Documents> list = new ArrayList<>();
+        while (rs.next()) {
+            Documents document = getDocumentMethod(rs);
+            list.add(document);
+        }
+        return list;
+    }
+
+    /**
+     * Returns document
+     *
+     * @param con connection
+     * @param id id
+     * @return Documents document
+     * @throws SQLException SQL exception
+     */
+    public static Documents findDocument(Connection con, int id) throws SQLException {
+        String sql = "SELECT * FROM DOCUMENTS WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setInt(1, id);
+        ResultSet rs = pstm.executeQuery();
+        if (rs.next()) return getDocumentMethod(rs);
+        else return null;
+    }
+
+    /**
+     * Get document method
+     *
+     * @param rs result set
+     * @return Documents document
+     * @throws SQLException SQL exception
+     */
+    private static Documents getDocumentMethod(ResultSet rs) throws SQLException {
+        int id;
+        String name, fileName;
+        id = rs.getInt("ID");
+        name = rs.getString("NAME");
+        fileName = rs.getString("FILE_NAME");
+        return new Documents(id, name, fileName);
+    }
+
+    /**
+     * Update document
+     *
+     * @param con connection
+     * @param document document
+     * @throws SQLException SQL exception
+     */
+    public static void updateDocument(Connection con, Documents document) throws SQLException {
+        backupDocument(con, document.getID(), "UPDATE");
+        String sql = "UPDATE DOCUMENTS SET NAME = ?, FILE_NAME = ? WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, document.getName());
+        pstm.setString(2, document.getFileName());
+        pstm.setInt(3, document.getID());
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Insert document
+     *
+     * @param con connection
+     * @param document document
+     * @throws SQLException SQL exception
+     */
+    public static void insertDocument(Connection con, Documents document) throws SQLException {
+        String sql = "INSERT INTO DOCUMENTS (NAME, FILE_NAME) VALUES (?, ?)";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, document.getName());
+        pstm.setString(2, document.getFileName());
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Delete document
+     *
+     * @param con connection
+     * @param id id
+     * @throws SQLException SQL exception
+     */
+    public static void deleteDocument(Connection con, int id) throws SQLException {
+        backupDocument(con, id, "DELETE");
+        String sql = "DELETE FROM DOCUMENTS WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setInt(1, id);
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Backup document
+     *
+     * @param con connection
+     * @param id id
+     * @param action action
+     * @throws SQLException SQL exception
+     */
+    private static void backupDocument(Connection con, int id, String action) throws SQLException {
+        String sql = "INSERT INTO DOCUMENTS_BACKUP (ID, NAME, FILE_NAME, ACTION) SELECT ID, NAME, FILE_NAME, ? FROM DOCUMENTS WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, action);
+        pstm.setInt(2, id);
+        pstm.executeUpdate();
+    }
+
+    /**
      * Returns images
      *
      * @param con connection
      * @return List<Images> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<Images> queryImages(Connection con) throws SQLException {
         String sql = "SELECT * FROM IMAGES";
@@ -56,12 +181,12 @@ public class DBUtils {
     }
 
     /**
-     * Return image
+     * Returns image
      *
      * @param con connection
      * @param id  id
      * @return Images image
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static Images findImage(Connection con, int id) throws SQLException {
         String sql = "SELECT * FROM IMAGES WHERE ID = ?";
@@ -81,7 +206,7 @@ public class DBUtils {
      *
      * @param con   connection
      * @param image image
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void updateImage(Connection con, Images image) throws SQLException {
         backupImage(con, image.getID(), "UPDATE");
@@ -98,7 +223,7 @@ public class DBUtils {
      *
      * @param con   connection
      * @param image image
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void insertImage(Connection con, Images image) throws SQLException {
         String sql = "INSERT INTO IMAGES (IMAGE, CAPTION) VALUES (?, ?)";
@@ -113,7 +238,7 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void deleteImage(Connection con, int id) throws SQLException {
         backupImage(con, id, "DELETE");
@@ -129,7 +254,7 @@ public class DBUtils {
      * @param con connection
      * @param id  id
      * @param action action
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static void backupImage(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO IMAGES_BACKUP (ID, IMAGE, CAPTION, ACTION) SELECT ID, IMAGE, CAPTION, ? FROM IMAGES WHERE ID = ?";
@@ -140,11 +265,11 @@ public class DBUtils {
     }
 
     /**
-     * Returns news
+     * Returns all news articles
      *
      * @param con connection
      * @return List<News> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<News> queryNews(Connection con) throws SQLException {
         String sql = "SELECT * FROM NEWS";
@@ -158,7 +283,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return List<News> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static List<News> getNewsMethodMultiple(ResultSet rs) throws SQLException {
         List<News> list = new ArrayList<>();
@@ -170,12 +295,12 @@ public class DBUtils {
     }
 
     /**
-     * Return news
+     * Returns one news article
      *
      * @param con connection
      * @param id  id
      * @return Images image
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static News findNews(Connection con, int id) throws SQLException {
         String sql = "SELECT * FROM NEWS WHERE ID = ?";
@@ -187,11 +312,11 @@ public class DBUtils {
     }
 
     /**
-     * Return news latest
+     * Returns news latest
      *
      * @param con connection
      * @return News news
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static News findNewsLatest(Connection con) throws SQLException {
         String sql = "SELECT * FROM NEWS ORDER BY ID DESC";
@@ -206,7 +331,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return News news
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static News getNewsMethodSingle(ResultSet rs) throws SQLException {
         int id;
@@ -225,7 +350,7 @@ public class DBUtils {
      *
      * @param con  connection
      * @param news news
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void updateNews(Connection con, News news) throws SQLException {
         backupNews(con, news.getID(), "UPDATE");
@@ -241,7 +366,7 @@ public class DBUtils {
      *
      * @param con  connection
      * @param news news
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void insertNews(Connection con, News news) throws SQLException {
         String sql = "INSERT INTO NEWS (TITLE, IMAGE, CONTENT, DATE) VALUES (?, ?, ?, ?)";
@@ -256,7 +381,7 @@ public class DBUtils {
      * @param pstm prepared statement
      * @param news news
      * @return PreparedStatement pstm
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static PreparedStatement setNewsMethod(PreparedStatement pstm, News news) throws SQLException {
         pstm.setString(1, news.getTitle());
@@ -271,7 +396,7 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void deleteNews(Connection con, int id) throws SQLException {
         backupNews(con, id, "DELETE");
@@ -287,7 +412,7 @@ public class DBUtils {
      * @param con connection
      * @param id  id
      * @param action action
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static void backupNews(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO NEWS_BACKUP (ID, TITLE, IMAGE, CONTENT, DATE, ACTION) SELECT ID, TITLE, IMAGE, CONTENT, DATE, ? FROM NEWS WHERE ID = ?";
@@ -302,7 +427,7 @@ public class DBUtils {
      *
      * @param con connection
      * @return List<Players> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<Players> queryPlayers(Connection con) throws SQLException {
         String sql = "SELECT * FROM PLAYERS";
@@ -312,12 +437,12 @@ public class DBUtils {
     }
 
     /**
-     * Return players by team
+     * Returns players by team
      *
      * @param con    connection
      * @param teamID team id
      * @return List<Players> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<Players> queryPlayersTeam(Connection con, int teamID) throws SQLException {
         String sql = "SELECT * FROM PLAYERS WHERE TEAM_ID = ?";
@@ -332,7 +457,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return List<Players> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static List<Players> getPlayersMethod(ResultSet rs) throws SQLException {
         List<Players> list = new ArrayList<>();
@@ -344,12 +469,12 @@ public class DBUtils {
     }
 
     /**
-     * Return player
+     * Returns player
      *
      * @param con connection
      * @param id  id
      * @return Players player
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static Players findPlayer(Connection con, int id) throws SQLException {
         String sql = "SELECT * FROM PLAYERS WHERE ID = ?";
@@ -365,7 +490,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return Players player
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static Players getPlayerMethod(ResultSet rs) throws SQLException {
         int id, teamID;
@@ -387,7 +512,7 @@ public class DBUtils {
      *
      * @param con    connection
      * @param player player
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void updatePlayer(Connection con, Players player) throws SQLException {
         backupPlayer(con, player.getID(), "UPDATE");
@@ -403,7 +528,7 @@ public class DBUtils {
      *
      * @param con    connection
      * @param player player
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void insertPlayer(Connection con, Players player) throws SQLException {
         String sql = "INSERT INTO PLAYERS (NAME, IMAGE, DATE_OF_BIRTH, POSITION, CAPTAIN, TEAM_ID) VALUES (?, ?, ?, ?, ?, ?)";
@@ -418,7 +543,7 @@ public class DBUtils {
      * @param pstm   prepared statement
      * @param player player
      * @return PreparedStatement pstm
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static PreparedStatement setPlayerMethod(PreparedStatement pstm, Players player) throws SQLException {
         pstm.setString(1, player.getName());
@@ -435,7 +560,7 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void deletePlayer(Connection con, int id) throws SQLException {
         backupPlayer(con, id, "DELETE");
@@ -451,7 +576,7 @@ public class DBUtils {
      * @param con connection
      * @param id  id
      * @param action action
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static void backupPlayer(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO PLAYERS_BACKUP (ID, NAME, IMAGE, DATE_OF_BIRTH, POSITION, CAPTAIN, TEAM_ID, ACTION) SELECT ID, NAME, IMAGE, DATE_OF_BIRTH, POSITION, CAPTAIN, TEAM_ID, ? FROM PLAYERS WHERE ID = ?";
@@ -462,11 +587,11 @@ public class DBUtils {
     }
 
     /**
-     * Return teams
+     * Returns teams
      *
      * @param con connection
      * @return List<Teams> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<Teams> queryTeams(Connection con) throws SQLException {
         String sql = "SELECT * FROM TEAMS";
@@ -476,11 +601,11 @@ public class DBUtils {
     }
 
     /**
-     * Return active teams
+     * Returns active teams
      *
      * @param con connection
      * @return List<Teams> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<Teams> queryTeamsActive(Connection con) throws SQLException {
         String sql = "SELECT * FROM TEAMS WHERE ACTIVE = TRUE";
@@ -494,7 +619,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return List<Teams> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static List<Teams> getTeamsMethod(ResultSet rs) throws SQLException {
         List<Teams> list = new ArrayList<>();
@@ -506,12 +631,12 @@ public class DBUtils {
     }
 
     /**
-     * Return team
+     * Returns team
      *
      * @param con connection
      * @param id  id
      * @return Teams team
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static Teams findTeam(Connection con, int id) throws SQLException {
         String sql = "SELECT * FROM TEAMS WHERE ID = ?";
@@ -527,7 +652,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return Teams team
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static Teams getTeamMethod(ResultSet rs) throws SQLException {
         int id, ages;
@@ -552,7 +677,7 @@ public class DBUtils {
      *
      * @param con  connection
      * @param team team
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void updateTeam(Connection con, Teams team) throws SQLException {
         backupTeam(con, team.getID(), "UPDATE");
@@ -568,7 +693,7 @@ public class DBUtils {
      *
      * @param con  connection
      * @param team team
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void insertTeam(Connection con, Teams team) throws SQLException {
         String sql = "INSERT INTO TEAMS (NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, TEAM_PHOTO, ACTIVE, YOUTH, AGES) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -583,7 +708,7 @@ public class DBUtils {
      * @param pstm prepared statement
      * @param team team
      * @return PreparedStatement pstm
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static PreparedStatement setTeamMethod(PreparedStatement pstm, Teams team) throws SQLException {
         pstm.setString(1, team.getName());
@@ -604,7 +729,7 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void deleteTeam(Connection con, int id) throws SQLException {
         backupTeam(con, id, "DELETE");
@@ -620,7 +745,7 @@ public class DBUtils {
      * @param con connection
      * @param id  id
      * @param action action
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static void backupTeam(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO TEAMS_BACKUP (ID, NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, TEAM_PHOTO, ACTIVE, YOUTH, AGES, ACTION) SELECT ID, NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, TEAM_PHOTO, ACTIVE, YOUTH, AGES, ? FROM TEAMS WHERE ID = ?";
@@ -631,11 +756,11 @@ public class DBUtils {
     }
 
     /**
-     * Return sponsors
+     * Returns sponsors
      *
      * @param con connection
      * @return List<Sponsors> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<Sponsors> querySponsors(Connection con) throws SQLException {
         String sql = "SELECT * FROM SPONSORS";
@@ -645,13 +770,13 @@ public class DBUtils {
     }
 
     /**
-     * Return sponsors for team
+     * Returns sponsors for team
      *
      * @param con    connection
      * @param teamID team id
      * @param youth  youth
      * @return List<Sponsors> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<Sponsors> querySponsorsTeam(Connection con, String teamID, boolean youth) throws SQLException {
         String sql = "SELECT * FROM SPONSORS WHERE TEAM_ID = ? OR TEAM_ID = ? OR TEAM_ID = 'A'";
@@ -668,7 +793,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return List<Sponsors> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static List<Sponsors> getSponsorsMethod(ResultSet rs) throws SQLException {
         List<Sponsors> list = new ArrayList<>();
@@ -680,12 +805,12 @@ public class DBUtils {
     }
 
     /**
-     * Return sponsor
+     * Returns sponsor
      *
      * @param con connection
      * @param id  id
      * @return Sponsors sponsor
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static Sponsors findSponsor(Connection con, int id) throws SQLException {
         String sql = "SELECT * FROM SPONSORS WHERE ID = ?";
@@ -701,7 +826,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return Sponsors sponsor
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static Sponsors getSponsorMethod(ResultSet rs) throws SQLException {
         int id;
@@ -720,7 +845,7 @@ public class DBUtils {
      *
      * @param con     connection
      * @param sponsor sponsor
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void updateSponsor(Connection con, Sponsors sponsor) throws SQLException {
         backupSponsor(con, sponsor.getID(), "UPDATE");
@@ -736,7 +861,7 @@ public class DBUtils {
      *
      * @param con     connection
      * @param sponsor sponsor
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void insertSponsor(Connection con, Sponsors sponsor) throws SQLException {
         String sql = "INSERT INTO SPONSORS (NAME, WEBSITE, IMAGE, PURPOSE, TEAM_ID) VALUES (?, ?, ?, ?, ?)";
@@ -751,7 +876,7 @@ public class DBUtils {
      * @param pstm    prepared statement
      * @param sponsor sponsor
      * @return PreparedStatement pstm
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static PreparedStatement setSponsorMethod(PreparedStatement pstm, Sponsors sponsor) throws SQLException {
         pstm.setString(1, sponsor.getName());
@@ -767,7 +892,7 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void deleteSponsor(Connection con, int id) throws SQLException {
         backupSponsor(con, id, "DELETE");
@@ -783,7 +908,7 @@ public class DBUtils {
      * @param con connection
      * @param id  id
      * @param action action
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static void backupSponsor(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO SPONSORS_BACKUP (ID, NAME, WEBSITE, IMAGE, PURPOSE, TEAM_ID, ACTION) SELECT ID, NAME, WEBSITE, IMAGE, PURPOSE, TEAM_ID, ? FROM SPONSORS WHERE ID = ?";
@@ -794,7 +919,7 @@ public class DBUtils {
     }
 
     /**
-     * Return users
+     * Returns users
      *
      * @param con connection
      * @return List<Users> list
@@ -808,7 +933,7 @@ public class DBUtils {
     }
 
     /**
-     * Return users for contact
+     * Returns users for contact
      *
      * @param con connection
      * @return List<Users> list
@@ -822,12 +947,12 @@ public class DBUtils {
     }
 
     /**
-     * Return users who are managers for team
+     * Returns users who are managers for team
      *
      * @param con    connection
      * @param teamID team id
      * @return List<Users> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<Users> queryUsersManagersTeam(Connection con, int teamID) throws SQLException {
         String sql = "SELECT * FROM USERS WHERE ROLE = 0 AND TEAM_ID = ?";
@@ -842,7 +967,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return List<Users> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static List<Users> getUsersMethod(ResultSet rs) throws SQLException {
         List<Users> list = new ArrayList<>();
@@ -854,7 +979,7 @@ public class DBUtils {
     }
 
     /**
-     * Return user
+     * Returns user
      *
      * @param con   connection
      * @param email email
@@ -871,7 +996,7 @@ public class DBUtils {
     }
 
     /**
-     * Return user
+     * Returns user
      *
      * @param con      connection
      * @param email    email
@@ -908,7 +1033,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return Users user
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static Users getUserMethod(ResultSet rs) throws SQLException {
         String name, email, phone, image;
@@ -1018,7 +1143,7 @@ public class DBUtils {
      * @param pstm prepared statement
      * @param user user
      * @return PreparedStatement pstm
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static PreparedStatement setUserMethod(PreparedStatement pstm, Users user) throws SQLException {
         pstm.setString(1, user.getName());
@@ -1051,7 +1176,7 @@ public class DBUtils {
      * @param con   connection
      * @param email email
      * @param action action
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static void backupUser(Connection con, String email, String action) throws SQLException {
         String sql = "INSERT INTO USERS_BACKUP (NAME, EMAIL, PHONE, TEAM_ID, ROLE, IMAGE, PASSWORD, TEMP, ACTION) SELECT NAME, EMAIL, PHONE, TEAM_ID, ROLE, IMAGE, PASSWORD, TEMP, ? FROM USERS WHERE EMAIL = ?";
@@ -1062,11 +1187,11 @@ public class DBUtils {
     }
 
     /**
-     * Returns what's on
+     * Returns all what's on
      *
      * @param con connection
      * @return List<WhatsOn> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<WhatsOn> queryWhatsOn(Connection con) throws SQLException {
         String sql = "SELECT * FROM WHATSON";
@@ -1076,11 +1201,11 @@ public class DBUtils {
     }
 
     /**
-     * Returns what's on by event date
+     * Returns all what's on by event date
      *
      * @param con connection
      * @return List<WhatsOn> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static List<WhatsOn> queryWhatsOnEventDate(Connection con) throws SQLException {
         String sql = "SELECT * FROM WHATSON WHERE DATE_OF_EVENT >= ?";
@@ -1096,7 +1221,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return List<WhatsOn> list
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static List<WhatsOn> getWhatsOnMethodMultiple(ResultSet rs) throws SQLException {
         List<WhatsOn> list = new ArrayList<>();
@@ -1108,12 +1233,12 @@ public class DBUtils {
     }
 
     /**
-     * Return what's on
+     * Returns one what's on article
      *
      * @param con connection
      * @param id  id
      * @return WhatsOn whatsOn
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static WhatsOn findWhatsOn(Connection con, int id) throws SQLException {
         String sql = "SELECT * FROM WHATSON WHERE ID = ?";
@@ -1125,11 +1250,11 @@ public class DBUtils {
     }
 
     /**
-     * Return what's on latest
+     * Returns latest what's on article
      *
      * @param con connection
      * @return WhatsOn whatsOn
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static WhatsOn findWhatsOnLatest(Connection con) throws SQLException {
         String sql = "SELECT * FROM WHATSON WHERE DATE_OF_EVENT >= ? ORDER BY DATE_OF_EVENT";
@@ -1145,7 +1270,7 @@ public class DBUtils {
      *
      * @param rs result set
      * @return WhatsOn whatsOn
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static WhatsOn getWhatsOnMethodSingle(ResultSet rs) throws SQLException {
         int id;
@@ -1165,7 +1290,7 @@ public class DBUtils {
      *
      * @param con     connection
      * @param whatsOn what's on
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void updateWhatsOn(Connection con, WhatsOn whatsOn) throws SQLException {
         backupWhatsOn(con, whatsOn.getID(), "UPDATE");
@@ -1181,7 +1306,7 @@ public class DBUtils {
      *
      * @param con     connection
      * @param whatsOn what's on
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void insertWhatsOn(Connection con, WhatsOn whatsOn) throws SQLException {
         String sql = "INSERT INTO WHATSON (TITLE, IMAGE, CONTENT, DATE, DATE_OF_EVENT) VALUES (?, ?, ?, ?, ?)";
@@ -1196,7 +1321,7 @@ public class DBUtils {
      * @param pstm    prepared statement
      * @param whatsOn what's on
      * @return PreparedStatement pstm
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static PreparedStatement setWhatsOnMethod(PreparedStatement pstm, WhatsOn whatsOn) throws SQLException {
         pstm.setString(1, whatsOn.getTitle());
@@ -1212,7 +1337,7 @@ public class DBUtils {
      *
      * @param con connection
      * @param id  id
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     public static void deleteWhatsOn(Connection con, int id) throws SQLException {
         backupWhatsOn(con, id, "DELETE");
@@ -1228,7 +1353,7 @@ public class DBUtils {
      * @param con connection
      * @param id  id
      * @param action action
-     * @throws SQLException SQLException
+     * @throws SQLException SQL exception
      */
     private static void backupWhatsOn(Connection con, int id, String action) throws SQLException {
         String sql = "INSERT INTO WHATSON_BACKUP (ID, TITLE, IMAGE, CONTENT, DATE, DATE_OF_EVENT, ACTION) SELECT ID, TITLE, IMAGE, CONTENT, DATE, DATE_OF_EVENT, ? FROM WHATSON WHERE ID = ?";

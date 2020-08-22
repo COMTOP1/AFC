@@ -1,8 +1,13 @@
 package com.bswdi.servlets;
 
+import com.bswdi.beans.Documents;
+import com.bswdi.utils.DBUtils;
+import com.bswdi.utils.MyUtils;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,44 +35,27 @@ public class DownloadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        int file = -1;
+        Connection con = MyUtils.getStoredConnection(request);
+        int id = -1;
         try {
-            file = Integer.parseInt(request.getParameter("file"));
+            id = Integer.parseInt(request.getParameter("id"));
         } catch (Exception e) {
             response.sendRedirect("documents");
         }
-        String filename = null;
-        switch (file) {
-            case 0:
-                filename = "Membership form 2020 - 21.pdf";
-                break;
-            case 1:
-                filename = "Code of Conduct for Players 2020-21.pdf";
-                break;
-            case 2:
-                filename = "Code of Conduct for Parents and Spectators 2020 - 21.pdf";
-                break;
-            case 3:
-                filename = "Club Anti Discrimination Policy 2020 - 21.pdf";
-                break;
-            case 4:
-                filename = "GDPR and Image Consent Form 2020-21.pdf";
-                break;
-            case 5:
-                filename = "afcaldermaston equality policy.pdf";
-                break;
-            case 6:
-                filename = "afcaldermaston safeguarding policy.pdf";
-                break;
-            default:
-                response.sendRedirect("documents");
-                break;
+        Documents document = null;
+        try {
+            document = DBUtils.findDocument(con, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("documents");
         }
         try {
-            //String filepath = "C:\\Users\\ADMIN\\Desktop\\Code\\Java\\AFC\\";
-            String filepath = "/Users/liam/Desktop/Code/Java/AFC/";
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-            FileInputStream fileInputStream = new FileInputStream(filepath + filename);
+            //String filepath = "C:\\Users\\ADMIN\\Desktop\\Code\\Java\\AFC\\FileStore\\";
+            //String filepath = System.getProperty("catalina.home") + "/FileStore";
+            String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
+            assert document != null;
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + document.getFileName() + "\"");
+            FileInputStream fileInputStream = new FileInputStream(filepath + document.getFileName());
             int i;
             while ((i = fileInputStream.read()) != -1) out.write(i);
             fileInputStream.close();
