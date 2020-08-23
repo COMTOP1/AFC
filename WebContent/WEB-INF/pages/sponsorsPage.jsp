@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.bswdi.beans.*, java.sql.Connection,com.bswdi.utils.*, java.util.List" %>
 <!DOCTYPE html>
@@ -33,7 +34,7 @@
                 <a href="<%=sponsor.getWebsite()%>" target="_blank">
                     <img src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
                          onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    <%=sponsor.getName()%><br></br><br>
+                    <%=sponsor.getName()%><br><br><br>
                     <%=sponsor.getPurpose()%><br><br>
                     <%if (user != null && user.getRole() > 0) {%>
                     <div class="button" id="container">

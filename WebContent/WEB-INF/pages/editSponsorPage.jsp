@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.bswdi.beans.*, java.sql.Connection, com.bswdi.utils.*, java.util.List" %>
 <!DOCTYPE html>
@@ -36,7 +37,7 @@
             </div>
             <div>
                 <label for="teamID">Team: </label>
-                <select form="edit" name="companyID" id="companyID">
+                <select form="edit" name="teamID" id="teamID">
                     <option id="teamID" name="teamID" value="A" <%if (sponsor.getTeamID().equals("A")) {%>selected<%}%>>
                         All
                     </option>

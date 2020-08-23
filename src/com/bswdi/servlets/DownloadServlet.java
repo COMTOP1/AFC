@@ -1,8 +1,7 @@
 package com.bswdi.servlets;
 
-import com.bswdi.beans.Documents;
-import com.bswdi.utils.DBUtils;
-import com.bswdi.utils.MyUtils;
+import com.bswdi.beans.*;
+import com.bswdi.utils.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;

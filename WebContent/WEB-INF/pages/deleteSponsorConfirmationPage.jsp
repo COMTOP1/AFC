@@ -1,5 +1,5 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.bswdi.utils.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +18,7 @@
         <form id="delete" method="POST" action="deletesponsor?id=<%=id%>">
             <p><a onclick="document.getElementById('delete').submit();" href="javascript:{}">Delete</a></p>
             <br>
-            <p><a href="sponsor">Cancel</a></p>
+            <p><a href="sponsors">Cancel</a></p>
         </form>
     </div>
 </main>

@@ -33,7 +33,7 @@ public class Documents {
     }
 
     /**
-     * Return id
+     * Returns id
      *
      * @return int id
      */
@@ -51,7 +51,7 @@ public class Documents {
     }
 
     /**
-     * Return name
+     * Returns name
      *
      * @return String name
      */
@@ -69,7 +69,7 @@ public class Documents {
     }
 
     /**
-     * Return file name
+     * Returns file name
      *
      * @return String fileName
      */

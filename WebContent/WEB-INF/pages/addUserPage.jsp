@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.bswdi.beans.*, java.sql.Connection, com.bswdi.utils.*, java.util.List" %>
 <!DOCTYPE html>
@@ -38,7 +39,7 @@
                 <input type="text" id="phone" name="phone">
             </div>
             <div>
-                <label type="role" for="role">Role: </label>
+                <label for="role">Role: </label>
                 <select form="add" name="role" id="role" onClick="team()" onmouseup="team()" onchange="team()">
                     <option id="role" name="role" value="<%=UserRole.MANAGER%>" onClick="team()">Manager</option>
                     <option id="role" name="role" value="<%=UserRole.SECRETARY%>" onClick="team()">Secretary</option>

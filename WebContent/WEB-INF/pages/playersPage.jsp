@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.bswdi.beans.*, java.sql.Connection, com.bswdi.utils.*, java.util.List, java.time.LocalDate" %>
 <!DOCTYPE html>
@@ -34,7 +35,9 @@
             <th>Edit</th>
             <th>Delete</th>
         </tr>
-        <%for (Players player : list) {%>
+        <%
+            assert list != null;
+            for (Players player : list) {%>
         <tr>
             <th><%=player.getName()%>
             </th>

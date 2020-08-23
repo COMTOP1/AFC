@@ -1,5 +1,6 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.bswdi.beans.*, com.bswdi.utils.*" %>
+<%@ page import="com.bswdi.beans.*" %>
 <!DOCTYPE html>
 <html>
 <head>

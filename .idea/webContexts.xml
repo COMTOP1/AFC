@@ -4,6 +4,7 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/_topPageConfirmation.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages" />
+        <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/homePage.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages" />
         <entry key="file://$PROJECT_DIR$/WebContent/WEB-INF/pages/infoPage.jsp" value="file://$PROJECT_DIR$/WebContent/WEB-INF/pages" />
       </map>
     </option>

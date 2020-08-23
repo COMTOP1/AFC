@@ -1,5 +1,5 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.bswdi.utils.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +16,7 @@
         empty contractors' huts as changing rooms – carrying the tin bath into whichever building was designated for
         that day's football. The players were also responsible for the pitch, and would mow and mark out the pitch
         before the match started. The club received support from Sir William Penney during his work at AWRE on the
-        Operation Hurricane project.<br></br><br>
+        Operation Hurricane project.<br><br><br>
 
         In the late 1960s/early 1970s, we changed our name, to AFC Aldermaston. In 1979 we were promoted from the
         Reading & District League into Division One of the Hellenic League, where we spent the next seven seasons. From
@@ -24,7 +24,7 @@
         Division Three of the Hampshire League in 1991. We finished fifth in the first season, earning promotion to
         Division Two. However, we were soon relegated back to Division Three the following season, where we remained
         until 1999. When the Hampshire League was re-organised prior to the 1999–2000 season, we were placed in the
-        Premier Division.<br></br><br>
+        Premier Division.<br><br><br>
 
         When the Hampshire and Wessex Leagues merged in 2004, we became members of Division Two of the Wessex League. At
         the end of the 2004–05 season we suffered relegation. The division was renamed Division Two in 2006, and was
@@ -34,7 +34,7 @@
         2010, a 2–0 loss to Downton. This was undoubtedly the worst time for the club in living memory, and it took a
         great effort to keep going at this time. The losing streak thankfully came to an end on 10 April 2010, when we
         club drew 1–1 against Warminster Town, and then finally winning the next match against Petersfield Town 2–1 win
-        for Aldermaston, to provide a much needed boost for all of us at that difficult time.<br></br><br>
+        for Aldermaston, to provide a much needed boost for all of us at that difficult time.<br><br><br>
 
         Unsurprisingly, we finished bottom of Division One with just the one win in 40 matches, and were relegated to
         the Hampshire Premier League, where played for four seasons before moving to the Thames Valley Premier League
@@ -42,7 +42,7 @@
         to Hale Leys Utd, the final of the Reading Senior Cup played at the Madjeski which we lost 1-0 to champions
         Marlow Utd, and the final of the Basingstoke Senior Cup where we lost to our local rivals Tadley Calleva 2-1
         AET. 2015-16 season we finished seventh in the TVPL Premier Division, and again reaching the final of the
-        Reading Senior Cup only to be beaten in a fourth final 1-0 to Cookham Dean.<br></br><br>
+        Reading Senior Cup only to be beaten in a fourth final 1-0 to Cookham Dean.<br><br><br>
 
         We made a welcome return to Step 6 football as we were promoted to Division One East of the Hellenic League.
         2016-17 saw us finish 7th in the Hellenic League this matched our highest ever finish at Step 6 football.

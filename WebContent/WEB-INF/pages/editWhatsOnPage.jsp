@@ -1,6 +1,7 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page
-        import="com.bswdi.beans.*, com.bswdi.utils.*, java.util.Date, java.util.Calendar, java.util.GregorianCalendar, java.time.LocalDate" %>
+        import="com.bswdi.beans.*, java.util.Date, java.util.Calendar, java.util.GregorianCalendar, java.time.LocalDate" %>
 <!DOCTYPE html>
 <html>
 <head>

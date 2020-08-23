@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.bswdi.utils.*, com.bswdi.beans.Users, java.sql.Connection" %>
 <!DOCTYPE html>
