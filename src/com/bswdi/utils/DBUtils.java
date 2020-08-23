@@ -32,7 +32,136 @@ public class DBUtils {
     }
 
     /**
+     * Returns affiliations
+     *
+     * @param con connection
+     * @return List<Affiliations> list
+     * @throws SQLException SQL exception
+     */
+    public static List<Affiliations> queryAffiliations(Connection con) throws SQLException {
+        String sql = "SELECT * FROM AFFILIATIONS";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        return getAffiliationsMethod(rs);
+    }
+
+    /**
+     * Get affiliations method
+     *
+     * @param rs result set
+     * @return List<Affiliations> list
+     * @throws SQLException SQL exception
+     */
+    private static List<Affiliations> getAffiliationsMethod(ResultSet rs) throws SQLException {
+        List<Affiliations> list = new ArrayList<>();
+        while (rs.next()) {
+            Affiliations affiliation = getAffiliationMethod(rs);
+            list.add(affiliation);
+        }
+        return list;
+    }
+
+    /**
+     * Returns affiliation
+     *
+     * @param con connection
+     * @param id id
+     * @return Affiliations affiliation
+     * @throws SQLException SQL exception
+     */
+    public static Affiliations findAffiliation(Connection con, int id) throws SQLException {
+        String sql = "SELECT * FROM AFFILIATIONS WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setInt(1, id);
+        ResultSet rs = pstm.executeQuery();
+        if (rs.next()) return getAffiliationMethod(rs);
+        else return null;
+    }
+
+    /**
+     * Get affiliation method
+     * @param rs result set
+     * @return Affiliations affiliation
+     * @throws SQLException SQL exception
+     */
+    private static Affiliations getAffiliationMethod(ResultSet rs) throws SQLException {
+        int id;
+        String name, website, image;
+        id = rs.getInt("ID");
+        name = rs.getString("NAME");
+        website = rs.getString("WEBSITE");
+        image = rs.getString("IMAGE");
+        return new Affiliations(id, name, website, image);
+    }
+
+    /**
+     * Update affiliation
+     *
+     * @param con connection
+     * @param affiliation affiliation
+     * @throws SQLException SQL exception
+     */
+    public static void updateAffiliation(Connection con, Affiliations affiliation) throws SQLException {
+        backupAffiliation(con, affiliation.getID(), "UPDATE");
+        String sql = "UPDATE AFFILIATIONS SET NAME = ?, WEBSITE = ?, IMAGE = ? WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, affiliation.getName());
+        pstm.setString(2, affiliation.getWebsite());
+        pstm.setString(3, affiliation.getWebsite());
+        pstm.setInt(4, affiliation.getID());
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Insert affiliation
+     *
+     * @param con connection
+     * @param affiliation affiliation
+     * @throws SQLException SQL exception
+     */
+    public static void insertAffiliation(Connection con, Affiliations affiliation) throws SQLException {
+        String sql = "INSERT INTO AFFILIATIONS (NAME, WEBSITE, IMAGE) VALUES (?, ?, ?)";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, affiliation.getName());
+        pstm.setString(2, affiliation.getWebsite());
+        pstm.setString(3, affiliation.getImage());
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Delete affiliation
+     *
+     * @param con connection
+     * @param id id
+     * @throws SQLException SQL exception
+     */
+    public static void deleteAffiliation(Connection con, int id) throws SQLException {
+        backupAffiliation(con, id, "DELETE");
+        String sql = "DELETE FROM AFFILIATIONS WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setInt(1, id);
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Backup affiliation
+     *
+     * @param con connection
+     * @param id id
+     * @param action action
+     * @throws SQLException SQL exception
+     */
+    private static void backupAffiliation(Connection con, int id, String action) throws SQLException {
+        String sql = "INSERT INTO AFFILIATIONS_BACKUP (ID, NAME, WEBSITE, IMAGE, ACTION) SELECT ID, NAME, WEBSITE, IMAGE, ? FROM AFFILIATIONS WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, action);
+        pstm.setInt(2, id);
+        pstm.executeUpdate();
+    }
+
+    /**
      * Returns documents
+     *
      * @param con connection
      * @return List<Documents> list
      * @throws SQLException SQL exception

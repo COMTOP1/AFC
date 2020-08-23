@@ -1,10 +1,11 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page
-        import="com.bswdi.beans.*, java.sql.Connection, java.util.List, java.util.Date, com.bswdi.utils.*, java.time.LocalDate" %>
+        import="com.bswdi.beans.*, java.sql.Connection, java.util.List, com.bswdi.utils.*, java.util.Date, java.time.LocalDate" %>
 <!DOCTYPE html>
 <html>
 <head>
-   <link href="styleHome.css" rel="stylesheet" type="text/css">
+    <link href="styleHome.css" rel="stylesheet" type="text/css">
     <link rel='icon' type='image/x-icon' href='images/AFC.ico'/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
@@ -20,9 +21,15 @@
     <title>Official website of AFC Aldermaston - Home</title>
     <%
         Connection con = MyUtils.getStoredConnection(request);
-        List<Sponsors> list = null;
+        List<Sponsors> listSponsors = null;
+        List<Affiliations> listAffiliations = null;
         try {
-            list = DBUtils.querySponsors(con);
+            listSponsors = DBUtils.querySponsors(con);
+        } catch (Exception ignored) {
+
+        }
+        try {
+            listAffiliations = DBUtils.queryAffiliations(con);
         } catch (Exception ignored) {
 
         }
@@ -40,7 +47,7 @@
 
         .photobanner {
             height: 250px;
-            width: <%=(list.size() + 4) * 354%>px;
+            width: <%=(listSponsors.size() + 4) * 354%>px;
             padding: 20px 0 20px 0;
         }
 
@@ -59,67 +66,67 @@
             -ms-transform: scale(1.1);
             transform: scale(1.1);
             cursor: pointer;
-            -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
-            -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
-            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+            -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
         }
 
 
         /*keyframe animations*/
 
         .first {
-            -webkit-animation: bannermove <%=list.size() * 15 / 7%>s linear infinite;
-            -moz-animation: bannermove <%=list.size() * 15 / 7%>s linear infinite;
-            -ms-animation: bannermove <%=list.size() * 15 / 7%>s linear infinite;
-            animation: bannermove <%=list.size() * 15 / 7%>s linear infinite;
+            -webkit-animation: bannermove <%=listSponsors.size() * 15 / 7%>s linear infinite;
+            -moz-animation: bannermove <%=listSponsors.size() * 15 / 7%>s linear infinite;
+            -ms-animation: bannermove <%=listSponsors.size() * 15 / 7%>s linear infinite;
+            animation: bannermove <%=listSponsors.size() * 15 / 7%>s linear infinite;
         }
 
         @keyframes "bannermove" {
             0% {
-                margin-left: 0px;
+                margin-left: 0;
             }
             100% {
-                margin-left: <%=list.size() * -355%>px;
+                margin-left: <%=listSponsors.size() * -355%>px;
             }
 
         }
 
         @-moz-keyframes bannermove {
             0% {
-                margin-left: 0px;
+                margin-left: 0;
             }
             100% {
-                margin-left: <%=list.size() * -355%>px;
+                margin-left: <%=listSponsors.size() * -355%>px;
             }
 
         }
 
         @-webkit-keyframes "bannermove" {
             0% {
-                margin-left: 0px;
+                margin-left: 0;
             }
             100% {
-                margin-left: <%=list.size() * -355%>px;
+                margin-left: <%=listSponsors.size() * -355%>px;
             }
 
         }
 
         @-ms-keyframes "bannermove" {
             0% {
-                margin-left: 0px;
+                margin-left: 0;
             }
             100% {
-                margin-left: <%=list.size() * -355%>px;
+                margin-left: <%=listSponsors.size() * -355%>px;
             }
 
         }
 
         @-o-keyframes "bannermove" {
             0% {
-                margin-left: 0px;
+                margin-left: 0;
             }
             100% {
-                margin-left: <%=list.size() * -355%>px;
+                margin-left: <%=listSponsors.size() * -355%>px;
             }
 
         }
@@ -133,7 +140,7 @@
     <h2 class="welcomeHeader">Welcome</h2>
     <p class="welcome">AFC Aldermaston is a Chartered Standard club based in West Berkshire which is run by a group of
         volunteers. We have over 20 teams with age groups registered from U6’s to U18’s and onto Adult
-        Football.<br></br><br></p>
+        Football.<br><br><br></p>
     <%
         News news = null;
         try {
@@ -200,7 +207,7 @@
         <div class="photobanner">
             <%
                 int i = 0;
-                for (Sponsors sponsor : list) {
+                for (Sponsors sponsor : listSponsors) {
             %>
             <a href="<%=sponsor.getWebsite()%>" target="_blank" style="width: 350px; height: 250px;">
                 <img <%if (i == 0) {%>class="first"<%}%> style="width: 350px; height: 250px;"
@@ -210,7 +217,7 @@
             <%
                     i++;
                 }
-                for (Sponsors sponsor : list) {
+                for (Sponsors sponsor : listSponsors) {
             %>
             <a href="<%=sponsor.getWebsite()%>" target="_blank">
                 <img style="width: 350px; height: 250px;" src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
@@ -223,86 +230,18 @@
         <h2 style="text-decoration: underline; text-decoration-color: red; width: 100vx; text-align: center;">
             AFFILIATIONS</h2>
         <div id="affiliationContainer">
+            <%
+                assert listAffiliations != null;
+                for (Affiliations affiliation : listAffiliations) {%>
             <div id="listItemAffiliation">
                 <div class="imgContainer">
-                    <a href="https://hellenicleague.co.uk/" target="_blank">
-                        <img id="affiliationImage" src="images/uhl.png" alt=""
+                    <a href="<%=affiliation.getWebsite()%>" target="_blank">
+                        <img id="affiliationImage" src="data:image/jpg;base64,<%=affiliation.getImage()%>" alt=""
                              onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
                     </a>
                 </div>
             </div>
-            <div id="listItemAffiliation">
-                <div class="imgContainer">
-                    <a href="http://www.berks-bucksfa.com/" target="_blank">
-                        <img id="affiliationImage" src="images/bab.png" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    </a>
-                </div>
-            </div>
-            <div id="listItemAffiliation">
-                <div class="imgContainer">
-                    <a href="http://www.hampshirefa.com/" target="_blank">
-                        <img id="affiliationImage" src="images/hfa.png" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    </a>
-                </div>
-            </div>
-            <div id="listItemAffiliation">
-                <div class="imgContainer">
-                    <a href="http://www.thefa.com/get-involved/respect" target="_blank">
-                        <img id="affiliationImage" src="images/far.png" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    </a>
-                </div>
-            </div>
-            <div id="listItemAffiliation">
-                <div class="imgContainer">
-                    <a href="http://www.thefa.com/get-involved/player/the-fa-charter-standard" target="_blank">
-                        <img id="affiliationImage" src="images/facs.jpeg" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    </a>
-                </div>
-            </div>
-            <div id="listItemAffiliation">
-                <div class="imgContainer">
-                    <a href="http://www.eastberksfa.com/" target="_blank">
-                        <img id="affiliationImage" src="images/ebfa.png" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    </a>
-                </div>
-            </div>
-            <div id="listItemAffiliation">
-                <div class="imgContainer">
-                    <a href="https://www.phyl.co.uk/" target="_blank">
-                        <img id="affiliationImage" src="images/phyl.png" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    </a>
-                </div>
-            </div>
-            <div id="listItemAffiliation">
-                <div class="imgContainer">
-                    <a href="https://www.bcgfl.org.uk/" target="_blank">
-                        <img id="affiliationImage" src="images/bcgfl.jpg" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    </a>
-                </div>
-            </div>
-            <div id="listItemAffiliation">
-                <div class="imgContainer">
-                    <a href="#" target="_blank">
-                        <img id="affiliationImage" src="images/bdfl.jpeg" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    </a>
-                </div>
-            </div>
-            <div id="listItemAffiliation">
-                <div class="imgContainer">
-                    <a href="http://recsoc.co.uk/" target="_blank">
-                        <img id="affiliationImage" src="images/ars.png" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    </a>
-                </div>
-            </div>
+            <%}%>
         </div>
     </div>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
