@@ -153,14 +153,6 @@ p {
         border-top: 5px solid red;
     }
     
-    #listItemAffiliation {
-		padding: 10px;
-        height: 200px;
-        width: 300px;
-        display: inline-flex;
-        flex-wrap: wrap;
-    }
-    
     #affiliationContainer {
     	padding: 10px;
 		width: 100vx;

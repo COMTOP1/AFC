@@ -6,6 +6,7 @@ package com.bswdi.beans;
  * @author BSWDI
  * @version 1.0
  */
+@SuppressWarnings("unused")
 public class Teams {
 
     private int id = 0, ages = 0;

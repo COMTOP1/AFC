@@ -6,6 +6,7 @@ package com.bswdi.beans;
  * @author BSWDI
  * @version 1.0
  */
+@SuppressWarnings("unused")
 public class Sponsors {
 
     private int id = 0;
