@@ -45,8 +45,8 @@
     <p style="z-index: -1; opacity: 0; float: left; width: 98%; height: 50px;">AFC</p>
 </main>
 <div id="socialBar" style="z-index: 0;">
-    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" class="fa fa-facebook"></a>
-    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
+    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"
        class="fa fa-twitter"></a>
 </div>
 </body>
