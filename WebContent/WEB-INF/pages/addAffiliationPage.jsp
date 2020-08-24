@@ -11,7 +11,7 @@
 <main class="main" style="text-align: center;">
     <div style="background-color: white; margin: 10px 0 0 0; padding: 5px 0 0 0;">
         <h2 style="text-decoration: underline; text-decoration-color: red; width: 100vx; text-align: center;">Add
-            sponsor</h2>
+            affiliation</h2>
         <p style="color: red; padding: 0; margin: 0;" id="error">${error}</p><br>
         <form id="add" method="POST" action="addaffiliation" enctype="multipart/form-data">
             <div>

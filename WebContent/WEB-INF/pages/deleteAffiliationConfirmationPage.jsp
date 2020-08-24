@@ -12,8 +12,8 @@
 <main class="main" style="text-align: center;">
     <div style="background-color: white; margin: 10px 0 0 0; padding: 5px 0 0 0;">
         <h2 style="text-decoration: underline; text-decoration-color: red; width: 100vx; text-align: center;">Delete
-            sponsor</h2>
-        <p style="padding: 0; margin: 0; height: auto;">Are you sure you want to delete this sponsor</p>
+            affiliaiton</h2>
+        <p style="padding: 0; margin: 0; height: auto;">Are you sure you want to delete this affiliation</p>
         <p style="color: red; padding: 0; margin: 0;" id="error">${error}</p><br>
         <form id="delete" method="POST" action="deleteaffiliation?id=<%=id%>">
             <p><a onclick="document.getElementById('delete').submit();" href="javascript:{}">Delete</a></p>

@@ -1,4 +1,4 @@
-<%--suppress ALL --%>
+<%--suppress  --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page
         import="com.bswdi.beans.*, java.sql.Connection, java.util.List, com.bswdi.utils.*, java.util.Date, java.time.LocalDate" %>
@@ -21,6 +21,13 @@
     <title>Official website of AFC Aldermaston - Home</title>
     <%
         Connection con = MyUtils.getStoredConnection(request);
+        String email = MyUtils.getEmailInCookie(request);
+        Users user = null;
+        try {
+            user = DBUtils.findUser(con, email);
+        } catch (Exception ignored) {
+
+        }
         List<Sponsors> listSponsors = null;
         List<Affiliations> listAffiliations = null;
         try {
@@ -35,6 +42,14 @@
         }
     %>
     <style>
+        #listItemAffiliation {
+            padding: 10px;
+            height: <%if (user != null && user.getRole() > 0) {%>150<%} else {%>100<%}%>px;
+            width: 150px;
+            display: inline-flex;
+            flex-wrap: wrap;
+        }
+
         #container {
             width: 100%;
             height: 250px;
@@ -239,10 +254,20 @@
                         <img id="affiliationImage" src="data:image/jpg;base64,<%=affiliation.getImage()%>" alt=""
                              onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
                     </a>
+                    <%if (user != null && user.getRole() > 0) {%>
+                    <p style="padding: 0; margin: 0;">
+                        <a href="deleteaffiliation?id=<%=affiliation.getID()%>">Delete</a>
+                    </p>
+                    <%}%>
                 </div>
             </div>
             <%}%>
         </div>
+        <%if (user != null && user.getRole() > 0) {%>
+        <p style="text-align: center;">
+            <a href="addaffiliation">Add affiliation</a>
+        </p>
+        <%}%>
     </div>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
