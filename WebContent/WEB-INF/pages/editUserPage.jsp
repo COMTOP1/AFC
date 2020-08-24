@@ -1,4 +1,4 @@
-<%--suppress AL --%>
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.bswdi.beans.*, java.sql.Connection, com.bswdi.utils.*, java.util.List" %>
 <!DOCTYPE html>
@@ -33,27 +33,27 @@
             </div>
             <div>
                 <label for="role">Role: </label>
-                <select form="edit" name="role" id="role">
-                    <option id="role" name="role" value="<%=UserRole.MANAGER%>" onClick="team()"
+                <select form="edit" id="role">
+                    <option id="role" value="<%=UserRole.MANAGER%>" onClick="team()"
                             <%if (user.getRole() == UserRole.MANAGER) {%>selected<%}%>>Manager
                     </option>
-                    <option id="role" name="role" value="<%=UserRole.SECRETARY%>" onClick="team()"
+                    <option id="role" value="<%=UserRole.SECRETARY%>" onClick="team()"
                             <%if (user.getRole() == UserRole.SECRETARY) {%>selected<%}%>>Secretary
                     </option>
-                    <option id="role" name="role" value="<%=UserRole.TREASURER%>" onClick="team()"
+                    <option id="role" value="<%=UserRole.TREASURER%>" onClick="team()"
                             <%if (user.getRole() == UserRole.TREASURER) {%>selected<%}%>>Treasurer
                     </option>
-                    <option id="role" name="role" value="<%=UserRole.SAFEGUARDING_OFFICER%>" onClick="team()"
+                    <option id="role" value="<%=UserRole.SAFEGUARDING_OFFICER%>" onClick="team()"
                             <%if (user.getRole() == UserRole.SAFEGUARDING_OFFICER) {%>selected<%}%>>Safeguarding officer
                     </option>
-                    <option id="role" name="role" value="<%=UserRole.PROGRAMME_EDITOR%>" onClick="team()"
+                    <option id="role" value="<%=UserRole.PROGRAMME_EDITOR%>" onClick="team()"
                             <%if (user.getRole() == UserRole.PROGRAMME_EDITOR) {%>selected<%}%>>Programme editor
                     </option>
-                    <option id="role" name="role" value="<%=UserRole.CHAIRPERSON%>" onClick="team()"
+                    <option id="role" value="<%=UserRole.CHAIRPERSON%>" onClick="team()"
                             <%if (user.getRole() == UserRole.CHAIRPERSON) {%>selected<%}%>>Chairperson
                     </option>
                     <%if (user.getRole() >= 5) {%>
-                    <option id="role" name="role" value="<%=UserRole.WEBMASTER%>"
+                    <option id="role" value="<%=UserRole.WEBMASTER%>"
                             <%if (user.getRole() == UserRole.WEBMASTER) {%>selected<%}%>>Webmaster
                     </option>
                     <%}%>
@@ -61,8 +61,8 @@
             </div>
             <div id="team" style="display: block;">
                 <label for="teamID">Team: </label>
-                <select form="edit" name="teamID" id="teamID">
-                    <option id="teamID" name="teamID" value="0" <%if (user.getTeam() == 0) {%>selected<%}%>>Not
+                <select form="edit" id="teamID">
+                    <option id="teamID" value="0" <%if (user.getTeam() == 0) {%>selected<%}%>>Not
                         associated with a team
                     </option>
                     <%
@@ -76,7 +76,7 @@
                         assert list != null;
                         for (Teams team : list) {
                     %>
-                    <option id="teamID" name="teamID" value="<%=team.getID()%>"
+                    <option id="teamID" value="<%=team.getID()%>"
                             <%if (user.getTeam() == team.getID()) {%>selected<%}%>><%=team.getName()%>
                     </option>
                     <%}%>

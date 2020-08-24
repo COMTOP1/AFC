@@ -59,7 +59,7 @@
                         assert list != null;
                         for (Teams team : list) {
                     %>
-                    <option id="teamID" name="teamID" value="<%=team.getID()%>"><%=team.getName()%>
+                    <option id="teamID" value="<%=team.getID()%>"><%=team.getName()%>
                     </option>
                     <%}%>
                 </select>

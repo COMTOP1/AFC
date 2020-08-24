@@ -34,9 +34,9 @@
             <div>
                 <label for="teamID">Team: </label>
                 <select form="add" name="companyID" id="companyID">
-                    <option id="teamID" name="teamID" value="A">All</option>
-                    <option id="teamID" name="teamID" value="O">Adult</option>
-                    <option id="teamID" name="teamID" value="Y">Youth</option>
+                    <option id="teamID" value="A">All</option>
+                    <option id="teamID" value="O">Adult</option>
+                    <option id="teamID" value="Y">Youth</option>
                     <%
                         List<Teams> list = null;
                         Connection con = MyUtils.getStoredConnection(request);
@@ -48,7 +48,7 @@
                         assert list != null;
                         for (Teams team : list) {
                     %>
-                    <option id="teamID" name="teamID" value="<%=team.getID()%>"><%=team.getName()%>
+                    <option id="teamID" value="<%=team.getID()%>"><%=team.getName()%>
                     </option>
                     <%}%>
                 </select>

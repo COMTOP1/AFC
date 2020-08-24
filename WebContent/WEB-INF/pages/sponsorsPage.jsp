@@ -34,19 +34,20 @@
                 <a href="<%=sponsor.getWebsite()%>" target="_blank">
                     <img src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
                          onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    <%=sponsor.getName()%><br><br><br>
-                    <%=sponsor.getPurpose()%><br><br>
-                    <%if (user != null && user.getRole() > 0) {%>
-                    <div class="button" id="container">
-                        <div id="translate"></div>
-                        <a href="editsponsor?id=<%=sponsor.getID()%>">Edit</a>
-                    </div>
-                    <div class="button" id="container">
-                        <div id="translate"></div>
-                        <a href="deletesponsor?id=<%=sponsor.getID()%>">Delete</a>
-                    </div>
-                    <%}%>
-                </a></div>
+                </a>
+                <%=sponsor.getName()%><br><br><br>
+                <%=sponsor.getPurpose()%><br><br>
+                <%if (user != null && user.getRole() > 0) {%>
+                <div class="button" id="container">
+                    <div id="translate"></div>
+                    <a href="editsponsor?id=<%=sponsor.getID()%>">Edit</a>
+                </div>
+                <div class="button" id="container">
+                    <div id="translate"></div>
+                    <a href="deletesponsor?id=<%=sponsor.getID()%>">Delete</a>
+                </div>
+                <%}%>
+            </div>
         </div>
         <%}%>
     </div>

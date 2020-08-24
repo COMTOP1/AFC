@@ -37,14 +37,14 @@
             </div>
             <div>
                 <label for="teamID">Team: </label>
-                <select form="edit" name="teamID" id="teamID">
-                    <option id="teamID" name="teamID" value="A" <%if (sponsor.getTeamID().equals("A")) {%>selected<%}%>>
+                <select form="edit" id="teamID">
+                    <option id="teamID" value="A" <%if (sponsor.getTeamID().equals("A")) {%>selected<%}%>>
                         All
                     </option>
-                    <option id="teamID" name="teamID" value="O" <%if (sponsor.getTeamID().equals("O")) {%>selected<%}%>>
+                    <option id="teamID" value="O" <%if (sponsor.getTeamID().equals("O")) {%>selected<%}%>>
                         Adult
                     </option>
-                    <option id="teamID" name="teamID" value="Y" <%if (sponsor.getTeamID().equals("Y")) {%>selected<%}%>>
+                    <option id="teamID" value="Y" <%if (sponsor.getTeamID().equals("Y")) {%>selected<%}%>>
                         Youth
                     </option>
                     <%
@@ -58,7 +58,7 @@
                         assert list != null;
                         for (Teams team : list) {
                     %>
-                    <option id="teamID" name="teamID" value="<%=team.getID()%>"
+                    <option id="teamID" value="<%=team.getID()%>"
                             <%if (sponsor.getTeamID().equals("" + team.getID())) {%>selected<%}%>><%=team.getName()%>
                     </option>
                     <%}%>

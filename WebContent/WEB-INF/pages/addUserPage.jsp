@@ -40,29 +40,29 @@
             </div>
             <div>
                 <label for="role">Role: </label>
-                <select form="add" name="role" id="role" onClick="team()" onmouseup="team()" onchange="team()">
-                    <option id="role" name="role" value="<%=UserRole.MANAGER%>" onClick="team()">Manager</option>
-                    <option id="role" name="role" value="<%=UserRole.SECRETARY%>" onClick="team()">Secretary</option>
-                    <option id="role" name="role" value="<%=UserRole.TREASURER%>" onClick="team()">Treasurer</option>
-                    <option id="role" name="role" value="<%=UserRole.SAFEGUARDING_OFFICER%>" onClick="team()">
+                <select form="add" id="role" onClick="team()" onmouseup="team()" onchange="team()">
+                    <option id="role" value="<%=UserRole.MANAGER%>" onClick="team()">Manager</option>
+                    <option id="role" value="<%=UserRole.SECRETARY%>" onClick="team()">Secretary</option>
+                    <option id="role" value="<%=UserRole.TREASURER%>" onClick="team()">Treasurer</option>
+                    <option id="role" value="<%=UserRole.SAFEGUARDING_OFFICER%>" onClick="team()">
                         Safeguarding officer
                     </option>
-                    <option id="role" name="role" value="<%=UserRole.PROGRAMME_EDITOR%>" onClick="team()">Programme
+                    <option id="role" value="<%=UserRole.PROGRAMME_EDITOR%>" onClick="team()">Programme
                         editor
                     </option>
-                    <option id="role" name="role" value="<%=UserRole.CHAIRPERSON%>" onClick="team()">Chairperson
+                    <option id="role" value="<%=UserRole.CHAIRPERSON%>" onClick="team()">Chairperson
                     </option>
                     <%
                         assert user != null;
                         if (user.getRole() >= 5) {%>
-                    <option id="role" name="role" value="<%=UserRole.WEBMASTER%>">Webmaster</option>
+                    <option id="role" value="<%=UserRole.WEBMASTER%>">Webmaster</option>
                     <%}%>
                 </select>
             </div>
             <div id="team" style="display: block;">
                 <label for="teamID">Team: </label>
                 <select form="add" name="teamID" id="teamID">
-                    <option id="teamID" name="teamID" value="0">Not associated with a team</option>
+                    <option id="teamID" value="0">Not associated with a team</option>
                     <%
                         List<Teams> list = null;
                         try {
@@ -73,7 +73,7 @@
                         assert list != null;
                         for (Teams team : list) {
                     %>
-                    <option id="teamID" name="teamID" value="<%=team.getID()%>"><%=team.getName()%>
+                    <option id="teamID" value="<%=team.getID()%>"><%=team.getName()%>
                     </option>
                     <%}%>
                 </select>

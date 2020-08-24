@@ -1,6 +1,6 @@
 <%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.bswdi.beans.*, com.bswdi.utils.*" %>
+<%@ page import="com.bswdi.beans.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,30 +62,30 @@
             </div>
             <div>
                 <label for="ages">Ages: </label>
-                <select form="edit" name="ages" id="ages">
-                    <option id="ages" name="ages" value="6" <%if (team.getAges() == 6) {%>selected<%}%>>&lt;6</option>
-                    <option id="ages" name="ages" value="7" <%if (team.getAges() == 7) {%>selected<%}%>>&lt;7</option>
-                    <option id="ages" name="ages" value="8" <%if (team.getAges() == 8) {%>selected<%}%>>&lt;8</option>
-                    <option id="ages" name="ages" value="9" <%if (team.getAges() == 9) {%>selected<%}%>>&lt;9</option>
-                    <option id="ages" name="ages" value="10" <%if (team.getAges() == 10) {%>selected<%}%>>&lt;10
+                <select form="edit" id="ages">
+                    <option id="ages" value="6" <%if (team.getAges() == 6) {%>selected<%}%>>&lt;6</option>
+                    <option id="ages" value="7" <%if (team.getAges() == 7) {%>selected<%}%>>&lt;7</option>
+                    <option id="ages" value="8" <%if (team.getAges() == 8) {%>selected<%}%>>&lt;8</option>
+                    <option id="ages" value="9" <%if (team.getAges() == 9) {%>selected<%}%>>&lt;9</option>
+                    <option id="ages" value="10" <%if (team.getAges() == 10) {%>selected<%}%>>&lt;10
                     </option>
-                    <option id="ages" name="ages" value="11" <%if (team.getAges() == 11) {%>selected<%}%>>&lt;11
+                    <option id="ages" value="11" <%if (team.getAges() == 11) {%>selected<%}%>>&lt;11
                     </option>
-                    <option id="ages" name="ages" value="12" <%if (team.getAges() == 12) {%>selected<%}%>>&lt;12
+                    <option id="ages" value="12" <%if (team.getAges() == 12) {%>selected<%}%>>&lt;12
                     </option>
-                    <option id="ages" name="ages" value="13" <%if (team.getAges() == 13) {%>selected<%}%>>&lt;13
+                    <option id="ages" value="13" <%if (team.getAges() == 13) {%>selected<%}%>>&lt;13
                     </option>
-                    <option id="ages" name="ages" value="14" <%if (team.getAges() == 14) {%>selected<%}%>>&lt;14
+                    <option id="ages" value="14" <%if (team.getAges() == 14) {%>selected<%}%>>&lt;14
                     </option>
-                    <option id="ages" name="ages" value="15" <%if (team.getAges() == 15) {%>selected<%}%>>&lt;15
+                    <option id="ages" value="15" <%if (team.getAges() == 15) {%>selected<%}%>>&lt;15
                     </option>
-                    <option id="ages" name="ages" value="16" <%if (team.getAges() == 16) {%>selected<%}%>>&lt;16
+                    <option id="ages" value="16" <%if (team.getAges() == 16) {%>selected<%}%>>&lt;16
                     </option>
-                    <option id="ages" name="ages" value="17" <%if (team.getAges() == 17) {%>selected<%}%>>&lt;17
+                    <option id="ages" value="17" <%if (team.getAges() == 17) {%>selected<%}%>>&lt;17
                     </option>
-                    <option id="ages" name="ages" value="18" <%if (team.getAges() == 18) {%>selected<%}%>>&lt;18
+                    <option id="ages" value="18" <%if (team.getAges() == 18) {%>selected<%}%>>&lt;18
                     </option>
-                    <option id="ages" name="ages" value="19" <%if (team.getAges() == 19) {%>selected<%}%>>&gt;18
+                    <option id="ages" value="19" <%if (team.getAges() == 19) {%>selected<%}%>>&gt;18
                     </option>
                 </select>
             </div>

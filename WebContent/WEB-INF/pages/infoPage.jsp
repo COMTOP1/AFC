@@ -19,7 +19,8 @@
         Operation Hurricane project.<br><br><br>
 
         In the late 1960s/early 1970s, we changed our name, to AFC Aldermaston. In 1979 we were promoted from the
-        Reading & District League into Division One of the Hellenic League, where we spent the next seven seasons. From
+        Reading &amp; District League into Division One of the Hellenic League, where we spent the next seven seasons.
+        From
         1986 until 1991 we played in local football leagues, including the North Hampshire League, before joining
         Division Three of the Hampshire League in 1991. We finished fifth in the first season, earning promotion to
         Division Two. However, we were soon relegated back to Division Three the following season, where we remained
@@ -38,7 +39,8 @@
 
         Unsurprisingly, we finished bottom of Division One with just the one win in 40 matches, and were relegated to
         the Hampshire Premier League, where played for four seasons before moving to the Thames Valley Premier League
-        for season 2014-15, when we reached the final of the Berks & Bucks Intermediate Cup, which we narrowly lost 2-1
+        for season 2014-15, when we reached the final of the Berks &amp; Bucks Intermediate Cup, which we narrowly lost
+        2-1
         to Hale Leys Utd, the final of the Reading Senior Cup played at the Madjeski which we lost 1-0 to champions
         Marlow Utd, and the final of the Basingstoke Senior Cup where we lost to our local rivals Tadley Calleva 2-1
         AET. 2015-16 season we finished seventh in the TVPL Premier Division, and again reaching the final of the

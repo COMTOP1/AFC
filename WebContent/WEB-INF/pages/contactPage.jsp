@@ -37,7 +37,8 @@
     <%}%>
     <p style="z-index: -1; opacity: 0; float: left; width: 98%; height: 25px; margin: 0;">AFC</p>
     <div style="width: 100%; background-color: white; text-align: center; padding: 10px 0 10px 0; margin: 10px 0 10px 0; display: block; float: left;">
-        <b>IF YOU ARE USING A SATNAV THEN PUT IN THE POSTCODE: <u>RG26 4QP</u><br>THE POSTCODE LISTED TAKES YOU SOME
+        <b>IF YOU ARE USING A SATNAV THEN PUT IN THE POSTCODE: <span style="text-decoration: underline;">RG26 4QP</span><br>THE
+            POSTCODE LISTED TAKES YOU SOME
             DISTANCE AWAY</b></div>
     <br><br><br>
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8939.983502968527!2d-1.1655729266615455!3d51.361551652298395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876a0226ede6355%3A0xefc85c4cd2bbf09b!2sAldermaston%20Recreational%20Society!5e1!3m2!1sen!2suk!4v1587086773128!5m2!1sen!2suk"

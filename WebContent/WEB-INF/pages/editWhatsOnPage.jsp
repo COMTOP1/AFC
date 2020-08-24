@@ -22,7 +22,7 @@
         <form id="edit" method="POST" action="editwhatson" enctype="multipart/form-data">
             <div>
                 <label for="title">Title: </label>
-                <input type="title" id="title" name="title" value="<%=whatsOn.getTitle()%>">
+                <input type="text" id="title" name="title" value="<%=whatsOn.getTitle()%>">
             </div>
             <div>
                 <label for="image">Image: </label>

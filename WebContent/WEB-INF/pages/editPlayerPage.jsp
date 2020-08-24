@@ -56,7 +56,7 @@
                         assert list != null;
                         for (Teams team : list) {
                     %>
-                    <option id="teamID" name="teamID" value="<%=team.getID()%>"
+                    <option id="teamID" value="<%=team.getID()%>"
                             <%if (player.getTeamID() == team.getID()) {%>selected<%}%>><%=team.getName()%>
                     </option>
                     <%}%>

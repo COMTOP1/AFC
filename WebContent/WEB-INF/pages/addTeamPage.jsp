@@ -56,21 +56,21 @@
             </div>
             <div>
                 <label for="ages">Ages: </label>
-                <select form="add" name="ages" id="ages">
-                    <option id="ages" name="ages" value="6">&lt;6</option>
-                    <option id="ages" name="ages" value="7">&lt;7</option>
-                    <option id="ages" name="ages" value="8">&lt;8</option>
-                    <option id="ages" name="ages" value="9">&lt;9</option>
-                    <option id="ages" name="ages" value="10">&lt;10</option>
-                    <option id="ages" name="ages" value="11">&lt;11</option>
-                    <option id="ages" name="ages" value="12">&lt;12</option>
-                    <option id="ages" name="ages" value="13">&lt;13</option>
-                    <option id="ages" name="ages" value="14">&lt;14</option>
-                    <option id="ages" name="ages" value="15">&lt;15</option>
-                    <option id="ages" name="ages" value="16">&lt;16</option>
-                    <option id="ages" name="ages" value="17">&lt;17</option>
-                    <option id="ages" name="ages" value="18">&lt;18</option>
-                    <option id="ages" name="ages" value="19">&gt;18</option>
+                <select form="add" id="ages">
+                    <option id="ages" value="6">&lt;6</option>
+                    <option id="ages" value="7">&lt;7</option>
+                    <option id="ages" value="8">&lt;8</option>
+                    <option id="ages" value="9">&lt;9</option>
+                    <option id="ages" value="10">&lt;10</option>
+                    <option id="ages" value="11">&lt;11</option>
+                    <option id="ages" value="12">&lt;12</option>
+                    <option id="ages" value="13">&lt;13</option>
+                    <option id="ages" value="14">&lt;14</option>
+                    <option id="ages" value="15">&lt;15</option>
+                    <option id="ages" value="16">&lt;16</option>
+                    <option id="ages" value="17">&lt;17</option>
+                    <option id="ages" value="18">&lt;18</option>
+                    <option id="ages" value="19">&gt;18</option>
                 </select>
             </div>
             <p><a onclick="validateFunction()" href="javascript:{}">Confirm</a></p>

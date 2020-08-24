@@ -33,21 +33,22 @@
             <a href="news?id=<%=news.getID()%>">
                 <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                <h2 style="margin: 5px 0 5px 0;"><%=news.getTitle()%>
-                </h2>
-                <%Date date = new Date(news.getDate());%>
-                <%=date.toString()%><br>
-                <%if (user != null && user.getRole() > 0) {%>
-                <div class="button" id="container">
-                    <div id="translate"></div>
-                    <a href="editnews?id=<%=news.getID()%>">Edit</a>
-                </div>
-                <div class="button" id="container">
-                    <div id="translate"></div>
-                    <a href="deletenews?id=<%=news.getID()%>">Delete</a>
-                </div>
-                <%}%>
-            </a></div>
+            </a>
+            <h2 style="margin: 5px 0 5px 0;"><%=news.getTitle()%>
+            </h2>
+            <%Date date = new Date(news.getDate());%>
+            <%=date.toString()%><br>
+            <%if (user != null && user.getRole() > 0) {%>
+            <div class="button" id="container">
+                <div id="translate"></div>
+                <a href="editnews?id=<%=news.getID()%>">Edit</a>
+            </div>
+            <div class="button" id="container">
+                <div id="translate"></div>
+                <a href="deletenews?id=<%=news.getID()%>">Delete</a>
+            </div>
+            <%}%>
+        </div>
     </div>
     <%}%>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>

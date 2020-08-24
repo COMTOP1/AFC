@@ -172,11 +172,12 @@
                 <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';"
                      style="padding: 5px; max-height: 150px; max-width: 150px;">
-                <h2 style="margin: 5px 0 5px 0;"><%=news.getTitle()%>
-                </h2>
-                <%Date date = new Date(news.getDate());%>
-                <%=date.toString()%>
-            </a></div>
+            </a>
+            <h2 style="margin: 5px 0 5px 0;"><%=news.getTitle()%>
+            </h2>
+            <%Date date = new Date(news.getDate());%>
+            <%=date.toString()%>
+        </div>
     </div>
     <%
         }
@@ -196,24 +197,25 @@
                 <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';"
                      style="padding: 5px; max-height: 150px; max-width: 150px;">
-                <h2 style="margin: 5px 0 5px 0;"><%=whatsOn.getTitle()%>
-                </h2>
-                <%
-                    Date date1 = new Date(whatsOn.getDate());
-                    String dateOfEvent = "";
-                    try {
-                        LocalDate date = LocalDate.ofEpochDay(whatsOn.getDateOfEvent());
-                        dateOfEvent = String.valueOf(date.getDayOfWeek()).charAt(0) + String.valueOf(date.getDayOfWeek()).substring(1).toLowerCase() + " "
-                                + date.getDayOfMonth() + " "
-                                + String.valueOf(date.getMonth()).charAt(0) + String.valueOf(date.getMonth()).substring(1).toLowerCase() + " "
-                                + date.getYear();
-                    } catch (Exception ignored) {
+            </a>
+            <h2 style="margin: 5px 0 5px 0;"><%=whatsOn.getTitle()%>
+            </h2>
+            <%
+                Date date1 = new Date(whatsOn.getDate());
+                String dateOfEvent = "";
+                try {
+                    LocalDate date = LocalDate.ofEpochDay(whatsOn.getDateOfEvent());
+                    dateOfEvent = String.valueOf(date.getDayOfWeek()).charAt(0) + String.valueOf(date.getDayOfWeek()).substring(1).toLowerCase() + " "
+                            + date.getDayOfMonth() + " "
+                            + String.valueOf(date.getMonth()).charAt(0) + String.valueOf(date.getMonth()).substring(1).toLowerCase() + " "
+                            + date.getYear();
+                } catch (Exception ignored) {
 
-                    }
-                %>
-                <%=date1.toString()%><br>
-                Date of Event - <%=dateOfEvent%>
-            </a></div>
+                }
+            %>
+            <%=date1.toString()%><br>
+            Date of Event - <%=dateOfEvent%>
+        </div>
     </div>
     <%}%>
 </div>
