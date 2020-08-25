@@ -118,7 +118,7 @@ p {
 }
 
 .welcomeBackground {
-	background-image: url('images/stock3.png');
+	background-image: url('images/stock.png');
 	background-size: cover;
 	padding: 10px;
 	margin: 0;
@@ -152,22 +152,30 @@ p {
         float: left;
         border-top: 5px solid red;
     }
-    
-    #affiliationContainer {
-    	padding: 10px;
+
+	#listItemAffiliation {
+		padding: 10px;
+		height: 100px;
+		width: 150px;
+		display: inline-flex;
+		flex-wrap: wrap;
+	}
+
+	#affiliationContainer {
+		padding: 10px;
 		width: 100vx;
 		display: inline-flex;
 		overflow: wrap;
 		flex-wrap: wrap;
 		justify-content: center;
 	}
-    
-    #affiliationImage {
-        max-width: 300px;
-        max-height: 200px;
-        display: inline-flex;
-        flex-wrap: wrap;
-    }
+
+	#affiliationImage {
+		max-width: 150px;
+		max-height: 100px;
+		display: inline-flex;
+		flex-wrap: wrap;
+	}
     
     .imgContainer {
     	width: 300px;
@@ -339,30 +347,30 @@ p {
         float: left;
         border-top: 5px solid red;
     }
-    
-    #listItemAffiliation {
+
+	#listItemAffiliation {
 		padding: 10px;
-        height: 200px;
-        width: 300px;
-        display: inline-flex;
-        flex-wrap: wrap;
-    }
-    
-    #affiliationContainer {
-    	padding: 10px;
+		height: 100px;
+		width: 150px;
+		display: inline-flex;
+		flex-wrap: wrap;
+	}
+
+	#affiliationContainer {
+		padding: 10px;
 		width: 100vx;
 		display: inline-flex;
 		overflow: wrap;
 		flex-wrap: wrap;
 		justify-content: center;
 	}
-    
-    #affiliationImage {
-        max-width: 300px;
-        max-height: 200px;
-        display: inline-flex;
-        flex-wrap: wrap;
-    }
+
+	#affiliationImage {
+		max-width: 150px;
+		max-height: 100px;
+		display: inline-flex;
+		flex-wrap: wrap;
+	}
     
     .imgContainer {
     	width: 300px;
@@ -540,30 +548,30 @@ p {
         float: left;
         border-top: 5px solid red;
     }
-    
-    #listItemAffiliation {
+
+	#listItemAffiliation {
 		padding: 10px;
-        height: 200px;
-        width: 300px;
-        display: inline-flex;
-        flex-wrap: wrap;
-    }
-    
-    #affiliationContainer {
-    	padding: 10px;
+		height: 100px;
+		width: 150px;
+		display: inline-flex;
+		flex-wrap: wrap;
+	}
+
+	#affiliationContainer {
+		padding: 10px;
 		width: 100vx;
 		display: inline-flex;
 		overflow: wrap;
 		flex-wrap: wrap;
 		justify-content: center;
 	}
-    
-    #affiliationImage {
-        max-width: 300px;
-        max-height: 200px;
-        display: inline-flex;
-        flex-wrap: wrap;
-    }
+
+	#affiliationImage {
+		max-width: 150px;
+		max-height: 100px;
+		display: inline-flex;
+		flex-wrap: wrap;
+	}
     
     .imgContainer {
     	width: 300px;
