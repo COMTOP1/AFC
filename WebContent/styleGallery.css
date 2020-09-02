@@ -135,6 +135,10 @@ p {
 		width: 100%;
 	}
 
+	.faImage {
+		display: none;
+	}
+
 	#listItem {
 		padding: 10px;
         height: 300px;
@@ -313,6 +317,10 @@ p {
 		overflow: auto;
 		height: 175px;
 		width: 100%;
+	}
+
+	.faImage {
+		display: none;
 	}
 
 	#listItem {

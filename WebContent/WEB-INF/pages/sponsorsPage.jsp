@@ -1,6 +1,6 @@
 <%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.bswdi.beans.*, java.sql.Connection,com.bswdi.utils.*, java.util.List" %>
+<%@ page import="com.bswdi.beans.*, java.sql.Connection, com.bswdi.utils.*, java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,47 +10,50 @@
 <body>
 <jsp:include page="_topPage.jsp"/>
 <main class="main" style="text-align: center;">
-    <div style="width: 98%; height: 325px;">
-        <%
-            Connection con = MyUtils.getStoredConnection(request);
-            String email = MyUtils.getEmailInCookie(request);
-            Users user = null;
-            try {
-                user = DBUtils.findUser(con, email);
-            } catch (Exception ignored) {
+    <%
+        Connection con = MyUtils.getStoredConnection(request);
+        String email = MyUtils.getEmailInCookie(request);
+        Users user = null;
+        try {
+            user = DBUtils.findUser(con, email);
+        } catch (Exception ignored) {
 
-            }
-            List<Sponsors> list = null;
-            try {
-                list = DBUtils.querySponsors(con);
-            } catch (Exception ignored) {
+        }
+        List<Sponsors> list = null;
+        try {
+            list = DBUtils.querySponsors(con);
+        } catch (Exception ignored) {
 
-            }
-            assert list != null;
-            for (Sponsors sponsor : list) {
-        %>
-        <div id="listItem">
-            <div>
-                <a href="<%=sponsor.getWebsite()%>" target="_blank">
+        }
+        assert list != null;
+        for (Sponsors sponsor : list) {
+    %>
+    <div id="listItemContact" style="display: inline-block; float: none;">
+        <div>
+            <div style="height: 200px;">
+                <a href="<%=sponsor.getImage()%>" target="_blank">
                     <img src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
-                         onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
+                         onerror="this.onerror=null;this.src='images/default.png';"
+                         style="padding: 5px; max-height: 200px; max-width: 200px;">
                 </a>
-                <%=sponsor.getName()%><br><br><br>
-                <%=sponsor.getPurpose()%><br><br>
-                <%if (user != null && user.getRole() > 0) {%>
-                <div class="button" id="container">
-                    <div id="translate"></div>
-                    <a href="editsponsor?id=<%=sponsor.getID()%>">Edit</a>
-                </div>
-                <div class="button" id="container">
-                    <div id="translate"></div>
-                    <a href="deletesponsor?id=<%=sponsor.getID()%>">Delete</a>
-                </div>
-                <%}%>
             </div>
+            <%=sponsor.getName()%><br><br><br>
+            <div style="min-height: 30px;"><%=sponsor.getPurpose()%>
+            </div>
+            <br><br>
+            <%if (user != null && user.getRole() > 0) {%>
+            <div class="button" id="container">
+                <div id="translate"></div>
+                <a href="editsponsor?id=<%=sponsor.getID()%>">Edit</a>
+            </div>
+            <div class="button" id="container">
+                <div id="translate"></div>
+                <a href="deletesponsor?id=<%=sponsor.getID()%>">Delete</a>
+            </div>
+            <%}%>
         </div>
-        <%}%>
     </div>
+    <%}%>
     <br>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>

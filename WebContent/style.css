@@ -186,7 +186,7 @@ img {
         padding: 10px;
         height: 300px;
         width: 150px;
-        display: block;
+        display: inline-block;
         margin: 10px;
         float: left;
         background-color: white;
@@ -381,7 +381,7 @@ img {
         padding: 10px;
         height: 300px;
         width: 150px;
-        display: block;
+        display: inline-block;
         margin: 10px;
         float: left;
         background-color: white;
@@ -577,7 +577,7 @@ img {
         padding: 10px;
         height: 300px;
         width: 150px;
-        display: block;
+        display: inline-block;
         margin: 10px;
         float: left;
         background-color: white;
@@ -745,7 +745,7 @@ img {
         padding: 10px;
         height: 300px;
         width: 150px;
-        display: block;
+        display: inline-block;
         margin: 10px;
         float: left;
         background-color: white;
