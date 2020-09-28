@@ -28,31 +28,33 @@
         assert list != null;
         for (Sponsors sponsor : list) {
     %>
-    <div id="listItemContact" style="display: inline-block; float: none;">
-        <div>
-            <div style="height: 200px;">
-                <a href="<%=sponsor.getImage()%>" target="_blank">
-                    <img src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
-                         onerror="this.onerror=null;this.src='images/default.png';"
-                         style="padding: 5px; max-height: 200px; max-width: 200px;">
-                </a>
+    <a href="<%=sponsor.getWebsite()%>" target="_blank">
+        <div id="listItemContact" style="display: inline-block; float: none;">
+            <div>
+                <div style="height: 200px;">
+                    <a href="<%=sponsor.getWebsite()%>" target="_blank">
+                        <img src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
+                             onerror="this.onerror=null;this.src='images/default.png';"
+                             style="padding: 5px; max-height: 200px; max-width: 200px;">
+                    </a>
+                </div>
+                <a href="<%=sponsor.getWebsite()%>" target="_blank"><%=sponsor.getName()%></a><br><br><br>
+                <div style="min-height: 60px;"><a href="<%=sponsor.getWebsite()%>" target="_blank"><%=sponsor.getPurpose()%></a>
+                </div>
+                <br><br>
+                <%if (user != null && user.getRole() > 0) {%>
+                <div class="button" id="container">
+                    <div id="translate"></div>
+                    <a href="editsponsor?id=<%=sponsor.getID()%>">Edit</a>
+                </div>
+                <div class="button" id="container">
+                    <div id="translate"></div>
+                    <a href="deletesponsor?id=<%=sponsor.getID()%>">Delete</a>
+                </div>
+                <%}%>
             </div>
-            <%=sponsor.getName()%><br><br><br>
-            <div style="min-height: 30px;"><%=sponsor.getPurpose()%>
-            </div>
-            <br><br>
-            <%if (user != null && user.getRole() > 0) {%>
-            <div class="button" id="container">
-                <div id="translate"></div>
-                <a href="editsponsor?id=<%=sponsor.getID()%>">Edit</a>
-            </div>
-            <div class="button" id="container">
-                <div id="translate"></div>
-                <a href="deletesponsor?id=<%=sponsor.getID()%>">Delete</a>
-            </div>
-            <%}%>
         </div>
-    </div>
+    </a>
     <%}%>
     <br>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
