@@ -28,10 +28,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="jdk" jdkName="Java SE 8 [1.8.0_251]" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="lib1" level="project" />
     <orderEntry type="library" name="font-awesome" level="application" />
     <orderEntry type="library" name="MySQL" level="project" />
+    <orderEntry type="library" name="TOMCAT" level="application" />
   </component>
 </module>
