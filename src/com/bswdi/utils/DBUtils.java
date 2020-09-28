@@ -723,7 +723,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Teams> queryTeams(Connection con) throws SQLException {
-        String sql = "SELECT * FROM TEAMS";
+        String sql = "SELECT * FROM TEAMS ORDER BY AGES DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getTeamsMethod(rs);
@@ -737,7 +737,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Teams> queryTeamsActive(Connection con) throws SQLException {
-        String sql = "SELECT * FROM TEAMS WHERE ACTIVE = TRUE";
+        String sql = "SELECT * FROM TEAMS WHERE ACTIVE = TRUE ORDER BY AGES DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getTeamsMethod(rs);

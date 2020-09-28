@@ -44,7 +44,7 @@ public class EditTeamServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (user.getRole() == 1 || user.getRole() > 4) {
+            if (user.getRole() > 0) {
                 Teams team = DBUtils.findTeam(con, id);
                 request.getSession().setAttribute("team", team);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/editTeamPage.jsp");
