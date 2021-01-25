@@ -2,7 +2,6 @@ package com.bswdi.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,7 +40,8 @@ public class TeamServlet extends HttpServlet {
                 Teams team = DBUtils.findTeam(con, id);
                 String email = MyUtils.getEmailInCookie(request);
                 Users user = DBUtils.findUser(con, email);
-                if (team == null || !(team.getActive() || Objects.requireNonNull(user).getRole() == 6)) response.sendRedirect("teams");
+                assert user != null;
+                if (team == null || !(team.getActive() || user.getRole() == Role.WEBMASTER)) response.sendRedirect("teams");
                 else {
                     request.setAttribute("team", team);
                     RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/teamPage.jsp");

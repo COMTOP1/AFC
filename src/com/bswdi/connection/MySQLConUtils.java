@@ -40,7 +40,7 @@ public class MySQLConUtils {
      */
     public static Connection getMySQLConnection(String hostName, String DBName, String username, String password) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + DBName + "?requireSSL=true";
+        String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + DBName + "?requireSSL=true&serverTimezone=GMT";
         return DriverManager.getConnection(connectionURL, username, password);
     }
 }

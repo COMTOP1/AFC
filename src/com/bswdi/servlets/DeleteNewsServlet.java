@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bswdi.beans.Role;
 import com.bswdi.beans.Users;
 import com.bswdi.utils.*;
 
@@ -38,13 +39,12 @@ public class DeleteNewsServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (user.getRole() > 0) {
+            if (user.getRole() != Role.MANAGER) {
                 request.setAttribute("id", id);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/deleteNewsConfirmationPage.jsp");
                 dispatcher.forward(request, response);
             } else response.sendRedirect("news");
         } catch (Exception e) {
-            e.printStackTrace();
             response.sendRedirect("news");
         }
     }

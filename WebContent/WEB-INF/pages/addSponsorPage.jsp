@@ -14,7 +14,7 @@
         <h2 style="text-decoration: underline; text-decoration-color: red; width: 100vx; text-align: center;">Add
             sponsor</h2>
         <p style="color: red; padding: 0; margin: 0;" id="error">${error}</p><br>
-        <form id="add" method="POST" action="addimage" enctype="multipart/form-data">
+        <form id="add" method="POST" action="addsponsor" enctype="multipart/form-data">
             <div>
                 <label for="name">Name: </label>
                 <input type="text" id="name" name="name">
@@ -32,11 +32,11 @@
                 <input type="text" id="purpose" name="purpose">
             </div>
             <div>
-                <label for="teamID">Team: </label>
-                <select form="add" name="companyID" id="companyID">
-                    <option id="teamID" value="A">All</option>
-                    <option id="teamID" value="O">Adult</option>
-                    <option id="teamID" value="Y">Youth</option>
+                <label for="team">Team: </label>
+                <select form="add" name="team" id="team">
+                    <option id="team" value="A">All</option>
+                    <option id="team" value="O">Adult</option>
+                    <option id="team" value="Y">Youth</option>
                     <%
                         List<Teams> list = null;
                         Connection con = MyUtils.getStoredConnection(request);
@@ -48,7 +48,7 @@
                         assert list != null;
                         for (Teams team : list) {
                     %>
-                    <option id="teamID" value="<%=team.getID()%>"><%=team.getName()%>
+                    <option id="team" value="<%=team.getID()%>"><%=team.getName()%>
                     </option>
                     <%}%>
                 </select>

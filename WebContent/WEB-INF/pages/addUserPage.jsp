@@ -40,22 +40,23 @@
             </div>
             <div>
                 <label for="role">Role: </label>
-                <select form="add" id="role" onClick="team()" onmouseup="team()" onchange="team()">
-                    <option id="role" value="<%=UserRole.MANAGER%>" onClick="team()">Manager</option>
-                    <option id="role" value="<%=UserRole.SECRETARY%>" onClick="team()">Secretary</option>
-                    <option id="role" value="<%=UserRole.TREASURER%>" onClick="team()">Treasurer</option>
-                    <option id="role" value="<%=UserRole.SAFEGUARDING_OFFICER%>" onClick="team()">
+                <select form="add" name="role" id="role" onClick="team()" onmouseup="team()" onchange="team()">
+                    <option id="role" value="<%=Role.MANAGER%>" onClick="team()">Manager</option>
+                    <option id="role" value="<%=Role.LEAGUE_SECRETARY%>" onClick="team()">League secretary</option>
+                    <option id="role" value="<%=Role.CLUB_SECRETARY%>" onClick="team()">Club secretary</option>
+                    <option id="role" value="<%=Role.TREASURER%>" onClick="team()">Treasurer</option>
+                    <option id="role" value="<%=Role.SAFEGUARDING_OFFICER%>" onClick="team()">
                         Safeguarding officer
                     </option>
-                    <option id="role" value="<%=UserRole.PROGRAMME_EDITOR%>" onClick="team()">Programme
+                    <option id="role" value="<%=Role.PROGRAMME_EDITOR%>" onClick="team()">Programme
                         editor
                     </option>
-                    <option id="role" value="<%=UserRole.CHAIRPERSON%>" onClick="team()">Chairperson
+                    <option id="role" value="<%=Role.CHAIRPERSON%>" onClick="team()">Chairperson
                     </option>
                     <%
                         assert user != null;
-                        if (user.getRole() >= 5) {%>
-                    <option id="role" value="<%=UserRole.WEBMASTER%>">Webmaster</option>
+                        if (user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {%>
+                    <option id="role" value="<%=Role.WEBMASTER%>">Webmaster</option>
                     <%}%>
                 </select>
             </div>

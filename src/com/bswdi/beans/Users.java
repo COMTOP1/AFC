@@ -6,11 +6,11 @@ package com.bswdi.beans;
  * @author BSWDI
  * @version 1.0
  */
-@SuppressWarnings("unused")
 public class Users {
 
     private String name = null, email = null, image = null, phone = null;
-    private int teamID = 0, role = -1;
+    private int teamID = 0;
+    Role role = null;
 
     /**
      * Blank constructor
@@ -28,7 +28,7 @@ public class Users {
      * @param teamID teamID
      * @param role   role
      */
-    public Users(String name, String email, String phone, int teamID, int role, String image) {
+    public Users(String name, String email, String phone, int teamID, Role role, String image) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -112,9 +112,9 @@ public class Users {
     /**
      * Return role
      *
-     * @return int role
+     * @return Role role
      */
-    public int getRole() {
+    public Role getRole() {
         return role;
     }
 
@@ -123,7 +123,7 @@ public class Users {
      *
      * @param role role
      */
-    public void setRole(int role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

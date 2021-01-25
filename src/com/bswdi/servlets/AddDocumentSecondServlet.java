@@ -69,17 +69,19 @@ public class AddDocumentSecondServlet extends HttpServlet {
         request.getSession().setAttribute("documentName", null);
         try {
             List<FileItem> fileItemsList = uploader.parseRequest(request);
-            for (FileItem fileItem : fileItemsList)
-                if (fileItem.getName() != null && !fileItem.getName().equals("null") && !fileItem.getName().equals("")) {
+            for (FileItem fileItem : fileItemsList) {
+                //if (fileItem.getName() != null && !fileItem.getName().equals("null") && !fileItem.getName().equals("")) {
                     fileName = fileItem.getName();
                     File file = new File(request.getServletContext().getAttribute("FILES_DIR") + File.separator + fileItem.getName());
                     fileItem.write(file);
-                }
+                //}
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         if (name == null || name.equals("") || fileName == null || fileName.equals("")) {
             request.getSession().setAttribute("error", "Name and file must not be empty");
+            System.out.println(name + " ~ " + fileName);
             response.sendRedirect("adddocument");
         } else
             try {

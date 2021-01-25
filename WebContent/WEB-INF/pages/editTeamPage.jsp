@@ -44,6 +44,10 @@
                 <input type="text" id="coach" name="coach" value="<%=team.getCoach()%>">
             </div>
             <div>
+                <label for="physio">Physio: </label>
+                <input type="text" id="physio" name="physio" value="<%=team.getPhysio()%>">
+            </div>
+            <div>
                 <label>Manager assigned via Users</label>
             </div>
             <div>
@@ -62,7 +66,7 @@
             </div>
             <div>
                 <label for="ages">Ages: </label>
-                <select form="edit" id="ages">
+                <select form="edit" name="ages" id="ages">
                     <option id="ages" value="6" <%if (team.getAges() == 6) {%>selected<%}%>>&lt;6</option>
                     <option id="ages" value="7" <%if (team.getAges() == 7) {%>selected<%}%>>&lt;7</option>
                     <option id="ages" value="8" <%if (team.getAges() == 8) {%>selected<%}%>>&lt;8</option>

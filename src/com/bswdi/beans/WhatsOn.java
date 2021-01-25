@@ -6,7 +6,6 @@ package com.bswdi.beans;
  * @author BSWDI
  * @version 1.0
  */
-@SuppressWarnings("unused")
 public class WhatsOn {
 
     private int id = 0;

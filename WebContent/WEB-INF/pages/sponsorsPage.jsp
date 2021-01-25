@@ -28,38 +28,34 @@
         assert list != null;
         for (Sponsors sponsor : list) {
     %>
-    <a href="<%=sponsor.getWebsite()%>" target="_blank">
-        <div id="listItemContact" style="display: inline-block; float: none;">
-            <div>
-                <div style="height: 200px;">
-                    <a href="<%=sponsor.getWebsite()%>" target="_blank">
-                        <img src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';"
-                             style="padding: 5px; max-height: 200px; max-width: 200px;">
-                    </a>
-                </div>
-                <a href="<%=sponsor.getWebsite()%>" target="_blank"><%=sponsor.getName()%></a><br><br><br>
-                <div style="min-height: 60px;"><a href="<%=sponsor.getWebsite()%>" target="_blank"><%=sponsor.getPurpose()%></a>
-                </div>
-                <br><br>
-                <%if (user != null && user.getRole() > 0) {%>
-                <div class="button" id="container">
-                    <div id="translate"></div>
-                    <a href="editsponsor?id=<%=sponsor.getID()%>">Edit</a>
-                </div>
-                <div class="button" id="container">
-                    <div id="translate"></div>
-                    <a href="deletesponsor?id=<%=sponsor.getID()%>">Delete</a>
-                </div>
-                <%}%>
-            </div>
+    <div id="listItemContact" style="display: inline-block; float: none;">
+        <div style="height: 200px;">
+            <a href="<%=sponsor.getWebsite()%>" target="_blank">
+                <img src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
+                     onerror="this.onerror=null;this.src='images/default.png';"
+                     style="border: 5px; max-height: 200px; max-width: 200px;">
+            </a>
         </div>
-    </a>
+		<a href="<%=sponsor.getWebsite()%>" target="_blank"><%=sponsor.getName()%></a><br><br><br>
+        <div style="min-height: 60px;"><a href="<%=sponsor.getWebsite()%>" target="_blank"><%=sponsor.getPurpose()%></a>
+        </div>
+        <br><br>
+        <%if (user != null && user.getRole() != Role.MANAGER) {%>
+        <div class="button" id="container">
+            <div id="translate"></div>
+            <a href="editsponsor?id=<%=sponsor.getID()%>">Edit</a>
+        </div>
+        <div class="button" id="container">
+            <div id="translate"></div>
+            <a href="deletesponsor?id=<%=sponsor.getID()%>">Delete</a>
+        </div>
+        <%}%>
+    </div>
     <%}%>
     <br>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
-<%if (user != null && user.getRole() > 0) {%>
+<%if (user != null && user.getRole() != Role.MANAGER) {%>
 <p style="width: 96%">
     <a href="addsponsor">Add sponsor</a>
 </p>

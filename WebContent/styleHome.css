@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url("webfonts/Allerta/stylesheet.css");
+@import url("webfonts/Arial/stylesheet.css")
 
 @viewport {
 	width: device-width;
@@ -12,7 +13,7 @@
 
 body {
 	font-size: 14px;
-	font-family: Allerta;
+	font-family: Arial; /*Allerta*/
 	margin: 0;
 	background-color: #eee;
 }
@@ -21,7 +22,7 @@ a {
 	color: black;
 	text-decoration: none;
 	letter-spacing: 1px;
-	font-family: Allerta;
+	font-family: Arial; /*Allerta*/
 	z-index: 1;
 }
 
@@ -37,7 +38,7 @@ main {
 footer {
 	background-size: cover;
 	text-align: left;
-	font-family: Allerta;
+	font-family: Arial; /*Allerta*/
 	bottom: 0;
 	padding: 0 0 0 10px;
 	position: fixed;
@@ -152,8 +153,8 @@ p {
         float: left;
         border-top: 5px solid red;
     }
-
-	#listItemAffiliation {
+    
+    #listItemAffiliation {
 		padding: 10px;
 		height: 100px;
 		width: 150px;
@@ -216,7 +217,7 @@ p {
 	}
 	
 	#header h1 {
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		text-align: center;
 		font-size: 72px;
@@ -237,7 +238,7 @@ p {
 	main {
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 		padding: 0 0 25px 0;
@@ -248,7 +249,7 @@ p {
 		font-size: 14px;
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 		padding: 0 0 25px 0;
@@ -260,7 +261,7 @@ p {
 		color: #1F1F1F;
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 	}
@@ -326,7 +327,7 @@ p {
 	}
 }
 
-@media screen and (min-width: 300px) and (max-width: 589px) {
+@media screen and (min-width: 300px) and (max-width: 609px) {
 	#topPage {
 		padding: 10px 0 10px 0;
 		text-align: center;
@@ -347,8 +348,8 @@ p {
         float: left;
         border-top: 5px solid red;
     }
-
-	#listItemAffiliation {
+    
+    #listItemAffiliation {
 		padding: 10px;
 		height: 100px;
 		width: 150px;
@@ -411,7 +412,7 @@ p {
 	}
 	
 	#header h1 {
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		text-align: center;
 		font-size: 72px;
@@ -439,7 +440,7 @@ p {
 	main {
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 		padding: 0 0 25px 0;
@@ -450,7 +451,7 @@ p {
 		font-size: 14px;
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 		padding: 0 0 25px 0;
@@ -462,7 +463,7 @@ p {
 		color: #1F1F1F;
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 	}
@@ -522,7 +523,7 @@ p {
 	}
 }
 
-@media screen and (min-width: 590px) and (max-width: 1009px) {
+@media screen and (min-width: 610px) and (max-width: 989px) {
 	.latest {
 		display: block;
 	}
@@ -548,8 +549,8 @@ p {
         float: left;
         border-top: 5px solid red;
     }
-
-	#listItemAffiliation {
+    
+    #listItemAffiliation {
 		padding: 10px;
 		height: 100px;
 		width: 150px;
@@ -627,7 +628,7 @@ p {
 	main {
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 		padding: 0 0 25px 0;
@@ -639,7 +640,7 @@ p {
 		font-size: 14px;
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 		padding: 0 0 25px 0;
@@ -651,7 +652,7 @@ p {
 		color: #1F1F1F;
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 	}
@@ -681,7 +682,7 @@ p {
 	}
 }
 
-@media screen and (min-width: 1010px) {
+@media screen and (min-width: 990px) {
 	.latest {
 		display: block;
 	}
@@ -710,27 +711,27 @@ p {
     
     #listItemAffiliation {
 		padding: 10px;
-        height: 100px;
-        width: 150px;
-        display: inline-flex;
-        flex-wrap: wrap;
-    }
-    
-    #affiliationContainer {
-    	padding: 10px;
+		height: 100px;
+		width: 150px;
+		display: inline-flex;
+		flex-wrap: wrap;
+	}
+
+	#affiliationContainer {
+		padding: 10px;
 		width: 100vx;
 		display: inline-flex;
 		overflow: wrap;
 		flex-wrap: wrap;
 		justify-content: center;
 	}
-    
-    #affiliationImage {
-        max-width: 150px;
-        max-height: 100px;
-        display: inline-flex;
-        flex-wrap: wrap;
-    }
+
+	#affiliationImage {
+		max-width: 150px;
+		max-height: 100px;
+		display: inline-flex;
+		flex-wrap: wrap;
+	}
     
     .imgContainer {
     	width: 300px;
@@ -743,7 +744,7 @@ p {
 	}
 	
 	#header h1 {
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		text-align: left;
 		font-size: 72px;
@@ -757,7 +758,7 @@ p {
 	}
 	
 	#header2 h2 {
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		text-align: left;
 		font-size: 32px;
@@ -773,7 +774,7 @@ p {
 	main {
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 		padding: 0 0 25px 0;
@@ -784,7 +785,7 @@ p {
 		font-size: 14px;
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 		padding: 0 0 25px 0;
@@ -796,7 +797,7 @@ p {
 		color: #1F1F1F;
 		background-size: cover;
 		text-align: left;
-		font-family: Allerta;
+		font-family: Arial; /*Allerta*/
 		font-style: normal;
 		font-weight: 400;
 	}
@@ -815,7 +816,7 @@ p {
 		color: black;
 	  	text-decoration: none;
 	  	letter-spacing: 1px;
-	  	font-family: Allerta;
+	  	font-family: Arial; /*Allerta*/
 	}
 	
 	#leftSide {

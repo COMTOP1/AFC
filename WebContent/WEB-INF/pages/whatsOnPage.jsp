@@ -34,47 +34,47 @@
             <a href="whatson?id=<%=whatsOn.getID()%>">
                 <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-            </a>
-            <h2 style="margin: 5px 0 5px 0;"><%=whatsOn.getTitle()%>
-            </h2>
-            <%
-                Date date1 = new Date(whatsOn.getDate());
-                String dateOfEvent = "";
-                try {
-                    LocalDate date = LocalDate.ofEpochDay(whatsOn.getDateOfEvent());
-                    dateOfEvent = String.valueOf(date.getDayOfWeek()).charAt(0) + String.valueOf(date.getDayOfWeek()).substring(1).toLowerCase() + " "
-                            + date.getDayOfMonth() + " "
-                            + String.valueOf(date.getMonth()).charAt(0) + String.valueOf(date.getMonth()).substring(1).toLowerCase() + " "
-                            + date.getYear();
-                } catch (Exception ignored) {
+                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=whatsOn.getTitle()%>
+                </span>
+                <%
+                    Date date1 = new Date(whatsOn.getDate());
+                    String dateOfEvent = "";
+                    try {
+                        LocalDate date = LocalDate.ofEpochDay(whatsOn.getDateOfEvent());
+                        dateOfEvent = String.valueOf(date.getDayOfWeek()).charAt(0) + String.valueOf(date.getDayOfWeek()).substring(1).toLowerCase() + " "
+                                + date.getDayOfMonth() + " "
+                                + String.valueOf(date.getMonth()).charAt(0) + String.valueOf(date.getMonth()).substring(1).toLowerCase() + " "
+                                + date.getYear();
+                    } catch (Exception ignored) {
 
-                }
-            %>
-            <%=date1.toString()%><br>
-            Date of Event - <%=dateOfEvent%><br>
-            <%if (user != null && user.getRole() > 0) {%>
-            <div class="button" id="container">
-                <div id="translate"></div>
-                <a href="editwhatson?id=<%=whatsOn.getID()%>">Edit</a>
+                    }
+                %>
+                <%=date1.toString()%><br>
+                Date of Event - <%=dateOfEvent%><br>
+                </a>
+                <%if (user != null && user.getRole() != Role.MANAGER) {%>
+                <div class="button" id="container">
+                    <div id="translate"></div>
+                    <a href="editwhatson?id=<%=whatsOn.getID()%>">Edit</a>
+                </div>
+                <div class="button" id="container">
+                    <div id="translate"></div>
+                    <a href="deletewhatson?id=<%=whatsOn.getID()%>">Delete</a>
+                </div>
+                <%}%>
             </div>
-            <div class="button" id="container">
-                <div id="translate"></div>
-                <a href="deletewhatson?id=<%=whatsOn.getID()%>">Delete</a>
-            </div>
-            <%}%>
-        </div>
     </div>
     <%}%>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
-<%if (user != null && user.getRole() > 0) {%>
+<%if (user != null && user.getRole() != Role.MANAGER) {%>
 <p style="width: 96%;">
     <a href="addwhatson">Add what's on</a>
 </p>
 <%}%>
 <div id="socialBar">
-    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>
-    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"
+    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
        class="fa fa-twitter"></a>
 </div>
 </body>

@@ -6,7 +6,6 @@ package com.bswdi.beans;
  * @author BSWDI
  * @version 1.0
  */
-@SuppressWarnings("unused")
 public class Documents {
 
     private int id = 0;
@@ -33,7 +32,7 @@ public class Documents {
     }
 
     /**
-     * Returns id
+     * Return id
      *
      * @return int id
      */
@@ -51,7 +50,7 @@ public class Documents {
     }
 
     /**
-     * Returns name
+     * Return name
      *
      * @return String name
      */
@@ -69,7 +68,7 @@ public class Documents {
     }
 
     /**
-     * Returns file name
+     * Return file name
      *
      * @return String fileName
      */

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bswdi.beans.Users;
+import com.bswdi.beans.*;
 import com.bswdi.utils.*;
 
 /**
@@ -39,13 +39,12 @@ public class DeleteDocumentServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (user.getRole() > 0) {
+            if (user.getRole() != Role.MANAGER) {
                 request.setAttribute("id", id);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/deleteDocumentConfirmationPage.jsp");
                 dispatcher.forward(request, response);
             } else response.sendRedirect("documents");
         } catch (Exception e) {
-            e.printStackTrace();
             response.sendRedirect("documents");
         }
     }
@@ -54,11 +53,13 @@ public class DeleteDocumentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection con = MyUtils.getStoredConnection(request);
         try {
+        	Documents document = DBUtils.findDocument(con, Integer.parseInt(request.getParameter("id")));
             DBUtils.deleteDocument(con, Integer.parseInt(request.getParameter("id")));
-            //String filepath = "C:\\Users\\ADMIN\\Desktop\\Code\\Java\\AFC\\FileStore\\";
+            String filepath = "C:\\Users\\Administrator.LIAM-ACER-SERVE\\Desktop\\Code\\Java\\AFC\\FileStore\\";
             //String filepath = System.getProperty("catalina.home") + "/FileStore";
-            String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
-            File file = new File(filepath);
+            //String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
+            assert document != null;
+            File file = new File(filepath + "\\" + document.getFileName());
             boolean deleted;
             deleted = file.delete();
             if (!deleted) request.getSession().setAttribute("error", "Couldn't delete file from file system");

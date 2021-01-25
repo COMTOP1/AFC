@@ -43,7 +43,7 @@ public class EditSponsorServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (user.getRole() > 0) {
+            if (user.getRole() != Role.MANAGER) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 Sponsors sponsor = DBUtils.findSponsor(con, id);
                 request.getSession().setAttribute("sponsor", sponsor);
@@ -86,7 +86,10 @@ public class EditSponsorServlet extends HttpServlet {
             while ((bytesRead = inputStream.read(buffer)) != -1) outputStream.write(buffer, 0, bytesRead);
             byte[] imageBytes = outputStream.toByteArray();
             image = Base64.getEncoder().encodeToString(imageBytes);
-            if (image.equals("")) image = null;
+            if (image.equals("")) {
+	            assert sponsorOld != null;
+				image = sponsorOld.getImage();
+            }
             inputStream.close();
             outputStream.close();
         } else {

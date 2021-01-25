@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bswdi.beans.Role;
 import com.bswdi.beans.Users;
 import com.bswdi.utils.*;
 
@@ -38,13 +39,12 @@ public class DeleteUserServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if ((user.getRole() == 1 || user.getRole() > 4) && !Objects.equals(email, "liamb1216@gmail.com")) {
+            if ((user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) && !Objects.equals(email, "liamb1216@gmail.com")) {
                 request.setAttribute("email", email1);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/deleteUserConfirmationPage.jsp");
                 dispatcher.forward(request, response);
             } else response.sendRedirect("users");
         } catch (Exception e) {
-            e.printStackTrace();
             response.sendRedirect("users");
         }
     }

@@ -18,7 +18,7 @@
         <form id="delete" method="POST" action="deletesponsor?id=<%=id%>">
             <p><a onclick="document.getElementById('delete').submit();" href="javascript:{}">Delete</a></p>
             <br>
-            <p><a href="sponsors">Cancel</a></p>
+            <p><a href="sponsor">Cancel</a></p>
         </form>
     </div>
 </main>

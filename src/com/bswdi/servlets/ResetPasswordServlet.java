@@ -35,7 +35,7 @@ public class ResetPasswordServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             String email = MyUtils.getEmailInCookie(request);
             Users user = DBUtils.findUser(con, email);
-            if (user != null && (user.getRole() == 1 || user.getRole() > 4)) {
+            if (user != null && (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER)) {
                 String email1 = request.getParameter("email");
                 if (email1 == null) response.sendRedirect("users");
                 else {

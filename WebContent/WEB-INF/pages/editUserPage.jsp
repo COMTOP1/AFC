@@ -33,35 +33,38 @@
             </div>
             <div>
                 <label for="role">Role: </label>
-                <select form="edit" id="role">
-                    <option id="role" value="<%=UserRole.MANAGER%>" onClick="team()"
-                            <%if (user.getRole() == UserRole.MANAGER) {%>selected<%}%>>Manager
+                <select form="edit" name="role" id="role">
+                    <option id="role" value="<%=Role.MANAGER%>" onClick="team()"
+                            <%if (user.getRole() == Role.MANAGER) {%>selected<%}%>>Manager
                     </option>
-                    <option id="role" value="<%=UserRole.SECRETARY%>" onClick="team()"
-                            <%if (user.getRole() == UserRole.SECRETARY) {%>selected<%}%>>Secretary
+                    <option id="role" value="<%=Role.LEAGUE_SECRETARY%>" onClick="team()"
+                            <%if (user.getRole() == Role.LEAGUE_SECRETARY) {%>selected<%}%>>League secretary
                     </option>
-                    <option id="role" value="<%=UserRole.TREASURER%>" onClick="team()"
-                            <%if (user.getRole() == UserRole.TREASURER) {%>selected<%}%>>Treasurer
+                    <option id="role" value="<%=Role.CLUB_SECRETARY%>" onClick="team()"
+                            <%if (user.getRole() == Role.CLUB_SECRETARY) {%>selected<%}%>>Club secretary
                     </option>
-                    <option id="role" value="<%=UserRole.SAFEGUARDING_OFFICER%>" onClick="team()"
-                            <%if (user.getRole() == UserRole.SAFEGUARDING_OFFICER) {%>selected<%}%>>Safeguarding officer
+                    <option id="role" value="<%=Role.TREASURER%>" onClick="team()"
+                            <%if (user.getRole() == Role.TREASURER) {%>selected<%}%>>Treasurer
                     </option>
-                    <option id="role" value="<%=UserRole.PROGRAMME_EDITOR%>" onClick="team()"
-                            <%if (user.getRole() == UserRole.PROGRAMME_EDITOR) {%>selected<%}%>>Programme editor
+                    <option id="role" value="<%=Role.SAFEGUARDING_OFFICER%>" onClick="team()"
+                            <%if (user.getRole() == Role.SAFEGUARDING_OFFICER) {%>selected<%}%>>Safeguarding officer
                     </option>
-                    <option id="role" value="<%=UserRole.CHAIRPERSON%>" onClick="team()"
-                            <%if (user.getRole() == UserRole.CHAIRPERSON) {%>selected<%}%>>Chairperson
+                    <option id="role" value="<%=Role.PROGRAMME_EDITOR%>" onClick="team()"
+                            <%if (user.getRole() == Role.PROGRAMME_EDITOR) {%>selected<%}%>>Programme editor
                     </option>
-                    <%if (user.getRole() >= 5) {%>
-                    <option id="role" value="<%=UserRole.WEBMASTER%>"
-                            <%if (user.getRole() == UserRole.WEBMASTER) {%>selected<%}%>>Webmaster
+                    <option id="role" value="<%=Role.CHAIRPERSON%>" onClick="team()"
+                            <%if (user.getRole() == Role.CHAIRPERSON) {%>selected<%}%>>Chairperson
+                    </option>
+                    <%if (user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {%>
+                    <option id="role" value="<%=Role.WEBMASTER%>"
+                            <%if (user.getRole() == Role.WEBMASTER) {%>selected<%}%>>Webmaster
                     </option>
                     <%}%>
                 </select>
             </div>
             <div id="team" style="display: block;">
                 <label for="teamID">Team: </label>
-                <select form="edit" id="teamID">
+                <select form="edit" name="teamID" id="teamID">
                     <option id="teamID" value="0" <%if (user.getTeam() == 0) {%>selected<%}%>>Not
                         associated with a team
                     </option>

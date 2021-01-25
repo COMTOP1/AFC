@@ -37,7 +37,7 @@
             </div>
             <div>
                 <label for="teamID">Team: </label>
-                <select form="edit" id="teamID">
+                <select form="edit" name="teamID" id="teamID">
                     <option id="teamID" value="A" <%if (sponsor.getTeamID().equals("A")) {%>selected<%}%>>
                         All
                     </option>

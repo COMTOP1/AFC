@@ -35,9 +35,7 @@
             <th>Edit</th>
             <th>Delete</th>
         </tr>
-        <%
-            assert list != null;
-            for (Players player : list) {%>
+        <%for (Players player : list) {%>
         <tr>
             <th><%=player.getName()%>
             </th>
@@ -100,8 +98,8 @@
     <a href="addplayer">Add player</a>
 </p>
 <div id="socialBar">
-    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>
-    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"
+    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
        class="fa fa-twitter"></a>
 </div>
 </body>

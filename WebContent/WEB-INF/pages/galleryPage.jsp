@@ -179,8 +179,8 @@
         %>
         <div class="column" style="display: inline-block; float: none;">
             <img src="data:image/jpg;base64,<%=image.getImage()%>" style="width:100%"
-                 onclick="openModal();currentSlide(<%=i%>)" class="hover-shadow cursor">
-            <%if (user != null && user.getRole() > 0) {%>
+                 onclick="openModal();currentSlide(<%=i%>)" class="hover-shadow cursor" alt="<%=image.getCaption()%>">
+            <%if (user != null && user.getRole() != Role.MANAGER) {%>
             <div class="button" id="container">
                 <div id="translate"></div>
                 <a href="deleteimage?id=<%=image.getID()%>">Delete</a>
@@ -201,7 +201,7 @@
             <div class="mySlides">
                 <div class="numbertext"><%=i%> / <%=list.size()%>
                 </div>
-                <img src="data:image/jpg;base64,<%=image.getImage()%>" style="width:100%">
+                <img src="data:image/jpg;base64,<%=image.getImage()%>" style="width:100%" alt="<%=image.getCaption()%>">
             </div>
             <%}%>
 
@@ -218,8 +218,8 @@
                     i++;
             %>
             <div class="column">
-                <img class="demo cursor" src="data:image/jpg;base64,<%=image.getImage()%>" style="width:100%"
-                     onclick="currentSlide(<%=i%>)" alt="">
+                <img class="demo cursor" src="data:image/jpg;base64,<%=image.getImage()%>" style="width:100%" 
+                onclick="currentSlide(<%=i%>)" alt="<%=image.getCaption()%>">
             </div>
             <%}%>
             <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
@@ -247,7 +247,7 @@
         }
 
         function showSlides(n) {
-            var i;
+        	var i;
             var slides = document.getElementsByClassName("mySlides");
             var dots = document.getElementsByClassName("demo");
             var captionText = document.getElementById("caption");
@@ -270,14 +270,14 @@
     </script>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
-<%if (user != null && user.getRole() > 0) {%>
+<%if (user != null && user.getRole() != Role.MANAGER) {%>
 <p style="width: 96%;">
     <a href="addimage">Add image</a>
 </p>
 <%}%>
 <div id="socialBar">
-    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>
-    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"
+    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
        class="fa fa-twitter"></a>
 </div>
 </body>

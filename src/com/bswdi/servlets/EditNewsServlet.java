@@ -43,7 +43,7 @@ public class EditNewsServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (user.getRole() > 0) {
+            if (user.getRole() != Role.MANAGER) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 News news = DBUtils.findNews(con, id);
                 request.getSession().setAttribute("news", news);

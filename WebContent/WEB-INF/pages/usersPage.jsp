@@ -38,7 +38,7 @@
             <th>Image</th>
             <%
                 assert user != null;
-                if (user.getRole() == 1 || user.getRole() > 4) {%>
+                if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {%>
             <th>Edit</th>
             <th>Delete</th>
             <th>Reset password</th>
@@ -69,12 +69,12 @@
                 }%>
             <th><%=team%>
             </th>
-            <th><%=UserRole.getRole(user1.getRole())%>
+            <th><%=user1.getRole()%>
             </th>
             <th><img src="data:image/jpg;base64,<%=user1.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';"
                      style="max-width: 150px; max-height: 150px;"/></th>
-            <%if ((user.getRole() == 1 && user1.getRole() != 6) || user.getRole() == 6) {%>
+            <%if ((user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) && user1.getEmail() != "liamb1216@gmail.com") {%>
             <th>
                 <div class="button" id="container">
                     <div id="translate"></div>
@@ -100,14 +100,14 @@
     <br>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
-<%if (user.getRole() == 1 || user.getRole() > 4) {%>
+<%if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {%>
 <p style="width: 96%">
     <a href="adduser">Add user</a>
 </p>
 <%}%>
 <div id="socialBar">
-    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>
-    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"
+    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
        class="fa fa-twitter"></a>
 </div>
 </body>

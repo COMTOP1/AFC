@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.bswdi.utils.*, com.bswdi.beans.*, java.util.List, java.sql.Connection" %>
 <!DOCTYPE html>
@@ -19,7 +20,9 @@
     }
 %>
 <main class="main" style="padding: 0 0 0 10px">
+	<p style="color: red; padding: 0; margin: 0;" id="error">${error}</p><br>
     <%
+    	request.getSession().setAttribute("error", null);
         List<Documents> list = null;
         try {
             list = DBUtils.queryDocuments(con);
@@ -31,7 +34,7 @@
     %>
     <h2><%=document.getName()%>
     </h2>
-    <a href="download?id=<%=document.getID()%>" style="text-decoration: underline;">Download</a><%if (user != null && user.getRole() > 0) {
+    <a href="download?id=<%=document.getID()%>" style="text-decoration: underline;">Download</a><%if (user != null && user.getRole() != Role.MANAGER) {
     	for (int i = 0; i < 21; i++) {%>&emsp;<%}%><a href="deletedocument?id=<%=document.getID()%>">Delete</a>
     <%
             }
@@ -39,14 +42,14 @@
     %>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%; height: 50px;">AFC</p>
 </main>
-<%if (user != null && user.getRole() > 0) {%>
+<%if (user != null && user.getRole() != Role.MANAGER) {%>
 <p style="width: 96%;">
     <a href="adddocument">Add document</a>
 </p>
 <%}%>
 <div id="socialBar">
-    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>
-    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"
+    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
        class="fa fa-twitter"></a>
 </div>
 </body>

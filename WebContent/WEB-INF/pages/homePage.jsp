@@ -44,7 +44,7 @@
     <style>
         #listItemAffiliation {
             padding: 10px;
-            height: <%if (user != null && user.getRole() > 0) {%>150<%} else {%>100<%}%>px;
+            height: <%if (user != null && user.getRole() != Role.MANAGER) {%>150<%} else {%>100<%}%>px;
             width: 150px;
             display: inline-flex;
             flex-wrap: wrap;
@@ -192,8 +192,8 @@
     <div id="listItem" class="latest"
          style="position: absolute; bottom: 0; background-color: white; left: 190px; width: 160px;">
         Latest from what's on
-        <div><%assert news != null;%>
-            <a href="whatson?id=<%=news.getID()%>">
+        <div>
+            <a href="whatson?id=<%=whatsOn.getID()%>">
                 <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';"
                      style="padding: 5px; max-height: 150px; max-width: 150px;">
@@ -256,7 +256,7 @@
                         <img id="affiliationImage" src="data:image/jpg;base64,<%=affiliation.getImage()%>" alt=""
                              onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
                     </a>
-                    <%if (user != null && user.getRole() > 0) {%>
+                    <%if (user != null && user.getRole() != Role.MANAGER) {%>
                     <p style="padding: 0; margin: 0;">
                         <a href="deleteaffiliation?id=<%=affiliation.getID()%>">Delete</a>
                     </p>
@@ -265,7 +265,7 @@
             </div>
             <%}%>
         </div>
-        <%if (user != null && user.getRole() > 0) {%>
+        <%if (user != null && user.getRole() != Role.MANAGER) {%>
         <p style="text-align: center;">
             <a href="addaffiliation">Add affiliation</a>
         </p>

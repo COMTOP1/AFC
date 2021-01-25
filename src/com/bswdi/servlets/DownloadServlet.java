@@ -14,24 +14,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
+/** 
  * Download servlet
- *
+ * 
  * @author BSWDI
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/download"})
 public class DownloadServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Constructor
-     */
-    public DownloadServlet() {
-        super();
-    }
-
-    @Override
+	private static final long serialVersionUID = 1L;
+	
+	/** Constructor
+	 */
+	public DownloadServlet() {
+		super();
+	}
+	
+	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         Connection con = MyUtils.getStoredConnection(request);
@@ -49,9 +48,9 @@ public class DownloadServlet extends HttpServlet {
             response.sendRedirect("documents");
         }
         try {
-            //String filepath = "C:\\Users\\ADMIN\\Desktop\\Code\\Java\\AFC\\FileStore\\";
+            String filepath = "C:\\Users\\Administrator.LIAM-ACER-SERVE\\Desktop\\Code\\Java\\AFC\\FileStore\\";
             //String filepath = System.getProperty("catalina.home") + "/FileStore";
-            String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
+            //String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
             assert document != null;
             response.setHeader("Content-Disposition", "attachment; filename=\"" + document.getFileName() + "\"");
             FileInputStream fileInputStream = new FileInputStream(filepath + document.getFileName());
@@ -64,9 +63,9 @@ public class DownloadServlet extends HttpServlet {
             response.sendRedirect("documents");
         }
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("documents");
-    }
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("documents");
+	}  
 }

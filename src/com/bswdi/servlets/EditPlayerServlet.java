@@ -49,7 +49,7 @@ public class EditPlayerServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (user.getRole() > 0) {
+            if (user.getRole() != Role.MANAGER) {
                 Players player = DBUtils.findPlayer(con, id);
                 request.getSession().setAttribute("player", player);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/editPlayerPage.jsp");

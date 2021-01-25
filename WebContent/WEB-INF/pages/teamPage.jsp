@@ -39,8 +39,12 @@
             %>
             <%=manager.getName()%>
             <%}%><br><br>
+            <h3>Team Coach</h3>
+            <%=team.getCoach()%><br><br>
+            <h3>Physio</h3>
+            <%=team.getPhysio()%><br><br>
             <h3>Training Location</h3>
-            AWE Recreational Society<br><br>
+            Aldermaston Recreational Society<br><br>
             <%if (team.getAges() >= 13) {%>
             <h3>League</h3>
             <%=team.getLeague()%><br><br>
@@ -68,14 +72,14 @@
             } catch (Exception ignored) {
 
             }%>
-    <div display="inline-block" style="width: 100%;<%if (list1.size() > 0) {%> height: 300px;<%}%>">
+    <div style="width: 100%; display: inline-block;<%if (list1.size() > 0) {%> height: 300px;<%}%>">
         <%for (Sponsors sponsor : list1) {%>
         <div id="listItem">
             <div>
                 <a href="<%=sponsor.getWebsite()%>" target="_blank">
                     <img src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
                          onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    <%=sponsor.getName()%><br><br><br>
+                    <%=sponsor.getName()%><br></br><br>
                     <%=sponsor.getPurpose()%>
                 </a></div>
         </div>
@@ -91,10 +95,8 @@
 
             }
     %>
-    <h3>Players</h3><br><%
-    assert list2 != null;
-%>
-    <div display="inline-block" style="width: 100%;<%if (list2.size() > 0) {%> height: 300px;<%}%>">
+    <h3>Players</h3><br>
+    <div style="width: 100%; display: inline-block;<%if (list2.size() > 0) {%> height: 300px;<%}%>">
         <%for (Players player : list2) {%>
         <div id="listItem" style="height: 200px;">
             <div>
@@ -108,9 +110,10 @@
         <%}%>
     </div>
     <%}%>
+    <p></p>
     <p style="z-index: -1; opacity: 0; float: left; width: 98%;">AFC</p>
 </main>
-<%if (user != null && user.getRole() > 0) {%>
+<%if (user != null && user.getRole() != Role.MANAGER) {%>
 <p style="width: 96%;">
     <a href="editteam?id=<%=team.getID()%>">Edit team</a>
 </p>
@@ -119,8 +122,8 @@
 </p>
 <%}%>
 <div id="socialBar">
-    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>
-    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"
+    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
        class="fa fa-twitter"></a>
 </div>
 </body>

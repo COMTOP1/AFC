@@ -43,7 +43,7 @@ public class AddTeamServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (user.getRole() > 0) {
+            if (user.getRole() != Role.MANAGER) {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addTeamPage.jsp");
                 dispatcher.forward(request, response);
             } else response.sendRedirect("teams");
@@ -56,7 +56,7 @@ public class AddTeamServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection con = MyUtils.getStoredConnection(request);
-        String name, league, division, leagueTable, fixtures, coach, teamPhoto = null;
+        String name, league, division, leagueTable, fixtures, coach, physio, teamPhoto = null;
         boolean active, youth;
         int ages;
         name = request.getParameter("name");
@@ -67,6 +67,7 @@ public class AddTeamServlet extends HttpServlet {
         fixtures = request.getParameter("fixtures");
         if (fixtures == null || fixtures.equals("")) fixtures = "#";
         coach = request.getParameter("coach");
+        physio = request.getParameter("physio");
         active = "Y".equals(request.getParameter("active"));
         youth = "Y".equals(request.getParameter("youth"));
         InputStream inputStream;
@@ -96,7 +97,7 @@ public class AddTeamServlet extends HttpServlet {
             ages = 0;
         }
         try {
-            Teams team = new Teams(0, name, league, division, leagueTable, fixtures, coach, teamPhoto, active, youth, ages);
+            Teams team = new Teams(0, name, league, division, leagueTable, fixtures, coach, physio, teamPhoto, active, youth, ages);
             DBUtils.insertTeam(con, team);
             response.sendRedirect("teams");
         } catch (Exception e) {

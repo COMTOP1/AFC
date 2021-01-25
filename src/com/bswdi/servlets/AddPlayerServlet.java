@@ -48,7 +48,7 @@ public class AddPlayerServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (user.getRole() > 0) {
+            if (user.getRole() != Role.MANAGER) {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addPlayerPage.jsp");
                 dispatcher.forward(request, response);
             } else response.sendRedirect("players");
@@ -63,7 +63,7 @@ public class AddPlayerServlet extends HttpServlet {
         Connection con = MyUtils.getStoredConnection(request);
         String name, image = null, position;
         long dateOfBirth = 0L;
-        boolean captain;
+        boolean captain, error = false;
         int teamID = 0;
         name = request.getParameter("name");
         InputStream inputStream;
@@ -94,38 +94,41 @@ public class AddPlayerServlet extends HttpServlet {
             dateOfBirth = localDate.toEpochDay();
         } catch (Exception e) {
             request.getSession().setAttribute("error", "Please enter a date");
+            error = true;
             response.sendRedirect("addplayer");
         }
-        position = request.getParameter("position");
-        captain = "Y".equals(request.getParameter("captain"));
-        try {
-            List<Players> list = DBUtils.queryPlayersTeam(con, teamID);
-            boolean captainPresent = false;
-            for (Players player : list)
-                if (player.getCaptain()) {
-                    captainPresent = true;
-                    break;
-                }
-            if (captainPresent) {
-                request.getSession().setAttribute("error", "A captain is already present for this team");
-                captain = false;
-            }
-        } catch (Exception ignored) {
-
-        }
-        try {
-            teamID = Integer.parseInt(request.getParameter("teamID"));
-            if (teamID < 0) teamID = 0;
-        } catch (Exception e) {
-            teamID = 0;
-        }
-        try {
-            Players player = new Players(0, name, image, dateOfBirth, position, captain, teamID);
-            DBUtils.insertPlayer(con, player);
-            response.sendRedirect("players");
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect("players");
+        if (!error) {
+	        position = request.getParameter("position");
+	        captain = "Y".equals(request.getParameter("captain"));
+	        try {
+	            List<Players> list = DBUtils.queryPlayersTeam(con, teamID);
+	            boolean captainPresent = false;
+	            for (Players player : list)
+	                if (player.getCaptain()) {
+	                    captainPresent = true;
+	                    break;
+	                }
+	            if (captainPresent) {
+	                request.getSession().setAttribute("error", "A captain is already present for this team");
+	                captain = false;
+	            }
+	        } catch (Exception ignored) {
+	
+	        }
+	        try {
+	            teamID = Integer.parseInt(request.getParameter("teamID"));
+	            if (teamID < 0) teamID = 0;
+	        } catch (Exception e) {
+	            teamID = 0;
+	        }
+	        try {
+	            Players player = new Players(0, name, image, dateOfBirth, position, captain, teamID);
+	            DBUtils.insertPlayer(con, player);
+	            response.sendRedirect("players");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            response.sendRedirect("players");
+	        }
         }
     }
 }

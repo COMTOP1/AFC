@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bswdi.beans.Role;
 import com.bswdi.beans.Users;
 import com.bswdi.utils.DBUtils;
 import com.bswdi.utils.MyUtils;
@@ -40,7 +41,7 @@ public class UsersServlet extends HttpServlet {
             else {
                 Users user = DBUtils.findUser(con, email);
                 assert user != null;
-                if (user.getRole() > 4 || user.getRole() == 1) {
+                if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {
                     RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/usersPage.jsp");
                     dispatcher.forward(request, response);
                 } else response.sendRedirect("home");

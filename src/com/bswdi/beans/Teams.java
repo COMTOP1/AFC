@@ -6,11 +6,10 @@ package com.bswdi.beans;
  * @author BSWDI
  * @version 1.0
  */
-@SuppressWarnings("unused")
 public class Teams {
 
     private int id = 0, ages = 0;
-    private String name = null, league = null, division = null, leagueTable = null, fixtures = null, coach = null, teamPhoto = null;
+    private String name = null, league = null, division = null, leagueTable = null, fixtures = null, coach = null, physio = null, teamPhoto = null;
     boolean active = false, youth = false;
 
     /**
@@ -30,12 +29,13 @@ public class Teams {
      * @param leagueTable leagueTable
      * @param fixtures    fixtures
      * @param coach       coach
+     * @param physio 	  physio
      * @param teamPhoto   team photo
      * @param active      active
      * @param youth       youth
      * @param ages        ages
      */
-    public Teams(int id, String name, String league, String division, String leagueTable, String fixtures, String coach, String teamPhoto, boolean active, boolean youth, int ages) {
+    public Teams(int id, String name, String league, String division, String leagueTable, String fixtures, String coach, String physio, String teamPhoto, boolean active, boolean youth, int ages) {
         this.id = id;
         this.name = name;
         this.league = league;
@@ -43,6 +43,7 @@ public class Teams {
         this.leagueTable = leagueTable;
         this.fixtures = fixtures;
         this.coach = coach;
+        this.physio = physio;
         this.teamPhoto = teamPhoto;
         this.active = active;
         this.youth = youth;
@@ -173,6 +174,24 @@ public class Teams {
      */
     public void setCoach(String coach) {
         this.coach = coach;
+    }
+    
+    /**
+     * Return physio
+     *
+     * @return String physio
+     */
+    public String getPhysio() {
+        return physio;
+    }
+
+    /**
+     * Sets physio
+     *
+     * @param physio physio
+     */
+    public void setPhysio(String physio) {
+        this.physio = physio;
     }
 
     /**

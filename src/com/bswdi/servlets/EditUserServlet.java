@@ -43,7 +43,7 @@ public class EditUserServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (((user.getRole() == 1 || user.getRole() > 4) && !email1.equals("liamb1216@gmail.com")) || user.getRole() == 6) {
+            if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {
                 Users user1 = DBUtils.findUser(con, email1);
                 request.getSession().setAttribute("user", user1);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/editUserPage.jsp");
@@ -59,7 +59,8 @@ public class EditUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection con = MyUtils.getStoredConnection(request);
         String name, email, phone, image;
-        int teamID, role;
+        int teamID;
+        Role role;
         Users userOld = null;
         try {
             userOld = (Users) request.getSession().getAttribute("user");
@@ -76,13 +77,7 @@ public class EditUserServlet extends HttpServlet {
         } catch (Exception e) {
             teamID = 0;
         }
-        try {
-            role = Integer.parseInt(request.getParameter("role"));
-            if (role < 0) role = 0;
-            if (role > 0) teamID = 0;
-        } catch (Exception e) {
-            role = 0;
-        }
+        role = Role.valueOf(request.getParameter("role"));
         InputStream inputStream;
         Part filePart;
         try {

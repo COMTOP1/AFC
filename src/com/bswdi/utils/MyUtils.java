@@ -5,7 +5,10 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import javax.servlet.ServletRequest;
-import javax.servlet.http.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bswdi.beans.Users;
 
@@ -15,7 +18,6 @@ import com.bswdi.beans.Users;
  * @author BSWDI
  * @version 1.0
  */
-@SuppressWarnings("unused")
 public class MyUtils {
     /**
      * Attribute for connection

@@ -15,7 +15,6 @@ import com.bswdi.beans.*;
  * @author BSWDI
  * @version 1.0
  */
-@SuppressWarnings("unused")
 public class DBUtils {
 
     /**
@@ -401,7 +400,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<News> queryNews(Connection con) throws SQLException {
-        String sql = "SELECT * FROM NEWS";
+        String sql = "SELECT * FROM NEWS ORDER BY DATE DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getNewsMethodMultiple(rs);
@@ -785,7 +784,7 @@ public class DBUtils {
      */
     private static Teams getTeamMethod(ResultSet rs) throws SQLException {
         int id, ages;
-        String name, league, division, leagueTable, fixtures, coach, teamPhoto;
+        String name, league, division, leagueTable, fixtures, coach, physio, teamPhoto;
         boolean active, youth;
         id = rs.getInt("ID");
         name = rs.getString("NAME");
@@ -794,11 +793,12 @@ public class DBUtils {
         leagueTable = rs.getString("LEAGUE_TABLE");
         fixtures = rs.getString("FIXTURES");
         coach = rs.getString("COACH");
+        physio = rs.getString("PHYSIO");
         teamPhoto = rs.getString("TEAM_PHOTO");
         active = rs.getBoolean("ACTIVE");
         youth = rs.getBoolean("YOUTH");
         ages = rs.getInt("AGES");
-        return new Teams(id, name, league, division, leagueTable, fixtures, coach, teamPhoto, active, youth, ages);
+        return new Teams(id, name, league, division, leagueTable, fixtures, coach, physio, teamPhoto, active, youth, ages);
     }
 
     /**
@@ -810,10 +810,10 @@ public class DBUtils {
      */
     public static void updateTeam(Connection con, Teams team) throws SQLException {
         backupTeam(con, team.getID(), "UPDATE");
-        String sql = "UPDATE TEAMS SET NAME = ?, LEAGUE = ?, DIVISION = ?, LEAGUE_TABLE = ?, FIXTURES = ?, COACH = ?, TEAM_PHOTO = ?, ACTIVE = ?, YOUTH = ?, AGES = ? WHERE ID = ?";
+        String sql = "UPDATE TEAMS SET NAME = ?, LEAGUE = ?, DIVISION = ?, LEAGUE_TABLE = ?, FIXTURES = ?, COACH = ?, PHYSIO = ?, TEAM_PHOTO = ?, ACTIVE = ?, YOUTH = ?, AGES = ? WHERE ID = ?";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setTeamMethod(pstm, team);
-        pstm1.setInt(11, team.getID());
+        pstm1.setInt(12, team.getID());
         pstm1.executeUpdate();
     }
 
@@ -825,7 +825,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertTeam(Connection con, Teams team) throws SQLException {
-        String sql = "INSERT INTO TEAMS (NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, TEAM_PHOTO, ACTIVE, YOUTH, AGES) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO TEAMS (NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, PHYSIO, TEAM_PHOTO, ACTIVE, YOUTH, AGES) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setTeamMethod(pstm, team);
         pstm1.executeUpdate();
@@ -846,10 +846,11 @@ public class DBUtils {
         pstm.setString(4, team.getLeagueTable());
         pstm.setString(5, team.getFixtures());
         pstm.setString(6, team.getCoach());
-        pstm.setString(7, team.getTeamPhoto());
-        pstm.setBoolean(8, team.getActive());
-        pstm.setBoolean(9, team.getYouth());
-        pstm.setInt(10, team.getAges());
+        pstm.setString(7, team.getPhysio());
+        pstm.setString(8, team.getTeamPhoto());
+        pstm.setBoolean(9, team.getActive());
+        pstm.setBoolean(10, team.getYouth());
+        pstm.setInt(11, team.getAges());
         return pstm;
     }
 
@@ -877,7 +878,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupTeam(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO TEAMS_BACKUP (ID, NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, TEAM_PHOTO, ACTIVE, YOUTH, AGES, ACTION) SELECT ID, NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, TEAM_PHOTO, ACTIVE, YOUTH, AGES, ? FROM TEAMS WHERE ID = ?";
+        String sql = "INSERT INTO TEAMS_BACKUP (ID, NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, PHYSIO, TEAM_PHOTO, ACTIVE, YOUTH, AGES, ACTION) SELECT ID, NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, PHYSIO, TEAM_PHOTO, ACTIVE, YOUTH, AGES, ? FROM TEAMS WHERE ID = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setInt(2, id);
@@ -892,7 +893,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Sponsors> querySponsors(Connection con) throws SQLException {
-        String sql = "SELECT * FROM SPONSORS";
+        String sql = "SELECT * FROM SPONSORS ORDER BY TEAM_ID, NAME";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getSponsorsMethod(rs);
@@ -1069,7 +1070,7 @@ public class DBUtils {
      * @throws SQLException throws SQLException
      */
     public static List<Users> queryUsersContacts(Connection con) throws SQLException {
-        String sql = "SELECT * FROM USERS WHERE ROLE IN(1, 2, 3, 4, 5) ORDER BY ROLE";
+        String sql = "SELECT * FROM USERS WHERE ROLE IN ('PROGRAMME_EDITOR', 'LEAGUE_SECRETARY', 'TREASURER', 'SAFEGUARDING_OFFICER', 'CLUB_SECRETARY', 'CHAIRPERSON') ORDER BY FIELD(ROLE, 'PROGRAMME_EDITOR', 'LEAGUE_SECRETARY', 'TREASURER', 'SAFEGUARDING_OFFICER', 'CLUB_SECRETARY', 'CHAIRPERSON') DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getUsersMethod(rs);
@@ -1146,11 +1147,12 @@ public class DBUtils {
         if (rs.getString("PASSWORD").equals(rs.getString("TEMP"))) {
             pstm3.execute();
             String name, phone, image;
-            int teamID, role;
+            int teamID;
+            Role role;
             name = rs.getString("NAME");
             phone = rs.getString("PHONE");
             teamID = rs.getInt("TEAM_ID");
-            role = rs.getInt("ROLE");
+            role = Role.valueOf(rs.getString("ROLE"));
             image = rs.getString("IMAGE");
             return new Users(name, email, phone, teamID, role, image);
         }
@@ -1166,12 +1168,13 @@ public class DBUtils {
      */
     private static Users getUserMethod(ResultSet rs) throws SQLException {
         String name, email, phone, image;
-        int teamID, role;
+        int teamID;
+        Role role;
         name = rs.getString("NAME");
         email = rs.getString("EMAIL");
         phone = rs.getString("PHONE");
         teamID = rs.getInt("TEAM_ID");
-        role = rs.getInt("ROLE");
+        role = Role.valueOf(rs.getString("ROLE"));
         image = rs.getString("IMAGE");
         return new Users(name, email, phone, teamID, role, image);
     }
@@ -1279,7 +1282,7 @@ public class DBUtils {
         pstm.setString(2, user.getEmail());
         pstm.setString(3, user.getPhone());
         pstm.setInt(4, user.getTeam());
-        pstm.setInt(5, user.getRole());
+        pstm.setString(5, user.getRole().toString());
         pstm.setString(6, user.getImage());
         return pstm;
     }

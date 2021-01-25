@@ -40,6 +40,10 @@
                 <input type="text" id="coach" name="coach">
             </div>
             <div>
+                <label for="physio">Physio: </label>
+                <input type="text" id="physio" name="physio">
+            </div>
+            <div>
                 <label>Manager assigned via Users</label>
             </div>
             <div>
@@ -56,7 +60,7 @@
             </div>
             <div>
                 <label for="ages">Ages: </label>
-                <select form="add" id="ages">
+                <select form="add" name="ages" id="ages">
                     <option id="ages" value="6">&lt;6</option>
                     <option id="ages" value="7">&lt;7</option>
                     <option id="ages" value="8">&lt;8</option>

@@ -44,7 +44,7 @@ public class EditTeamServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (user.getRole() > 0) {
+            if (user.getRole() != Role.MANAGER) {
                 Teams team = DBUtils.findTeam(con, id);
                 request.getSession().setAttribute("team", team);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/editTeamPage.jsp");
@@ -59,7 +59,7 @@ public class EditTeamServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection con = MyUtils.getStoredConnection(request);
-        String name, league, division, leagueTable, fixtures, coach, teamPhoto;
+        String name, league, division, leagueTable, fixtures, coach, physio, teamPhoto;
         boolean active, youth;
         int ages;
         Teams teamOld = null;
@@ -75,6 +75,7 @@ public class EditTeamServlet extends HttpServlet {
         leagueTable = request.getParameter("leagueTable");
         fixtures = request.getParameter("fixtures");
         coach = request.getParameter("coach");
+        physio = request.getParameter("physio");
         active = "Y".equals(request.getParameter("active"));
         youth = "Y".equals(request.getParameter("youth"));
         InputStream inputStream;
@@ -94,8 +95,12 @@ public class EditTeamServlet extends HttpServlet {
             byte[] imageBytes = outputStream.toByteArray();
             teamPhoto = Base64.getEncoder().encodeToString(imageBytes);
             if (teamPhoto.equals("") || teamPhoto.length() == 0) {
-				assert teamOld != null;
-				teamPhoto = teamOld.getTeamPhoto();
+            	try {
+                    assert teamOld != null;
+                    teamPhoto = teamOld.getTeamPhoto();
+            	} catch (Exception ignored) {
+            		
+            	}
 			}
             inputStream.close();
             outputStream.close();
@@ -111,7 +116,7 @@ public class EditTeamServlet extends HttpServlet {
         }
         try {
             assert teamOld != null;
-            Teams team = new Teams(teamOld.getID(), name, league, division, leagueTable, fixtures, coach, teamPhoto, active, youth, ages);
+            Teams team = new Teams(teamOld.getID(), name, league, division, leagueTable, fixtures, coach, physio, teamPhoto, active, youth, ages);
             DBUtils.updateTeam(con, team);
             response.sendRedirect("teams");
         } catch (Exception e) {

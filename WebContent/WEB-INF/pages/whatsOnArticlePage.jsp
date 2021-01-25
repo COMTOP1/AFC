@@ -52,7 +52,7 @@
              style="padding: 5px; width: 50%; max-height: 500px; max-width: 700px;"><br>
         <p><%=whatsOn.getContent()%>
         </p>
-        <%if (user != null && user.getRole() > 0) {%>
+        <%if (user != null && user.getRole() != Role.MANAGER) {%>
         <div class="button" id="container">
             <div id="translate"></div>
             <a href="editwhatson?id=<%=whatsOn.getID()%>">Edit</a>
@@ -66,8 +66,8 @@
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
 <div id="socialBar">
-    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>
-    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"
+    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
        class="fa fa-twitter"></a>
 </div>
 </body>

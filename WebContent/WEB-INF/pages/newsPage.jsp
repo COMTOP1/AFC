@@ -32,35 +32,32 @@
         <div>
             <a href="news?id=<%=news.getID()%>">
                 <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
-                     onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-            </a>
-            <h2 style="margin: 5px 0 5px 0;"><%=news.getTitle()%>
-            </h2>
-            <%Date date = new Date(news.getDate());%>
-            <%=date.toString()%><br>
-            <%if (user != null && user.getRole() > 0) {%>
-            <div class="button" id="container">
-                <div id="translate"></div>
-                <a href="editnews?id=<%=news.getID()%>">Edit</a>
+                     onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px; width: auto;">
+                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=news.getTitle()%></span>
+                <%Date date = new Date(news.getDate());%>
+                <span style="text-align: left;"><%=date.toString()%></span>
+                </a>
+                <%if (user != null && user.getRole() != Role.MANAGER) {%>
+                <div class="button">
+            		<a href="editnews?id=<%=news.getID()%>">Edit</a>
+        		</div>
+        		<div class="button">
+            		<a href="deletenews?id=<%=news.getID()%>">Delete</a>
+        		</div>
+                <%}%>
             </div>
-            <div class="button" id="container">
-                <div id="translate"></div>
-                <a href="deletenews?id=<%=news.getID()%>">Delete</a>
-            </div>
-            <%}%>
-        </div>
     </div>
     <%}%>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
-<%if (user != null && user.getRole() > 0) {%>
+<%if (user != null && user.getRole() != Role.MANAGER) {%>
 <p style="width: 96%;">
     <a href="addnews">Add news</a>
 </p>
 <%}%>
 <div id="socialBar">
-    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>
-    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"
+    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
        class="fa fa-twitter"></a>
 </div>
 </body>

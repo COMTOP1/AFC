@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bswdi.beans.Role;
 import com.bswdi.beans.Users;
 import com.bswdi.utils.*;
 
@@ -38,13 +39,12 @@ public class DeleteImageServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
-            if (user.getRole() > 0) {
+            if (user.getRole() != Role.MANAGER) {
                 request.setAttribute("id", id);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/deleteImageConfirmationPage.jsp");
                 dispatcher.forward(request, response);
             } else response.sendRedirect("gallery");
         } catch (Exception e) {
-            e.printStackTrace();
             response.sendRedirect("gallery");
         }
     }

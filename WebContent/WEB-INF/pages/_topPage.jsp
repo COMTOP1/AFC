@@ -1,6 +1,6 @@
 <%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.bswdi.utils.*, com.bswdi.beans.Users, java.sql.Connection" %>
+<%@ page import="com.bswdi.utils.*, com.bswdi.beans.Users, java.sql.Connection, com.bswdi.beans.Role" %>
 <!DOCTYPE html>
 <html>
 <body>
@@ -40,7 +40,7 @@
             <%
             } else {
                 assert user != null;
-                if (user.getRole() > 4 || user.getRole() == 1) {
+                if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {
             %>
             <a href="users">Users</a>
             <%}%>
@@ -50,7 +50,7 @@
             <%}%>
         </div>
     </div>
-    <div id="leftSide" style="color: white;">
+    <div id="leftSide" style="color: white; width: 670px;">
         <div class="button">
             <a href="home" style="color: white;">Home</a>
         </div>
@@ -88,14 +88,14 @@
         </div>
     </div>
     <div id="rightSide"
-         style="color: white;<%if (email != null && !email.equals("")) {%> width: <%if (user.getRole() > 4 || user.getRole() == 1) {%>300px;<%} else {%>150px;<%}}%>">
+         style="color: white;<%if (email != null && !email.equals("")) {%> width: <%if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {%>280px;<%} else {%>150px;<%}}%>">
         <%if (email == null || email.equals("")) {%>
         <div class="button" align="right">
             <a href="login" style="color: white;">Login</a>
         </div>
         <%
         } else {
-            if (user.getRole() > 4 || user.getRole() == 1) {
+            if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {
         %>
         <div class="button" align="right">
             <a href="users" style="color: white;">Users</a>

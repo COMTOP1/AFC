@@ -30,7 +30,7 @@
     <h2>Email</h2>
     <%=user.getEmail()%>
     <h2>Role</h2>
-    <%=UserRole.getRole(user.getRole())%>
+    <%=user.getRole()%>
     <h2>Change password</h2>
     <%request.getSession().setAttribute("allowedOwnUserModification", true);%>
     <div class="button" id="container">
@@ -40,8 +40,8 @@
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
 <div id="socialBar">
-    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>
-    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank"
+    <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" class="fa fa-facebook"></a>
+    <a href="https://twitter.com/afcaldermaston?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
        class="fa fa-twitter"></a>
 </div>
 </body>
