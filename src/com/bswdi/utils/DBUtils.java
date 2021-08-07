@@ -715,6 +715,52 @@ public class DBUtils {
     }
 
     /**
+     * Returns programmes
+     *
+     * @param con connection
+     * @return List<Programmes> list
+     * @throws SQLException SQL exception
+     */
+    public static List<Programmes> queryProgrammes(Connection con) throws SQLException {
+        String sql = "SELECT * FROM PROGRAMMES";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        return getProgrammesMethod(rs);
+    }
+
+    private static List<Programmes> getProgrammesMethod(ResultSet rs) throws SQLException {
+        List<Programmes> list = new ArrayList<>();
+        while (rs.next()) {
+            Programmes programme = getProgrammeMethod(rs);
+            list.add(programme);
+        }
+        return list;
+    }
+
+    /**
+     * Returns programme
+     *
+     * @param con connection
+     * @param id id
+     * @return Programme programme
+     * @throws SQLException SQL exception
+     */
+    public static Programmes findProgramme(Connection con, int id) throws SQLException {
+        String sql = "SELECT * FROM PROGRAMMES WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setInt(1, id);
+        ResultSet rs = pstm.executeQuery();
+        if (rs.next()) return getProgrammeMethod(rs);
+        else return null;
+    }
+
+    private static Programmes getProgrammeMethod(ResultSet rs) throws SQLException {
+        int id;
+        id = rs.getInt("ID");
+        return new Programmes(id);
+    }
+
+    /**
      * Returns teams
      *
      * @param con connection
