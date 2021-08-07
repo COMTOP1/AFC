@@ -165,18 +165,18 @@
         }
         if (news != null) {%>
     <div id="listItem" class="latest"
-         style="position: absolute; bottom: 0; background-color: white; left: 0; width: 160px;">
+         style="position: absolute; bottom: 0; background-color: white; left: 0; text-align: center;">
         Latest from news
         <div>
             <a href="news?id=<%=news.getID()%>">
                 <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';"
                      style="padding: 5px; max-height: 150px; max-width: 150px;">
+                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=news.getTitle()%></span>
+                <%Date date = new Date(news.getDate());%>
+                <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date.toString()%>
+                </p>
             </a>
-            <h2 style="margin: 5px 0 5px 0;"><%=news.getTitle()%>
-            </h2>
-            <%Date date = new Date(news.getDate());%>
-            <%=date.toString()%>
         </div>
     </div>
     <%
@@ -190,31 +190,31 @@
         if (whatsOn != null) {
     %>
     <div id="listItem" class="latest"
-         style="position: absolute; bottom: 0; background-color: white; left: 190px; width: 160px;">
+         style="position: absolute; bottom: 0; background-color: white; left: 190px; text-align: center;">
         Latest from what's on
         <div>
             <a href="whatson?id=<%=whatsOn.getID()%>">
                 <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';"
                      style="padding: 5px; max-height: 150px; max-width: 150px;">
-            </a>
-            <h2 style="margin: 5px 0 5px 0;"><%=whatsOn.getTitle()%>
-            </h2>
-            <%
-                Date date1 = new Date(whatsOn.getDate());
-                String dateOfEvent = "";
-                try {
-                    LocalDate date = LocalDate.ofEpochDay(whatsOn.getDateOfEvent());
-                    dateOfEvent = String.valueOf(date.getDayOfWeek()).charAt(0) + String.valueOf(date.getDayOfWeek()).substring(1).toLowerCase() + " "
-                            + date.getDayOfMonth() + " "
-                            + String.valueOf(date.getMonth()).charAt(0) + String.valueOf(date.getMonth()).substring(1).toLowerCase() + " "
-                            + date.getYear();
-                } catch (Exception ignored) {
+                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=whatsOn.getTitle()%></span>
+                <%
+                    Date date1 = new Date(whatsOn.getDate());
+                    String dateOfEvent = "";
+                    try {
+                        LocalDate date = LocalDate.ofEpochDay(whatsOn.getDateOfEvent());
+                        dateOfEvent = String.valueOf(date.getDayOfWeek()).charAt(0) + String.valueOf(date.getDayOfWeek()).substring(1).toLowerCase() + " "
+                                + date.getDayOfMonth() + " "
+                                + String.valueOf(date.getMonth()).charAt(0) + String.valueOf(date.getMonth()).substring(1).toLowerCase() + " "
+                                + date.getYear();
+                    } catch (Exception ignored) {
 
-                }
-            %>
-            <%=date1.toString()%><br>
-            Date of Event - <%=dateOfEvent%>
+                    }
+                %>
+                <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date1.toString()%><br>
+                    Date of Event - <%=dateOfEvent%>
+                </p>
+            </a>
         </div>
     </div>
     <%}%>

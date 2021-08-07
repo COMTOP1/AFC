@@ -48,9 +48,9 @@ public class DownloadServlet extends HttpServlet {
             response.sendRedirect("documents");
         }
         try {
-            String filepath = "C:\\Users\\Administrator.LIAM-ACER-SERVE\\Desktop\\Code\\Java\\AFC\\FileStore\\";
+            //String filepath = "C:\\Users\\Administrator.LIAM-ACER-SERVE\\Desktop\\Code\\Java\\AFC\\FileStore\\";
             //String filepath = System.getProperty("catalina.home") + "/FileStore";
-            //String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
+            String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
             assert document != null;
             response.setHeader("Content-Disposition", "attachment; filename=\"" + document.getFileName() + "\"");
             FileInputStream fileInputStream = new FileInputStream(filepath + document.getFileName());

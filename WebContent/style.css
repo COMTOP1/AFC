@@ -170,6 +170,22 @@ img {
     padding: 10px;
 }
 
+#col-1 {
+    width: 45%;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    float: left;
+    height: 100%;
+}
+
+#col-2 {
+    width: 45%;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    float: left;
+    height: 100%;
+}
+
 @media screen and (max-width: 299px) {
     #topPage {
         padding: 10px 0 10px 0;
@@ -185,8 +201,8 @@ img {
 
     #listItem {
         padding: 10px;
-        height: 300px;
-        width: 150px;
+        height: auto;
+        width: 200px;
         display: inline-block;
         margin: 10px;
         float: left;
@@ -380,8 +396,8 @@ img {
 
     #listItem {
         padding: 10px;
-        height: 300px;
-        width: 150px;
+        height: auto;
+        width: 200px;
         display: inline-block;
         margin: 10px;
         float: left;
@@ -576,8 +592,8 @@ img {
 
     #listItem {
         padding: 10px;
-        height: 300px;
-        width: 150px;
+        height: auto;
+        width: 200px;
         display: inline-block;
         margin: 10px;
         float: left;
@@ -744,8 +760,8 @@ img {
 
     #listItem {
         padding: 10px;
-        height: 300px;
-        width: 150px;
+        height: auto;
+        width: 200px;
         display: inline-block;
         margin: 10px;
         float: left;

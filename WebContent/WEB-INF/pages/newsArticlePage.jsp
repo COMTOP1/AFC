@@ -15,7 +15,7 @@
 <body>
 <jsp:include page="_topPage.jsp"/>
 <main class="main" style="text-align: center; overflow: inherit;">
-    <div style="background-color: white; margin: 10px 10px 0 10px; padding: 5px 0 0 0;">
+    <div style="background-color: white; margin: 10px 10px 0 10px; padding: 5px 5px 10px 5px; display: table;">
         <div class="button" id="container">
             <div id="translate"></div>
             <a href="news">Return</a>
@@ -35,21 +35,22 @@
             String dateString = String.format("%s %s %s %s", dateArray[0], dateArray[2], dateArray[1], dateArray[5]);
         %>
         <h3><%=dateString%><br></h3>
-        <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
-             onerror="this.onerror=null;this.src='images/default.png';"
-             style="padding: 5px; width: auto; max-height: 500px; max-width: 700px;"><br>
-        <p style="text-align: left;"><%=news.getContent()%>
-        </p>
-        <%if (user != null && user.getRole() != Role.MANAGER) {%>
-        <div class="button" id="container">
-            <div id="translate"></div>
-            <a href="editnews?id=<%=news.getID()%>">Edit</a>
-        </div>
-        <div class="button" id="container">
-            <div id="translate"></div>
-            <a href="deletenews?id=<%=news.getID()%>">Delete</a>
-        </div>
-        <%}%>
+        <div id="col-1">
+        <p style="text-align: left; font-size: 18px;"><%=news.getContent()%>
+        </p></div>
+    <div id="col-2"><img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
+                         onerror="this.onerror=null;this.src='images/default.png';"
+                         style="padding: 5px; margin: 20px 0 0 0; width: auto; max-height: 500px; max-width: 700px;"></div>
+    <%if (user != null && user.getRole() != Role.MANAGER) {%>
+    <div class="button" id="container">
+        <div id="translate"></div>
+        <a href="editnews?id=<%=news.getID()%>">Edit</a>
+    </div>
+    <div class="button" id="container">
+        <div id="translate"></div>
+        <a href="deletenews?id=<%=news.getID()%>">Delete</a>
+    </div>
+    <%}%>
     </div>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>

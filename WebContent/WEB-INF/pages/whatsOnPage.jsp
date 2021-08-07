@@ -34,8 +34,7 @@
             <a href="whatson?id=<%=whatsOn.getID()%>">
                 <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=whatsOn.getTitle()%>
-                </span>
+                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=whatsOn.getTitle()%></span>
                 <%
                     Date date1 = new Date(whatsOn.getDate());
                     String dateOfEvent = "";
@@ -49,8 +48,8 @@
 
                     }
                 %>
-                <%=date1.toString()%><br>
-                Date of Event - <%=dateOfEvent%><br>
+                <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date1.toString()%><br>
+                Date of Event - <%=dateOfEvent%></p>
                 </a>
                 <%if (user != null && user.getRole() != Role.MANAGER) {%>
                 <div class="button" id="container">

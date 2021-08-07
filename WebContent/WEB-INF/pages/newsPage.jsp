@@ -35,7 +35,7 @@
                      onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px; width: auto;">
                 <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=news.getTitle()%></span>
                 <%Date date = new Date(news.getDate());%>
-                <span style="text-align: left;"><%=date.toString()%></span>
+                <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date.toString()%></p>
                 </a>
                 <%if (user != null && user.getRole() != Role.MANAGER) {%>
                 <div class="button">

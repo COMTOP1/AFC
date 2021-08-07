@@ -15,7 +15,7 @@
 <body>
 <jsp:include page="_topPage.jsp"/>
 <main class="main" style="text-align: center; overflow: inherit;">
-    <div style="background-color: white; margin: 10px 10px 0 10px; padding: 5px 0 0 0;">
+    <div style="background-color: white; margin: 10px 10px 0 10px; padding: 5px 5px 10px 5px; display: table">
         <div class="button" id="container">
             <div id="translate"></div>
             <a href="whatson">Return</a>
@@ -47,11 +47,11 @@
         <h3><%=dateString%><br><br>
             Date of event - <%=dateOfEvent%>
             <br></h3>
-        <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
-             onerror="this.onerror=null;this.src='images/default.png';"
-             style="padding: 5px; width: 50%; max-height: 500px; max-width: 700px;"><br>
-        <p><%=whatsOn.getContent()%>
-        </p>
+        <div id="col-1"><p><%=whatsOn.getContent()%>
+        </p></div>
+        <div id="col-2"><img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
+                             onerror="this.onerror=null;this.src='images/default.png';"
+                             style="padding: 5px; width: 50%; max-height: 500px; max-width: 700px;"></div>
         <%if (user != null && user.getRole() != Role.MANAGER) {%>
         <div class="button" id="container">
             <div id="translate"></div>
