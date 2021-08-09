@@ -96,7 +96,7 @@
             animation: bannermove <%=listSponsors.size() * 15 / 7%>s linear infinite;
         }
 
-        @keyframes "bannermove" {
+        @keyframes bannermove {
             0% {
                 margin-left: 0;
             }
@@ -116,7 +116,7 @@
 
         }
 
-        @-webkit-keyframes "bannermove" {
+        @-webkit-keyframes bannermove {
             0% {
                 margin-left: 0;
             }
@@ -126,7 +126,7 @@
 
         }
 
-        @-ms-keyframes "bannermove" {
+        @-ms-keyframes bannermove {
             0% {
                 margin-left: 0;
             }
@@ -136,7 +136,7 @@
 
         }
 
-        @-o-keyframes "bannermove" {
+        @-o-keyframes bannermove {
             0% {
                 margin-left: 0;
             }
@@ -165,19 +165,16 @@
         }
         if (news != null) {%>
     <div id="listItem" class="latest"
-         style="position: absolute; bottom: 0; background-color: white; left: 0; text-align: center;">
+         style="position: absolute; bottom: 0; background-color: white; left: 0; text-align: center; display: block; cursor: pointer;"
+         onclick="location.href='news?id=<%=news.getID()%>';">
         Latest from news
-        <div>
-            <a href="news?id=<%=news.getID()%>">
-                <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
-                     onerror="this.onerror=null;this.src='images/default.png';"
-                     style="padding: 5px; max-height: 150px; max-width: 150px;">
-                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=news.getTitle()%></span>
-                <%Date date = new Date(news.getDate());%>
-                <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date.toString()%>
-                </p>
-            </a>
-        </div>
+        <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
+             onerror="this.onerror=null;this.src='images/default.png';"
+             style="padding: 5px; max-height: 150px; max-width: 150px;">
+        <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=news.getTitle()%></span>
+        <%Date date = new Date(news.getDate());%>
+        <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date.toString()%>
+        </p>
     </div>
     <%
         }
@@ -190,32 +187,28 @@
         if (whatsOn != null) {
     %>
     <div id="listItem" class="latest"
-         style="position: absolute; bottom: 0; background-color: white; left: 190px; text-align: center;">
+         style="position: absolute; bottom: 0; background-color: white; left: 190px; text-align: center; display: block; cursor: pointer;" onclick="location.href='whatson?id=<%=whatsOn.getID()%>';">
         Latest from what's on
-        <div>
-            <a href="whatson?id=<%=whatsOn.getID()%>">
-                <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
-                     onerror="this.onerror=null;this.src='images/default.png';"
-                     style="padding: 5px; max-height: 150px; max-width: 150px;">
-                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=whatsOn.getTitle()%></span>
-                <%
-                    Date date1 = new Date(whatsOn.getDate());
-                    String dateOfEvent = "";
-                    try {
-                        LocalDate date = LocalDate.ofEpochDay(whatsOn.getDateOfEvent());
-                        dateOfEvent = String.valueOf(date.getDayOfWeek()).charAt(0) + String.valueOf(date.getDayOfWeek()).substring(1).toLowerCase() + " "
-                                + date.getDayOfMonth() + " "
-                                + String.valueOf(date.getMonth()).charAt(0) + String.valueOf(date.getMonth()).substring(1).toLowerCase() + " "
-                                + date.getYear();
-                    } catch (Exception ignored) {
+        <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
+             onerror="this.onerror=null;this.src='images/default.png';"
+             style="padding: 5px; max-height: 150px; max-width: 150px;">
+        <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=whatsOn.getTitle()%></span>
+        <%
+            Date date1 = new Date(whatsOn.getDate());
+            String dateOfEvent = "";
+            try {
+                LocalDate date = LocalDate.ofEpochDay(whatsOn.getDateOfEvent());
+                dateOfEvent = String.valueOf(date.getDayOfWeek()).charAt(0) + String.valueOf(date.getDayOfWeek()).substring(1).toLowerCase() + " "
+                        + date.getDayOfMonth() + " "
+                        + String.valueOf(date.getMonth()).charAt(0) + String.valueOf(date.getMonth()).substring(1).toLowerCase() + " "
+                        + date.getYear();
+            } catch (Exception ignored) {
 
-                    }
-                %>
-                <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date1.toString()%><br>
-                    Date of Event - <%=dateOfEvent%>
-                </p>
-            </a>
-        </div>
+            }
+        %>
+        <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date1.toString()%><br>
+            Date of Event - <%=dateOfEvent%>
+        </p>
     </div>
     <%}%>
 </div>
@@ -244,7 +237,7 @@
         </div>
     </div>
     <div style="background-color: white; margin: 10px 0 0 0; padding: 5px 0 0 0;">
-        <h2 style="text-decoration: underline; text-decoration-color: red; width: 100vx; text-align: center;">
+        <h2 style="text-decoration: underline; text-decoration-color: red; width: 100%; text-align: center;">
             AFFILIATIONS</h2>
         <div id="affiliationContainer">
             <%

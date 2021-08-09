@@ -26,28 +26,37 @@
 
         }
         assert list != null;
+        boolean first = true;
         for (Programmes programme : list) {
+            if (first) {%>
+    <h2><%=programme.getName()%>
+    </h2>
+    <iframe src="<%=programme.getFileName()%>" width="75%" height="500px">
+    </iframe>
+    <br><br><br>
+    <%
+    } else {
     %>
-    <div id="listItem">
-        <div>
-            <a href="news?id=<%=programme.getID()%>">
-                <!--<img src="data:image/jpg;base64," alt=""
-                     onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px; width: auto;">-->
-                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"></span>
-                <%Date date = new Date();%>
-                <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date.toString()%></p>
-                </a>
-                <%if (user != null && user.getRole() != Role.MANAGER) {%>
-                <div class="button">
-            		<a href="editnews?id=<%=programme.getID()%>">Edit</a>
-        		</div>
-        		<div class="button">
-            		<a href="deletenews?id=<%=programme.getID()%>">Delete</a>
-        		</div>
-                <%}%>
-            </div>
+    <div id="listItem" style="display: block; cursor: pointer;" onclick="location.href='<%=programme.getFileName()%>';">
+        <!--<img src="data:image/jpg;base64," alt=""
+             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px; width: auto;">-->
+        <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"></span>
+        <%Date date = new Date();%>
+        <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date.toString()%>
+        </p>
+        <%if (user != null && user.getRole() != Role.MANAGER) {%>
+        <div class="button">
+            <a href="editnews?id=<%=programme.getID()%>">Edit</a>
+        </div>
+        <div class="button">
+            <a href="deletenews?id=<%=programme.getID()%>">Delete</a>
+        </div>
+        <%}%>
     </div>
-    <%}%>
+    <%
+            }
+        }
+    %>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
 <%if (user != null && user.getRole() != Role.MANAGER) {%>

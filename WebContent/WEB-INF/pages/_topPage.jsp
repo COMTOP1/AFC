@@ -32,6 +32,7 @@
             <a href="whatson">What's on</a>
             <a href="gallery">Gallery</a>
             <a href="documents">Documents</a>
+            <a href="programmes">Programmes</a>
             <a href="sponsors">Sponsors</a>
             <a href="info">Info</a>
             <a href="contact">Contact</a>
@@ -50,7 +51,7 @@
             <%}%>
         </div>
     </div>
-    <div id="leftSide" style="color: white; width: 670px;">
+    <div id="leftSide" style="color: white;">
         <div class="button">
             <a href="home" style="color: white;">Home</a>
         </div>
@@ -73,6 +74,10 @@
         |
         <div class="button">
             <a href="documents" style="color: white;">Documents</a>
+        </div>
+        |
+        <div class="button">
+            <a href="programmes" style="color: white;">Programmes</a>
         </div>
         |
         <div class="button">

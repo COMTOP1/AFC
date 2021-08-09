@@ -28,24 +28,21 @@
         assert list != null;
         for (News news : list) {
     %>
-    <div id="listItem">
-        <div>
-            <a href="news?id=<%=news.getID()%>">
-                <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
-                     onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px; width: auto;">
-                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=news.getTitle()%></span>
-                <%Date date = new Date(news.getDate());%>
-                <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date.toString()%></p>
-                </a>
-                <%if (user != null && user.getRole() != Role.MANAGER) {%>
-                <div class="button">
-            		<a href="editnews?id=<%=news.getID()%>">Edit</a>
-        		</div>
-        		<div class="button">
-            		<a href="deletenews?id=<%=news.getID()%>">Delete</a>
-        		</div>
-                <%}%>
-            </div>
+    <div id="listItem" style="display: block; cursor: pointer;" onclick="location.href='news?id=<%=news.getID()%>';">
+        <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
+             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px; width: auto;">
+        <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=news.getTitle()%></span>
+        <%Date date = new Date(news.getDate());%>
+        <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date.toString()%>
+        </p>
+        <%if (user != null && user.getRole() != Role.MANAGER) {%>
+        <div class="button">
+            <a href="editnews?id=<%=news.getID()%>">Edit</a>
+        </div>
+        <div class="button">
+            <a href="deletenews?id=<%=news.getID()%>">Delete</a>
+        </div>
+        <%}%>
     </div>
     <%}%>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>

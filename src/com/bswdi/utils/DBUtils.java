@@ -15,6 +15,7 @@ import com.bswdi.beans.*;
  * @author BSWDI
  * @version 1.0
  */
+@SuppressWarnings("unused")
 public class DBUtils {
 
     /**
@@ -728,6 +729,13 @@ public class DBUtils {
         return getProgrammesMethod(rs);
     }
 
+    /**
+     * Get programmes method
+     *
+     * @param rs result set
+     * @return List<Programmes> list
+     * @throws SQLException SQL exception
+     */
     private static List<Programmes> getProgrammesMethod(ResultSet rs) throws SQLException {
         List<Programmes> list = new ArrayList<>();
         while (rs.next()) {
@@ -754,10 +762,20 @@ public class DBUtils {
         else return null;
     }
 
+    /**
+     * Get programme method
+     *
+     * @param rs result set
+     * @return Programmes programme
+     * @throws SQLException SQL exception
+     */
     private static Programmes getProgrammeMethod(ResultSet rs) throws SQLException {
         int id;
+        String name, fileName;
         id = rs.getInt("ID");
-        return new Programmes(id);
+        name = rs.getString("NAME");
+        fileName = rs.getString("FILE_NAME");
+        return new Programmes(id, name, fileName);
     }
 
     /**
@@ -1181,16 +1199,29 @@ public class DBUtils {
      * @throws Exception throws SQLException
      */
     public static Users login(Connection con, String email, String password) throws Exception {
-        String sql1 = "UPDATE USERS SET TEMP = SHA2('" + password + "', 512) WHERE EMAIL = ? AND ROLE != 0", sql2 = "SELECT * FROM USERS WHERE EMAIL = ? AND ROLE != 0", sql3 = "UPDATE USERS SET TEMP = NULL WHERE EMAIL = ? AND ROLE != 0";
+        String sql1 = "UPDATE USERS SET TEMP = SHA2(?, 512) WHERE EMAIL = ? AND ROLE != 'MANAGER'", sql2 = "SELECT * FROM USERS WHERE EMAIL = ? AND ROLE != 'MANAGER'", sql3 = "UPDATE USERS SET TEMP = NULL WHERE EMAIL = ? AND ROLE != 'MANAGER'";
         PreparedStatement pstm1 = con.prepareStatement(sql1), pstm2 = con.prepareStatement(sql2), pstm3 = con.prepareStatement(sql3);
         if (email == null) return null;
-        pstm1.setString(1, email);
-        pstm1.execute();
+        pstm1.setString(1, password);
+        pstm1.setString(2, email);
+        try {
+        	pstm1.executeUpdate();
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
         pstm2.setString(1, email);
         pstm3.setString(1, email);
         ResultSet rs = pstm2.executeQuery();
         rs.next();
-        if (rs.getString("PASSWORD").equals(rs.getString("TEMP"))) {
+        String password1 = null, temp = null;
+        try {
+        	password1 = rs.getString("PASSWORD");
+        	temp = rs.getString("TEMP");
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        assert password1 != null;
+        if (password1.equals(temp)) {
             pstm3.execute();
             String name, phone, image;
             int teamID;

@@ -36,9 +36,7 @@
         assert list != null;
         for (Teams team : list) {
     %>
-    <div id="listItem" style="text-align: center; width: auto; height: auto;">
-        <div>
-            <a href="team?id=<%=team.getID()%>">
+    <div id="listItem" style="text-align: center; width: auto; height: auto;" style="display: block; cursor: pointer;" onclick="location.href='team?id=<%=team.getID()%>';">
                 <%
                     if (user != null && user.getRole() != Role.MANAGER) {
                         String active = (team.getActive()) ? "Active" : "Inactive";
@@ -46,7 +44,6 @@
                 <%=active%><br><br><br>
                 <%}%>
                 <%=team.getName()%>
-            </a></div>
         <br>
         <%if (user != null && user.getRole() != Role.MANAGER) {%>
         <p><a href="editteam?id=<%=team.getID()%>">Edit team</a></p><br>

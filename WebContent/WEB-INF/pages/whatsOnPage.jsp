@@ -29,42 +29,41 @@
         assert list != null;
         for (WhatsOn whatsOn : list) {
     %>
-    <div id="listItem">
-        <div>
-            <a href="whatson?id=<%=whatsOn.getID()%>">
-                <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
-                     onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=whatsOn.getTitle()%></span>
-                <%
-                    Date date1 = new Date(whatsOn.getDate());
-                    String dateOfEvent = "";
-                    try {
-                        LocalDate date = LocalDate.ofEpochDay(whatsOn.getDateOfEvent());
-                        dateOfEvent = String.valueOf(date.getDayOfWeek()).charAt(0) + String.valueOf(date.getDayOfWeek()).substring(1).toLowerCase() + " "
-                                + date.getDayOfMonth() + " "
-                                + String.valueOf(date.getMonth()).charAt(0) + String.valueOf(date.getMonth()).substring(1).toLowerCase() + " "
-                                + date.getYear();
-                    } catch (Exception ignored) {
+    <a href="whatson?id=<%=whatsOn.getID()%>">
+        <div id="listItem" style="display: block; cursor: pointer;"
+             onclick="location.href='whatson?id=<%=whatsOn.getID()%>';">
+            <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
+                 onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
+            <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=whatsOn.getTitle()%></span>
+            <%
+                Date date1 = new Date(whatsOn.getDate());
+                String dateOfEvent = "";
+                try {
+                    LocalDate date = LocalDate.ofEpochDay(whatsOn.getDateOfEvent());
+                    dateOfEvent = String.valueOf(date.getDayOfWeek()).charAt(0) + String.valueOf(date.getDayOfWeek()).substring(1).toLowerCase() + " "
+                            + date.getDayOfMonth() + " "
+                            + String.valueOf(date.getMonth()).charAt(0) + String.valueOf(date.getMonth()).substring(1).toLowerCase() + " "
+                            + date.getYear();
+                } catch (Exception ignored) {
 
-                    }
-                %>
-                <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date1.toString()%><br>
-                Date of Event - <%=dateOfEvent%></p>
-                </a>
-                <%if (user != null && user.getRole() != Role.MANAGER) {%>
-                <div class="button" id="container">
-                    <div id="translate"></div>
-                    <a href="editwhatson?id=<%=whatsOn.getID()%>">Edit</a>
-                </div>
-                <div class="button" id="container">
-                    <div id="translate"></div>
-                    <a href="deletewhatson?id=<%=whatsOn.getID()%>">Delete</a>
-                </div>
-                <%}%>
+                }
+            %>
+            <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date1.toString()%><br>
+                Date of Event - <%=dateOfEvent%>
+            </p>
+            <%if (user != null && user.getRole() != Role.MANAGER) {%>
+            <div class="button" id="container">
+                <div id="translate"></div>
+                <a href="editwhatson?id=<%=whatsOn.getID()%>">Edit</a>
             </div>
-    </div>
-    <%}%>
-    <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
+            <div class="button" id="container">
+                <div id="translate"></div>
+                <a href="deletewhatson?id=<%=whatsOn.getID()%>">Delete</a>
+            </div>
+            <%}%>
+        </div>
+            <%}%>
+        <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
 <%if (user != null && user.getRole() != Role.MANAGER) {%>
 <p style="width: 96%;">

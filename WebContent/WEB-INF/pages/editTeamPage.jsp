@@ -11,7 +11,7 @@
 <jsp:include page="_topPageConfirmation.jsp"/>
 <main class="main" style="text-align: center;">
     <div style="background-color: white; margin: 10px 0 0 0; padding: 5px 0 0 0;">
-        <h2 style="text-decoration: underline; text-decoration-color: red; width: 100vx; text-align: center;">Edit
+        <h2 style="text-decoration: underline; text-decoration-color: red; width: 100%; text-align: center;">Edit
             team</h2>
         <p style="color: red; padding: 0; margin: 0;" id="error">${error}</p>
         <%

@@ -3,17 +3,17 @@
 @import url("webfonts/Arial/stylesheet.css");
 
 @viewport {
-    width: device-width;
+    width: 100%;
     zoom: 1.0;
 }
 
 @-ms-viewport {
-    width: device-width;
+    width: 100%;
 }
 
 body {
     font-size: 14px;
-    font-family: Arial; /*Allerta*/
+    font-family: Arial, serif; /*Allerta*/
     margin: 0;
     background-color: #eee;
 }
@@ -22,7 +22,7 @@ a {
     color: black;
     text-decoration: none;
     letter-spacing: 1px;
-    font-family: Arial; /*Allerta*/
+    font-family: Arial, serif; /*Allerta*/
     z-index: 1;
 }
 
@@ -44,7 +44,7 @@ main {
 footer {
     background-size: cover;
     text-align: left;
-    font-family: Arial; /*Allerta*/
+    font-family: Arial, serif; /*Allerta*/
     bottom: 0;
     padding: 0 0 0 10px;
     position: fixed;
@@ -153,7 +153,7 @@ p {
 }
 
 .welcomeBackground {
-    background-image: url('images/stock3.png');
+    background-image: url('images/stock.png');
     background-size: cover;
     padding: 10px;
     margin: 0;
@@ -189,7 +189,7 @@ img {
 @media screen and (max-width: 299px) {
     #topPage {
         padding: 10px 0 10px 0;
-        text-align: centre;
+        text-align: center;
         overflow: auto;
         height: 200px;
         width: 100%;
@@ -200,10 +200,10 @@ img {
     }
 
     #listItem {
+    	display: block;
         padding: 10px;
         height: auto;
         width: 200px;
-        display: inline-block;
         margin: 10px;
         float: left;
         background-color: white;
@@ -229,9 +229,8 @@ img {
 
     #affiliationContainer {
         padding: 10px;
-        width: 100 vx;
+        width: 100%;
         display: inline-flex;
-        overflow: wrap;
         flex-wrap: wrap;
         justify-content: center;
     }
@@ -279,7 +278,7 @@ img {
     }
 
     #header h1 {
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         text-align: center;
         font-size: 72px;
@@ -300,7 +299,7 @@ img {
     main {
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
         padding: 0 0 25px 0;
@@ -311,7 +310,7 @@ img {
         font-size: 14px;
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
         padding: 0 0 25px 0;
@@ -323,7 +322,7 @@ img {
         color: #1F1F1F;
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
     }
@@ -364,7 +363,7 @@ img {
         color: black;
         padding: 10px 10px;
         text-decoration: none;
-        text-size: 12px;
+        font-size: 12px;
         display: block;
         text-align: left;
     }
@@ -395,10 +394,10 @@ img {
     }
 
     #listItem {
+        display: block;
         padding: 10px;
         height: auto;
         width: 200px;
-        display: inline-block;
         margin: 10px;
         float: left;
         background-color: white;
@@ -424,9 +423,8 @@ img {
 
     #affiliationContainer {
         padding: 10px;
-        width: 100 vx;
+        width: 100%;
         display: inline-flex;
-        overflow: wrap;
         flex-wrap: wrap;
         justify-content: center;
     }
@@ -474,7 +472,7 @@ img {
     }
 
     #header h1 {
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         text-align: center;
         font-size: 72px;
@@ -502,7 +500,7 @@ img {
     main {
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
         padding: 0 0 25px 0;
@@ -513,7 +511,7 @@ img {
         font-size: 14px;
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
         padding: 0 0 25px 0;
@@ -525,7 +523,7 @@ img {
         color: #1F1F1F;
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
     }
@@ -559,7 +557,7 @@ img {
         color: black;
         padding: 10px 10px;
         text-decoration: none;
-        text-size: 12px;
+        font-size: 12px;
         display: block;
         text-align: left;
         z-index: 0;
@@ -577,7 +575,7 @@ img {
     }
 }
 
-@media screen and (min-width: 610px) and (max-width: 989px) {
+@media screen and (min-width: 610px) and (max-width: 1071px) {
     #topPage {
         padding: 10px 15px 10px 15px;
         text-align: left;
@@ -591,10 +589,10 @@ img {
     }
 
     #listItem {
+        display: block;
         padding: 10px;
         height: auto;
         width: 200px;
-        display: inline-block;
         margin: 10px;
         float: left;
         background-color: white;
@@ -623,9 +621,8 @@ img {
 
     #affiliationContainer {
         padding: 10px;
-        width: 100 vx;
+        width: 100%;
         display: inline-flex;
-        overflow: wrap;
         flex-wrap: wrap;
         justify-content: center;
     }
@@ -691,7 +688,7 @@ img {
     main {
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
         padding: 0 0 25px 0;
@@ -703,7 +700,7 @@ img {
         font-size: 14px;
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
         padding: 0 0 25px 0;
@@ -715,7 +712,7 @@ img {
         color: #1F1F1F;
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
     }
@@ -728,7 +725,7 @@ img {
         color: black;
         padding: 10px 10px;
         text-decoration: none;
-        text-size: 12px;
+        font-size: 12px;
         display: block;
         text-align: left;
     }
@@ -745,7 +742,7 @@ img {
     }
 }
 
-@media screen and (min-width: 990px) {
+@media screen and (min-width: 1072px) {
     #topPage {
         padding: 10px 15px 10px 15px;
         text-align: left;
@@ -759,10 +756,10 @@ img {
     }
 
     #listItem {
+        display: block;
         padding: 10px;
         height: auto;
         width: 200px;
-        display: inline-block;
         margin: 10px;
         float: left;
         background-color: white;
@@ -791,9 +788,8 @@ img {
 
     #affiliationContainer {
         padding: 10px;
-        width: 100 vx;
+        width: 100%;
         display: inline-flex;
-        overflow: wrap;
         flex-wrap: wrap;
         justify-content: center;
     }
@@ -816,7 +812,7 @@ img {
     }
 
     #header h1 {
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         text-align: left;
         font-size: 72px;
@@ -830,7 +826,7 @@ img {
     }
 
     #header2 h2 {
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         text-align: left;
         font-size: 32px;
@@ -846,7 +842,7 @@ img {
     main {
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
         padding: 0 0 25px 0;
@@ -857,7 +853,7 @@ img {
         font-size: 14px;
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
         padding: 0 0 25px 0;
@@ -869,18 +865,17 @@ img {
         color: #1F1F1F;
         background-size: cover;
         text-align: left;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
         font-style: normal;
         font-weight: 400;
     }
 
     .button {
-        display: inline-flex;
+        display: inline-block;
         margin: 5px;
         text-decoration: none;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
         color: white;
     }
 
@@ -888,11 +883,11 @@ img {
         color: black;
         text-decoration: none;
         letter-spacing: 1px;
-        font-family: Arial; /*Allerta*/
+        font-family: Arial, serif; /*Allerta*/
     }
 
     #leftSide {
-        width: 709px;
+        width: 772px;
         padding: 0 0 0 10px;
         float: left;
     }
