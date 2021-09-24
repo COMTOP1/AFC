@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,27 +14,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bswdi.beans.*;
 import com.bswdi.utils.*;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
- * Add document second servlet
+ * Add document servlet
  *
  * @author BSWDI
  * @version 1.0
  */
-@WebServlet(urlPatterns = {"/adddocumentsecond"})
-@MultipartConfig(maxFileSize = 16177215)
-public class AddDocumentSecondServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/adddocument"})
+public class AddDocumentServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ServletFileUpload uploader = null;
 
     /**
      * Constructor
      */
-    public AddDocumentSecondServlet() {
+    public AddDocumentServlet() {
         super();
     }
 
@@ -49,10 +46,13 @@ public class AddDocumentSecondServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = MyUtils.getEmailInCookie(request);
         try {
-            if ((boolean) request.getSession().getAttribute("allow")) {
-            	request.getSession().setAttribute("allow", false);
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addDocumentSecondPage.jsp");
+            Connection con = MyUtils.getStoredConnection(request);
+            Users user = DBUtils.findUser(con, email);
+            assert user != null;
+            if (user.getRole() != Role.MANAGER) {
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addDocumentPage.jsp");
                 dispatcher.forward(request, response);
             } else response.sendRedirect("documents");
         } catch (Exception e) {
@@ -65,32 +65,34 @@ public class AddDocumentSecondServlet extends HttpServlet {
         if (!ServletFileUpload.isMultipartContent(request))
             throw new ServletException("Content type is not multipart/form-data");
         Connection con = MyUtils.getStoredConnection(request);
-        String name = (String) request.getSession().getAttribute("documentName"), fileName = null;
-        request.getSession().setAttribute("documentName", null);
-        try {
-            List<FileItem> fileItemsList = uploader.parseRequest(request);
-            for (FileItem fileItem : fileItemsList) {
-                //if (fileItem.getName() != null && !fileItem.getName().equals("null") && !fileItem.getName().equals("")) {
+        String name = request.getParameter("name"), fileName = null;
+        if (name == null || name.equals("")) {
+            request.getSession().setAttribute("error", "Name must not be empty");
+            response.sendRedirect("adddocument");
+        } else {
+            try {
+                List<FileItem> fileItemsList = uploader.parseRequest(request);
+                for (FileItem fileItem : fileItemsList) {
                     fileName = fileItem.getName();
                     File file = new File(request.getServletContext().getAttribute("FILES_DIR") + File.separator + fileName);
                     fileItem.write(file);
-                //}
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (name == null || name.equals("") || fileName == null || fileName.equals("")) {
-            request.getSession().setAttribute("error", "Name and file must not be empty");
-            System.out.println(name + " ~ " + fileName);
-            response.sendRedirect("adddocument");
-        } else
-            try {
-                Documents document = new Documents(0, name, fileName);
-                DBUtils.insertDocument(con, document);
-                response.sendRedirect("documents");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-                response.sendRedirect("documents");
             }
+            if (fileName == null || fileName.equals("")) {
+                request.getSession().setAttribute("error", "Name and file must not be empty");
+                System.out.println(name + " ~ " + fileName);
+                response.sendRedirect("adddocument");
+            } else
+                try {
+                    Documents document = new Documents(0, name, fileName);
+                    DBUtils.insertDocument(con, document);
+                    response.sendRedirect("documents");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    response.sendRedirect("documents");
+                }
+        }
     }
 }

@@ -10,6 +10,7 @@ public class Programmes {
 	
 	private int id = 0;
 	private String name = null, fileName = null;
+	private long dateOfProgramme = 0L;
 
 	/**
 	 * Blank constructor
@@ -20,17 +21,23 @@ public class Programmes {
 
 	/**
 	 * Constructor
+	 * 
+	 * @param id id
+	 * @param name name
+	 * @param fileName file name
+	 * @param date date
 	 */
-	public Programmes(int id, String name, String fileName) {
+	public Programmes(int id, String name, String fileName, long date) {
 		this.id = id;
 		this.name = name;
 		this.fileName = fileName;
+		this.dateOfProgramme = date;
 	}
 
 	/**
 	 * Return id
 	 *
-	 * @return id id
+	 * @return int id
 	 */
 	public int getID() {
 		return id;
@@ -79,5 +86,23 @@ public class Programmes {
 	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+	
+	/**
+	 * Return date of programme
+	 *
+	 * @return Long date of programme
+	 */
+	public Long getDateOfProgramme() {
+		return dateOfProgramme;
+	}
+
+	/**
+	 * Sets date of programme
+	 *
+	 * @param dateOfProgramme date of programme
+	 */
+	public void setDateOfProgramme(Long dateOfProgramme) {
+		this.dateOfProgramme = dateOfProgramme;
 	}
 }

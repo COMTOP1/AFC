@@ -118,9 +118,9 @@ public class AddPlayerServlet extends HttpServlet {
 	        try {
 	            teamID = Integer.parseInt(request.getParameter("teamID"));
 	            if (teamID < 0) teamID = 0;
-	        } catch (Exception e) {
-	            teamID = 0;
-	        }
+	        } catch (Exception ignored) {
+
+            }
 	        try {
 	            Players player = new Players(0, name, image, dateOfBirth, position, captain, teamID);
 	            DBUtils.insertPlayer(con, player);

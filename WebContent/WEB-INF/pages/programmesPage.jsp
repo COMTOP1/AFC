@@ -1,6 +1,6 @@
 <%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.bswdi.beans.*, java.sql.Connection, com.bswdi.utils.*, java.util.List, java.util.Date" %>
+<%@ page import="com.bswdi.beans.*, java.sql.Connection, com.bswdi.utils.*, java.util.List, java.time.LocalDate, java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,28 +28,40 @@
         assert list != null;
         boolean first = true;
         for (Programmes programme : list) {
-            if (first) {%>
+            if (first) {
+                first = false;%>
     <h2><%=programme.getName()%>
-    </h2>
-    <iframe src="<%=programme.getFileName()%>" width="75%" height="500px">
-    </iframe>
+    </h2><%
+    Date date = new Date(programme.getDateOfProgramme());
+    String[] dateArray = date.toString().split(" ");
+    String dateString = String.format("%s %s %s %s", dateArray[0], dateArray[2], dateArray[1], dateArray[5]);
+    %>
+    <p>Date of programme - <%=dateString%></p>
+    <iframe src="FileStore/<%=programme.getFileName()%>" width="75%" height="500px"></iframe>
+    <%if (user != null && user.getRole() != Role.MANAGER) {%>
+        <div class="button">
+            <a href="editprogramme?id=<%=programme.getID()%>">Edit</a>
+        </div>
+        <div class="button">
+            <a href="deleteprogramme?id=<%=programme.getID()%>">Delete</a>
+        </div>
+        <%}%>
     <br><br><br>
     <%
     } else {
     %>
-    <div id="listItem" style="display: block; cursor: pointer;" onclick="location.href='<%=programme.getFileName()%>';">
-        <!--<img src="data:image/jpg;base64," alt=""
-             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px; width: auto;">-->
-        <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"></span>
-        <%Date date = new Date();%>
-        <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date.toString()%>
-        </p>
+    <div id="listItem" style="display: block; cursor: pointer;"
+         onclick="location.href('download?id=<%=programme.getID()%>&s=p');">
+        <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=programme.getName()%></span><%
+        Date date = new Date(programme.getDateOfProgramme());
+        String[] dateArray = date.toString().split(" ");
+        String dateString = String.format("%s %s %s %s", dateArray[0], dateArray[2], dateArray[1], dateArray[5]);
+        %>
+        <p>Date of programme - <%=dateString%></p>
+        <p>Click to download</p>
         <%if (user != null && user.getRole() != Role.MANAGER) {%>
         <div class="button">
-            <a href="editnews?id=<%=programme.getID()%>">Edit</a>
-        </div>
-        <div class="button">
-            <a href="deletenews?id=<%=programme.getID()%>">Delete</a>
+            <a href="deleteprogramme?id=<%=programme.getID()%>">Delete</a>
         </div>
         <%}%>
     </div>

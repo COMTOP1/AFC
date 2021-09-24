@@ -772,10 +772,59 @@ public class DBUtils {
     private static Programmes getProgrammeMethod(ResultSet rs) throws SQLException {
         int id;
         String name, fileName;
+        long date;
         id = rs.getInt("ID");
         name = rs.getString("NAME");
         fileName = rs.getString("FILE_NAME");
-        return new Programmes(id, name, fileName);
+        date = rs.getLong("DATE");
+        return new Programmes(id, name, fileName, date);
+    }
+
+    /**
+     * Insert programme
+     *
+     * @param con connection
+     * @param programme programme
+     * @throws SQLException SQL exception
+     */
+    public static void insertProgramme(Connection con, Programmes programme) throws SQLException {
+        String sql = "INSERT INTO PROGRAMMES (NAME, FILE_NAME, DATE_OF_PROGRAMME) VALUES (?, ?, ?)";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, programme.getName());
+        pstm.setString(2, programme.getFileName());
+        pstm.setLong(3, programme.getDateOfProgramme());
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Delete programme
+     *
+     * @param con connection
+     * @param id  id
+     * @throws SQLException SQL exception
+     */
+    public static void deleteProgramme(Connection con, int id) throws SQLException {
+        backupProgramme(con, id, "DELETE");
+        String sql = "DELETE FROM PROGRAMMES WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setInt(1, id);
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Backup programme
+     *
+     * @param con connection
+     * @param id id
+     * @param action action
+     * @throws SQLException SQL exception
+     */
+    private static void backupProgramme(Connection con, int id, String action) throws SQLException {
+        String sql = "INSERT INTO PROGRAMMES_BACKUP (ID, NAME, FILE_NAME, DATE_OF_PROGRAMME, ACTION) SELECT ID, NAME, FILE_NAME, DATE_OF_PROGRAMME, ? FROM PROGRAMMES WHERE ID = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, action);
+        pstm.setInt(2, id);
+        pstm.executeUpdate();
     }
 
     /**

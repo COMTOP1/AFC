@@ -11,7 +11,7 @@ public class FileLocationContextListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         //String rootPath = System.getProperty("catalina.home");
-        String rootPath = "/Users/liam/Desktop/Code/Java/AFC/";
+        String rootPath = "/Users/liam/Desktop/Code/Java/AFC/WebContent/";
         ServletContext ctx = servletContextEvent.getServletContext();
         String relativePath = "FileStore";
         File file = new File(rootPath + File.separator + relativePath);

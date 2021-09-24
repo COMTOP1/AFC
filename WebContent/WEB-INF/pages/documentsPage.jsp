@@ -34,7 +34,7 @@
     %>
     <h2><%=document.getName()%>
     </h2>
-    <a href="download?id=<%=document.getID()%>" style="text-decoration: underline;">Download</a><%if (user != null && user.getRole() != Role.MANAGER) {
+    <a href="download?id=<%=document.getID()%>&s=d" style="text-decoration: underline;">Download</a><%if (user != null && user.getRole() != Role.MANAGER) {
     	for (int i = 0; i < 21; i++) {%>&emsp;<%}%><a href="deletedocument?id=<%=document.getID()%>">Delete</a>
     <%
             }

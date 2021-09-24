@@ -10,23 +10,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bswdi.beans.*;
+import com.bswdi.beans.Role;
+import com.bswdi.beans.Users;
 import com.bswdi.utils.*;
 
 /**
- * Add document first servlet
+ * Delete programme servlet
  *
  * @author BSWDI
  * @version 1.0
  */
-@WebServlet(urlPatterns = {"/adddocument"})
-public class AddDocumentFirstServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/deleteprogramme"})
+public class DeleteProgrammeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * Constructor
      */
-    public AddDocumentFirstServlet() {
+    public DeleteProgrammeServlet() {
         super();
     }
 
@@ -34,28 +35,29 @@ public class AddDocumentFirstServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = MyUtils.getEmailInCookie(request);
         try {
+            int id = Integer.parseInt(request.getParameter("id"));
             Connection con = MyUtils.getStoredConnection(request);
             Users user = DBUtils.findUser(con, email);
             assert user != null;
             if (user.getRole() != Role.MANAGER) {
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addDocumentFirstPage.jsp");
+                request.setAttribute("id", id);
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/deleteProgrammeConfirmationPage.jsp");
                 dispatcher.forward(request, response);
-            } else response.sendRedirect("documents");
+            } else response.sendRedirect("programmes");
         } catch (Exception e) {
-            response.sendRedirect("documents");
+            response.sendRedirect("programmes");
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
-        if (name == null || name.equals("")) {
-            request.getSession().setAttribute("error", "Name must not be empty");
-            response.sendRedirect("adddocument");
-        } else {
-            request.getSession().setAttribute("documentName", name);
-            request.getSession().setAttribute("allow", true);
-            response.sendRedirect("adddocumentsecond");
+        Connection con = MyUtils.getStoredConnection(request);
+        try {
+            DBUtils.deleteProgramme(con, Integer.parseInt(request.getParameter("id")));
+            response.sendRedirect("programmes");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("programmes");
         }
     }
 }
