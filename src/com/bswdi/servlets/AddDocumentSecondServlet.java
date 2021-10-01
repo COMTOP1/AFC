@@ -50,7 +50,7 @@ public class AddDocumentSecondServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            if ((boolean) request.getSession().getAttribute("allow")) {
+            if ((boolean) request.getSession().getAttribute("allowDocumentSecond")) {
             	request.getSession().setAttribute("allow", false);
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addDocumentSecondPage.jsp");
                 dispatcher.forward(request, response);

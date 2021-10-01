@@ -9,8 +9,9 @@
 </head>
 <body>
 <jsp:include page="_topPage.jsp"/>
-<main class="main" style="text-align: center;">
+<main class="main" style="text-align: center;"><p style="color: red; padding: 0; margin: 0;" id="error">${error}</p><br>
     <%
+        request.getSession().setAttribute("error", null);
         Connection con = MyUtils.getStoredConnection(request);
         String email = MyUtils.getEmailInCookie(request);
         Users user = null;
@@ -38,10 +39,8 @@
     %>
     <p>Date of programme - <%=dateString%></p>
     <iframe src="FileStore/<%=programme.getFileName()%>" width="75%" height="500px"></iframe>
+    <br><br><br>
     <%if (user != null && user.getRole() != Role.MANAGER) {%>
-        <div class="button">
-            <a href="editprogramme?id=<%=programme.getID()%>">Edit</a>
-        </div>
         <div class="button">
             <a href="deleteprogramme?id=<%=programme.getID()%>">Delete</a>
         </div>

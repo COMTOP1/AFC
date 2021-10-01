@@ -772,12 +772,12 @@ public class DBUtils {
     private static Programmes getProgrammeMethod(ResultSet rs) throws SQLException {
         int id;
         String name, fileName;
-        long date;
+        long dateOfProgramme;
         id = rs.getInt("ID");
         name = rs.getString("NAME");
         fileName = rs.getString("FILE_NAME");
-        date = rs.getLong("DATE");
-        return new Programmes(id, name, fileName, date);
+        dateOfProgramme = rs.getLong("DATE_OF_PROGRAMME");
+        return new Programmes(id, name, fileName, dateOfProgramme);
     }
 
     /**

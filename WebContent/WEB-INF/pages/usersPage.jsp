@@ -12,14 +12,14 @@
         Users user = null;
         try {
             user = DBUtils.findUser(con, email);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+        	e.printStackTrace();
         }
         List<Users> list = null;
         try {
             list = DBUtils.queryUsers(con);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+        	e.printStackTrace();
         }
     %>
 </head>
