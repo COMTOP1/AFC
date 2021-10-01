@@ -804,7 +804,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void deleteProgramme(Connection con, int id) throws SQLException {
-        backupProgramme(con, id, "DELETE");
+        backupProgramme(con, id);
         String sql = "DELETE FROM PROGRAMMES WHERE ID = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
@@ -816,14 +816,12 @@ public class DBUtils {
      *
      * @param con connection
      * @param id id
-     * @param action action
      * @throws SQLException SQL exception
      */
-    private static void backupProgramme(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO PROGRAMMES_BACKUP (ID, NAME, FILE_NAME, DATE_OF_PROGRAMME, ACTION) SELECT ID, NAME, FILE_NAME, DATE_OF_PROGRAMME, ? FROM PROGRAMMES WHERE ID = ?";
+    private static void backupProgramme(Connection con, int id) throws SQLException {
+        String sql = "INSERT INTO PROGRAMMES_BACKUP (ID, NAME, FILE_NAME, DATE_OF_PROGRAMME, ACTION) SELECT ID, NAME, FILE_NAME, DATE_OF_PROGRAMME, 'DELETE' FROM PROGRAMMES WHERE ID = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
-        pstm.setString(1, action);
-        pstm.setInt(2, id);
+        pstm.setInt(1, id);
         pstm.executeUpdate();
     }
 
