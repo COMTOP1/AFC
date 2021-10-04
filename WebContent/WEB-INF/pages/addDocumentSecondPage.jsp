@@ -22,7 +22,7 @@
             </div>
             <p><a onclick="validateFunction()" href="javascript:{}">Add</a></p>
             <br>
-            <p><a href="users">Cancel</a></p>
+            <p><a href="documents">Cancel</a></p>
             <script>
                 function validateFunction() {
                     const file = document.getElementById('file').value.length;

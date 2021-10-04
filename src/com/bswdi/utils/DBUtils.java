@@ -723,7 +723,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Programmes> queryProgrammes(Connection con) throws SQLException {
-        String sql = "SELECT * FROM PROGRAMMES";
+        String sql = "SELECT * FROM PROGRAMMES ORDER BY DATE_OF_PROGRAMME DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getProgrammesMethod(rs);

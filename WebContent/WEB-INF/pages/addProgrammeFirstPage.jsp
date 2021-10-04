@@ -16,7 +16,7 @@
         <p style="color: red; padding: 0; margin: 0;" id="error">${error}</p><br><%
         request.getSession().setAttribute("error", null);
     %>
-        <form id="add" method="POST" action="addprogramme" enctype="multipart/form-data">
+        <form id="add" method="POST" action="addprogramme">
             <div>
                 <label for="name">Name: </label>
                 <input type="text" id="name" name="name">
@@ -28,7 +28,7 @@
             </div>
             <p><a onclick="validateFunction()" href="javascript:{}">Next</a></p>
             <br>
-            <p><a href="users">Cancel</a></p>
+            <p><a href="programmes">Cancel</a></p>
             <script>
                 function validateFunction() {
                     const name = document.getElementById('name').value.length;

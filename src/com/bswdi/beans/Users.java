@@ -10,7 +10,7 @@ public class Users {
 
     private String name = null, email = null, image = null, phone = null;
     private int teamID = 0;
-    Role role = null;
+    private Role role = null;
 
     /**
      * Blank constructor

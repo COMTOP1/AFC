@@ -30,7 +30,7 @@
                      style="padding: 5px; max-height: 200px;">
             </div>
             <br><%=user.getName()%><br></br>
-            <%=user.getRole()%><br>
+            <%=user.getRole().toString()%><br>
             <%=user.getEmail()%>
         </div>
     </div>

@@ -25,7 +25,7 @@
             </div>
             <p><a onclick="document.getElementById('add').submit();" href="javascript:{}">Add</a></p>
             <br>
-            <p><a href="users">Cancel</a></p>
+            <p><a href="gallery">Cancel</a></p>
         </form>
     </div>
 </main>

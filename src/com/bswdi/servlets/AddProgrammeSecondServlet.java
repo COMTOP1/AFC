@@ -18,8 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,7 +54,7 @@ public class AddProgrammeSecondServlet extends HttpServlet {
             Users user = DBUtils.findUser(con, email);
             assert user != null;
             if (user.getRole() != Role.MANAGER) {
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addProgrammeFirstPage.jsp");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addProgrammeSecondPage.jsp");
                 dispatcher.forward(request, response);
             } else response.sendRedirect("programmes");
         } catch (Exception e) {

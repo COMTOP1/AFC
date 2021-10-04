@@ -22,7 +22,7 @@
             </div>
             <p><a onclick="validateFunction()" href="javascript:{}">Next</a></p>
             <br>
-            <p><a href="users">Cancel</a></p>
+            <p><a href="documents">Cancel</a></p>
             <script>
                 function validateFunction() {
                     const name = document.getElementById('name').value.length;

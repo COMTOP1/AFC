@@ -14,5 +14,29 @@ public enum Role {
     SAFEGUARDING_OFFICER,
     CLUB_SECRETARY,
     CHAIRPERSON,
-    WEBMASTER
+    WEBMASTER;
+    
+    @Override
+    public String toString() {
+    	switch (this) {
+    		case MANAGER:
+    			return "Manager";
+    		case PROGRAMME_EDITOR:
+    			return "Programme editor";
+    		case LEAGUE_SECRETARY:
+    			return "League secretary";
+            case TREASURER:
+                return "Treasurer";
+            case SAFEGUARDING_OFFICER:
+                return "Safeguarding officer";
+            case CLUB_SECRETARY:
+                return "Club secretary";
+            case CHAIRPERSON:
+                return "Chairperson";
+            case WEBMASTER:
+                return "Webmaster";
+			default:
+    			throw new IllegalArgumentException();
+    	}
+    }
 }

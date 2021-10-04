@@ -28,7 +28,7 @@
             </div>
             <p><a onclick="validateFunction()" href="javascript:{}">Add</a></p>
             <br>
-            <p><a href="users">Cancel</a></p>
+            <p><a href="news">Cancel</a></p>
             <script>
                 function validateFunction() {
                     const title = document.getElementById('title').value.length;
