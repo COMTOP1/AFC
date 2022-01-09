@@ -165,7 +165,7 @@
         }
         if (news != null) {%>
     <div id="listItem" class="latest"
-         style="position: absolute; bottom: 0; background-color: white; left: 0; text-align: center; display: block; cursor: pointer;"
+         style="position: absolute; bottom: 0; background-color: white; left: 0; text-align: center; cursor: pointer;"
          onclick="location.href='news?id=<%=news.getID()%>';">
         Latest from news
         <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
@@ -187,7 +187,7 @@
         if (whatsOn != null) {
     %>
     <div id="listItem" class="latest"
-         style="position: absolute; bottom: 0; background-color: white; left: 190px; text-align: center; display: block; cursor: pointer;" onclick="location.href='whatson?id=<%=whatsOn.getID()%>';">
+         style="position: absolute; bottom: 0; background-color: white; left: 190px; text-align: center; cursor: pointer;" onclick="location.href='whatson?id=<%=whatsOn.getID()%>';">
         Latest from what's on
         <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
              onerror="this.onerror=null;this.src='images/default.png';"

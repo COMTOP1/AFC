@@ -55,11 +55,12 @@ public class DeleteDocumentServlet extends HttpServlet {
         try {
         	Documents document = DBUtils.findDocument(con, Integer.parseInt(request.getParameter("id")));
             DBUtils.deleteDocument(con, Integer.parseInt(request.getParameter("id")));
-            String filepath = "C:\\Users\\Administrator.LIAM-ACER-SERVE\\Desktop\\Code\\Java\\AFC\\FileStore\\";
-            //String filepath = System.getProperty("catalina.home") + "/FileStore";
-            //String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
+//            String filepath = "C:\\Users\\Administrator.LIAM-ACER-SERVE\\Desktop\\Code\\Java\\AFC\\FileStore\\";
+//            String filepath = System.getProperty("catalina.home") + "/FileStore/";
+//            String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
+            String filepath = "/FileStore/";
             assert document != null;
-            File file = new File(filepath + "\\" + document.getFileName());
+            File file = new File(filepath + document.getFileName());
             boolean deleted;
             deleted = file.delete();
             if (!deleted) request.getSession().setAttribute("error", "Couldn't delete file from file system");

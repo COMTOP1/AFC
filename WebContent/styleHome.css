@@ -146,13 +146,7 @@ p {
 	}
 
 	#listItem {
-		display: block;
-        padding: 10px;
-        height: auto;
-        width: 200px;
-        margin: 10px;
-        float: left;
-        border-top: 5px solid red;
+		display: none;
     }
     
     #listItemAffiliation {
@@ -327,7 +321,7 @@ p {
 	}
 }
 
-@media screen and (min-width: 300px) and (max-width: 609px) {
+@media screen and (min-width: 300px) and (max-width: 612px) {
 	#topPage {
 		padding: 10px 0 10px 0;
 		text-align: center;
@@ -341,13 +335,7 @@ p {
 	}
 
 	#listItem {
-		display: block;
-        padding: 10px;
-        height: auto;
-        width: 200px;
-        margin: 10px;
-        float: left;
-        border-top: 5px solid red;
+		display: none;
     }
     
     #listItemAffiliation {
@@ -523,7 +511,7 @@ p {
 	}
 }
 
-@media screen and (min-width: 610px) and (max-width: 1071px) {
+@media screen and (min-width: 613px) and (max-width: 1071px) {
 	.latest {
 		display: block;
 	}

@@ -37,9 +37,11 @@ public class DownloadServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         Connection con = MyUtils.getStoredConnection(request);
         int id = -1;
+        String source = null;
 //        String filepath = "C:\\Users\\Administrator.LIAM-ACER-SERVE\\Desktop\\Code\\Java\\AFC\\FileStore\\";
 //        String filepath = System.getProperty("catalina.home") + "/FileStore";
-        String source = null, filepath = "/Users/liam/Desktop/Code/Java/AFC/WebContent/FileStore/";
+//        String filepath = "/Users/liam/Desktop/Code/Java/AFC/WebContent/FileStore/";
+        String filepath = "/FileStore/";
         try {
             id = Integer.parseInt(request.getParameter("id"));
             source = request.getParameter("s");

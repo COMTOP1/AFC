@@ -39,7 +39,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Affiliations> queryAffiliations(Connection con) throws SQLException {
-        String sql = "SELECT * FROM AFFILIATIONS";
+        String sql = "SELECT * FROM affiliations";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getAffiliationsMethod(rs);
@@ -70,7 +70,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static Affiliations findAffiliation(Connection con, int id) throws SQLException {
-        String sql = "SELECT * FROM AFFILIATIONS WHERE ID = ?";
+        String sql = "SELECT * FROM affiliations WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
@@ -87,10 +87,10 @@ public class DBUtils {
     private static Affiliations getAffiliationMethod(ResultSet rs) throws SQLException {
         int id;
         String name, website, image;
-        id = rs.getInt("ID");
-        name = rs.getString("NAME");
-        website = rs.getString("WEBSITE");
-        image = rs.getString("IMAGE");
+        id = rs.getInt("id");
+        name = rs.getString("name");
+        website = rs.getString("website");
+        image = rs.getString("image");
         return new Affiliations(id, name, website, image);
     }
 
@@ -103,7 +103,7 @@ public class DBUtils {
      */
     public static void updateAffiliation(Connection con, Affiliations affiliation) throws SQLException {
         backupAffiliation(con, affiliation.getID(), "UPDATE");
-        String sql = "UPDATE AFFILIATIONS SET NAME = ?, WEBSITE = ?, IMAGE = ? WHERE ID = ?";
+        String sql = "UPDATE affiliations SET name = ?, website = ?, image = ? WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, affiliation.getName());
         pstm.setString(2, affiliation.getWebsite());
@@ -120,7 +120,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertAffiliation(Connection con, Affiliations affiliation) throws SQLException {
-        String sql = "INSERT INTO AFFILIATIONS (NAME, WEBSITE, IMAGE) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO affiliations (name, website, image) VALUES (?, ?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, affiliation.getName());
         pstm.setString(2, affiliation.getWebsite());
@@ -137,7 +137,7 @@ public class DBUtils {
      */
     public static void deleteAffiliation(Connection con, int id) throws SQLException {
         backupAffiliation(con, id, "DELETE");
-        String sql = "DELETE FROM AFFILIATIONS WHERE ID = ?";
+        String sql = "DELETE FROM affiliations WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -152,7 +152,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupAffiliation(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO AFFILIATIONS_BACKUP (ID, NAME, WEBSITE, IMAGE, ACTION) SELECT ID, NAME, WEBSITE, IMAGE, ? FROM AFFILIATIONS WHERE ID = ?";
+        String sql = "INSERT INTO affiliations_backup (id, name, website, image, action) SELECT id, name, website, image, ? FROM affiliations WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setInt(2, id);
@@ -167,7 +167,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Documents> queryDocuments(Connection con) throws SQLException {
-        String sql = "SELECT * FROM DOCUMENTS";
+        String sql = "SELECT * FROM documents";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getDocumentsMethod(rs);
@@ -198,7 +198,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static Documents findDocument(Connection con, int id) throws SQLException {
-        String sql = "SELECT * FROM DOCUMENTS WHERE ID = ?";
+        String sql = "SELECT * FROM documents WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
@@ -216,9 +216,9 @@ public class DBUtils {
     private static Documents getDocumentMethod(ResultSet rs) throws SQLException {
         int id;
         String name, fileName;
-        id = rs.getInt("ID");
-        name = rs.getString("NAME");
-        fileName = rs.getString("FILE_NAME");
+        id = rs.getInt("id");
+        name = rs.getString("name");
+        fileName = rs.getString("file_name");
         return new Documents(id, name, fileName);
     }
 
@@ -231,7 +231,7 @@ public class DBUtils {
      */
     public static void updateDocument(Connection con, Documents document) throws SQLException {
         backupDocument(con, document.getID(), "UPDATE");
-        String sql = "UPDATE DOCUMENTS SET NAME = ?, FILE_NAME = ? WHERE ID = ?";
+        String sql = "UPDATE documents SET name = ?, file_name = ? WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, document.getName());
         pstm.setString(2, document.getFileName());
@@ -247,7 +247,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertDocument(Connection con, Documents document) throws SQLException {
-        String sql = "INSERT INTO DOCUMENTS (NAME, FILE_NAME) VALUES (?, ?)";
+        String sql = "INSERT INTO documents (name, file_name) VALUES (?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, document.getName());
         pstm.setString(2, document.getFileName());
@@ -263,7 +263,7 @@ public class DBUtils {
      */
     public static void deleteDocument(Connection con, int id) throws SQLException {
         backupDocument(con, id, "DELETE");
-        String sql = "DELETE FROM DOCUMENTS WHERE ID = ?";
+        String sql = "DELETE FROM documents WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -278,7 +278,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupDocument(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO DOCUMENTS_BACKUP (ID, NAME, FILE_NAME, ACTION) SELECT ID, NAME, FILE_NAME, ? FROM DOCUMENTS WHERE ID = ?";
+        String sql = "INSERT INTO documents_backup (id, name, file_name, action) SELECT id, name, file_name, ? FROM documents WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setInt(2, id);
@@ -293,16 +293,16 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Images> queryImages(Connection con) throws SQLException {
-        String sql = "SELECT * FROM IMAGES";
+        String sql = "SELECT * FROM images";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         List<Images> list = new ArrayList<>();
         while (rs.next()) {
             int id;
             String image1, caption;
-            id = rs.getInt("ID");
-            image1 = rs.getString("IMAGE");
-            caption = rs.getString("CAPTION");
+            id = rs.getInt("id");
+            image1 = rs.getString("image");
+            caption = rs.getString("caption");
             Images image = new Images(id, image1, caption);
             list.add(image);
         }
@@ -318,14 +318,14 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static Images findImage(Connection con, int id) throws SQLException {
-        String sql = "SELECT * FROM IMAGES WHERE ID = ?";
+        String sql = "SELECT * FROM images WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
         if (rs.next()) {
             String image1, caption;
-            image1 = rs.getString("IMAGE");
-            caption = rs.getString("CAPTION");
+            image1 = rs.getString("image");
+            caption = rs.getString("caption");
             return new Images(id, image1, caption);
         } else return null;
     }
@@ -339,7 +339,7 @@ public class DBUtils {
      */
     public static void updateImage(Connection con, Images image) throws SQLException {
         backupImage(con, image.getID(), "UPDATE");
-        String sql = "UPDATE IMAGES SET IMAGE = ?, CAPTION = ? WHERE ID = ?";
+        String sql = "UPDATE images SET image = ?, caption = ? WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, image.getImage());
         pstm.setString(2, image.getCaption());
@@ -355,7 +355,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertImage(Connection con, Images image) throws SQLException {
-        String sql = "INSERT INTO IMAGES (IMAGE, CAPTION) VALUES (?, ?)";
+        String sql = "INSERT INTO images (image, caption) VALUES (?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, image.getImage());
         pstm.setString(2, image.getCaption());
@@ -371,7 +371,7 @@ public class DBUtils {
      */
     public static void deleteImage(Connection con, int id) throws SQLException {
         backupImage(con, id, "DELETE");
-        String sql = "DELETE FROM IMAGES WHERE ID = ?";
+        String sql = "DELETE FROM images WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -386,7 +386,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupImage(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO IMAGES_BACKUP (ID, IMAGE, CAPTION, ACTION) SELECT ID, IMAGE, CAPTION, ? FROM IMAGES WHERE ID = ?";
+        String sql = "INSERT INTO images_BACKUP (id, image, caption, action) SELECT id, image, caption, ? FROM images WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setInt(2, id);
@@ -401,7 +401,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<News> queryNews(Connection con) throws SQLException {
-        String sql = "SELECT * FROM NEWS ORDER BY DATE DESC";
+        String sql = "SELECT * FROM news ORDER BY date DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getNewsMethodMultiple(rs);
@@ -432,7 +432,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static News findNews(Connection con, int id) throws SQLException {
-        String sql = "SELECT * FROM NEWS WHERE ID = ?";
+        String sql = "SELECT * FROM news WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
@@ -448,7 +448,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static News findNewsLatest(Connection con) throws SQLException {
-        String sql = "SELECT * FROM NEWS ORDER BY ID DESC";
+        String sql = "SELECT * FROM news ORDER BY id DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         if (rs.next()) return getNewsMethodSingle(rs);
@@ -466,11 +466,11 @@ public class DBUtils {
         int id;
         String title, image, content;
         long date;
-        id = rs.getInt("ID");
-        title = rs.getString("TITLE");
-        image = rs.getString("IMAGE");
-        content = rs.getString("CONTENT");
-        date = rs.getLong("DATE");
+        id = rs.getInt("id");
+        title = rs.getString("title");
+        image = rs.getString("image");
+        content = rs.getString("content");
+        date = rs.getLong("date");
         return new News(id, title, image, content, date);
     }
 
@@ -483,7 +483,7 @@ public class DBUtils {
      */
     public static void updateNews(Connection con, News news) throws SQLException {
         backupNews(con, news.getID(), "UPDATE");
-        String sql = "UPDATE NEWS SET TITLE = ?, IMAGE = ?, CONTENT = ?, DATE = ? WHERE ID = ?";
+        String sql = "UPDATE news SET title = ?, image = ?, content = ?, date = ? WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setNewsMethod(pstm, news);
         pstm1.setInt(5, news.getID());
@@ -498,7 +498,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertNews(Connection con, News news) throws SQLException {
-        String sql = "INSERT INTO NEWS (TITLE, IMAGE, CONTENT, DATE) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO news (title, image, content, date) VALUES (?, ?, ?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setNewsMethod(pstm, news);
         pstm1.executeUpdate();
@@ -529,7 +529,7 @@ public class DBUtils {
      */
     public static void deleteNews(Connection con, int id) throws SQLException {
         backupNews(con, id, "DELETE");
-        String sql = "DELETE FROM NEWS WHERE ID = ?";
+        String sql = "DELETE FROM news WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -544,7 +544,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupNews(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO NEWS_BACKUP (ID, TITLE, IMAGE, CONTENT, DATE, ACTION) SELECT ID, TITLE, IMAGE, CONTENT, DATE, ? FROM NEWS WHERE ID = ?";
+        String sql = "INSERT INTO news_backup (id, title, image, content, date, action) SELECT id, title, image, content, date, ? FROM news WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setInt(2, id);
@@ -559,7 +559,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Players> queryPlayers(Connection con) throws SQLException {
-        String sql = "SELECT * FROM PLAYERS";
+        String sql = "SELECT * FROM players";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getPlayersMethod(rs);
@@ -574,7 +574,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Players> queryPlayersTeam(Connection con, int teamID) throws SQLException {
-        String sql = "SELECT * FROM PLAYERS WHERE TEAM_ID = ?";
+        String sql = "SELECT * FROM players WHERE team_id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, teamID);
         ResultSet rs = pstm.executeQuery();
@@ -606,7 +606,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static Players findPlayer(Connection con, int id) throws SQLException {
-        String sql = "SELECT * FROM PLAYERS WHERE ID = ?";
+        String sql = "SELECT * FROM players WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
@@ -626,13 +626,13 @@ public class DBUtils {
         String name, image, position;
         long dateOfBirth;
         boolean captain;
-        id = rs.getInt("ID");
-        name = rs.getString("NAME");
-        image = rs.getString("IMAGE");
-        dateOfBirth = Long.parseLong(rs.getString("DATE_OF_BIRTH"));
-        position = rs.getString("POSITION");
-        captain = rs.getBoolean("CAPTAIN");
-        teamID = rs.getInt("TEAM_ID");
+        id = rs.getInt("id");
+        name = rs.getString("name");
+        image = rs.getString("image");
+        dateOfBirth = Long.parseLong(rs.getString("date_of_birth"));
+        position = rs.getString("position");
+        captain = rs.getBoolean("captain");
+        teamID = rs.getInt("team_id");
         return new Players(id, name, image, dateOfBirth, position, captain, teamID);
     }
 
@@ -645,7 +645,7 @@ public class DBUtils {
      */
     public static void updatePlayer(Connection con, Players player) throws SQLException {
         backupPlayer(con, player.getID(), "UPDATE");
-        String sql = "UPDATE PLAYERS SET NAME = ?, IMAGE = ?, DATE_OF_BIRTH = ?, POSITION = ?, CAPTAIN = ?, TEAM_ID = ? WHERE ID = ?";
+        String sql = "UPDATE players SET name = ?, image = ?, date_of_birth = ?, position = ?, captain = ?, team_id = ? WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setPlayerMethod(pstm, player);
         pstm1.setInt(7, player.getID());
@@ -660,7 +660,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertPlayer(Connection con, Players player) throws SQLException {
-        String sql = "INSERT INTO PLAYERS (NAME, IMAGE, DATE_OF_BIRTH, POSITION, CAPTAIN, TEAM_ID) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO players (name, image, date_of_birth, position, captain, team_id) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setPlayerMethod(pstm, player);
         pstm1.executeUpdate();
@@ -693,7 +693,7 @@ public class DBUtils {
      */
     public static void deletePlayer(Connection con, int id) throws SQLException {
         backupPlayer(con, id, "DELETE");
-        String sql = "DELETE FROM PLAYERS WHERE ID = ?";
+        String sql = "DELETE FROM players WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -708,7 +708,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupPlayer(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO PLAYERS_BACKUP (ID, NAME, IMAGE, DATE_OF_BIRTH, POSITION, CAPTAIN, TEAM_ID, ACTION) SELECT ID, NAME, IMAGE, DATE_OF_BIRTH, POSITION, CAPTAIN, TEAM_ID, ? FROM PLAYERS WHERE ID = ?";
+        String sql = "INSERT INTO players_backup (id, name, image, date_of_birth, position, captain, team_id, action) SELECT id, name, image, date_of_birth, position, captain, team_id, ? FROM players WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setInt(2, id);
@@ -723,7 +723,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Programmes> queryProgrammes(Connection con) throws SQLException {
-        String sql = "SELECT * FROM PROGRAMMES ORDER BY DATE_OF_PROGRAMME DESC";
+        String sql = "SELECT * FROM programmes ORDER BY date_of_programme DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getProgrammesMethod(rs);
@@ -754,7 +754,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static Programmes findProgramme(Connection con, int id) throws SQLException {
-        String sql = "SELECT * FROM PROGRAMMES WHERE ID = ?";
+        String sql = "SELECT * FROM programmes WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
@@ -773,10 +773,10 @@ public class DBUtils {
         int id;
         String name, fileName;
         long dateOfProgramme;
-        id = rs.getInt("ID");
-        name = rs.getString("NAME");
-        fileName = rs.getString("FILE_NAME");
-        dateOfProgramme = rs.getLong("DATE_OF_PROGRAMME");
+        id = rs.getInt("id");
+        name = rs.getString("name");
+        fileName = rs.getString("file_name");
+        dateOfProgramme = rs.getLong("date_of_programme");
         return new Programmes(id, name, fileName, dateOfProgramme);
     }
 
@@ -788,7 +788,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertProgramme(Connection con, Programmes programme) throws SQLException {
-        String sql = "INSERT INTO PROGRAMMES (NAME, FILE_NAME, DATE_OF_PROGRAMME) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO programmes (name, file_name, date_of_programme) VALUES (?, ?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, programme.getName());
         pstm.setString(2, programme.getFileName());
@@ -805,7 +805,7 @@ public class DBUtils {
      */
     public static void deleteProgramme(Connection con, int id) throws SQLException {
         backupProgramme(con, id);
-        String sql = "DELETE FROM PROGRAMMES WHERE ID = ?";
+        String sql = "DELETE FROM programmes WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -819,7 +819,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupProgramme(Connection con, int id) throws SQLException {
-        String sql = "INSERT INTO PROGRAMMES_BACKUP (ID, NAME, FILE_NAME, DATE_OF_PROGRAMME, ACTION) SELECT ID, NAME, FILE_NAME, DATE_OF_PROGRAMME, 'DELETE' FROM PROGRAMMES WHERE ID = ?";
+        String sql = "INSERT INTO programmes_backup (id, name, file_name, date_of_programme, action) SELECT id, name, file_name, date_of_programme, 'DELETE' FROM programmes WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -833,7 +833,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Teams> queryTeams(Connection con) throws SQLException {
-        String sql = "SELECT * FROM TEAMS ORDER BY AGES DESC";
+        String sql = "SELECT * FROM teams ORDER BY ages DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getTeamsMethod(rs);
@@ -847,7 +847,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Teams> queryTeamsActive(Connection con) throws SQLException {
-        String sql = "SELECT * FROM TEAMS WHERE ACTIVE = TRUE ORDER BY AGES DESC";
+        String sql = "SELECT * FROM teams WHERE active = TRUE ORDER BY ages DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getTeamsMethod(rs);
@@ -878,7 +878,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static Teams findTeam(Connection con, int id) throws SQLException {
-        String sql = "SELECT * FROM TEAMS WHERE ID = ?";
+        String sql = "SELECT * FROM teams WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
@@ -897,18 +897,18 @@ public class DBUtils {
         int id, ages;
         String name, league, division, leagueTable, fixtures, coach, physio, teamPhoto;
         boolean active, youth;
-        id = rs.getInt("ID");
-        name = rs.getString("NAME");
-        league = rs.getString("LEAGUE");
-        division = rs.getString("DIVISION");
-        leagueTable = rs.getString("LEAGUE_TABLE");
-        fixtures = rs.getString("FIXTURES");
-        coach = rs.getString("COACH");
-        physio = rs.getString("PHYSIO");
-        teamPhoto = rs.getString("TEAM_PHOTO");
-        active = rs.getBoolean("ACTIVE");
-        youth = rs.getBoolean("YOUTH");
-        ages = rs.getInt("AGES");
+        id = rs.getInt("id");
+        name = rs.getString("name");
+        league = rs.getString("league");
+        division = rs.getString("division");
+        leagueTable = rs.getString("league_table");
+        fixtures = rs.getString("fixtures");
+        coach = rs.getString("coach");
+        physio = rs.getString("physio");
+        teamPhoto = rs.getString("team_photo");
+        active = rs.getBoolean("active");
+        youth = rs.getBoolean("youth");
+        ages = rs.getInt("ages");
         return new Teams(id, name, league, division, leagueTable, fixtures, coach, physio, teamPhoto, active, youth, ages);
     }
 
@@ -921,7 +921,7 @@ public class DBUtils {
      */
     public static void updateTeam(Connection con, Teams team) throws SQLException {
         backupTeam(con, team.getID(), "UPDATE");
-        String sql = "UPDATE TEAMS SET NAME = ?, LEAGUE = ?, DIVISION = ?, LEAGUE_TABLE = ?, FIXTURES = ?, COACH = ?, PHYSIO = ?, TEAM_PHOTO = ?, ACTIVE = ?, YOUTH = ?, AGES = ? WHERE ID = ?";
+        String sql = "UPDATE teams SET name = ?, league = ?, division = ?, league_table = ?, fixtures = ?, coach = ?, physio = ?, team_photo = ?, active = ?, youth = ?, ages = ? WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setTeamMethod(pstm, team);
         pstm1.setInt(12, team.getID());
@@ -936,7 +936,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertTeam(Connection con, Teams team) throws SQLException {
-        String sql = "INSERT INTO TEAMS (NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, PHYSIO, TEAM_PHOTO, ACTIVE, YOUTH, AGES) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO teams (name, league, division, league_table, fixtures, coach, physio, team_photo, active, youth, ages) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setTeamMethod(pstm, team);
         pstm1.executeUpdate();
@@ -974,7 +974,7 @@ public class DBUtils {
      */
     public static void deleteTeam(Connection con, int id) throws SQLException {
         backupTeam(con, id, "DELETE");
-        String sql = "DELETE FROM TEAMS WHERE ID = ?";
+        String sql = "DELETE FROM teams WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -989,7 +989,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupTeam(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO TEAMS_BACKUP (ID, NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, PHYSIO, TEAM_PHOTO, ACTIVE, YOUTH, AGES, ACTION) SELECT ID, NAME, LEAGUE, DIVISION, LEAGUE_TABLE, FIXTURES, COACH, PHYSIO, TEAM_PHOTO, ACTIVE, YOUTH, AGES, ? FROM TEAMS WHERE ID = ?";
+        String sql = "INSERT INTO teams_backup (id, name, league, division, league_table, fixtures, coach, physio, team_photo, active, youth, ages, action) SELECT id, name, league, division, league_table, fixtures, coach, physio, team_photo, active, youth, ages, ? FROM teams WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setInt(2, id);
@@ -1004,7 +1004,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Sponsors> querySponsors(Connection con) throws SQLException {
-        String sql = "SELECT * FROM SPONSORS ORDER BY TEAM_ID, NAME";
+        String sql = "SELECT * FROM sponsors ORDER BY team_id, name";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getSponsorsMethod(rs);
@@ -1020,7 +1020,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Sponsors> querySponsorsTeam(Connection con, String teamID, boolean youth) throws SQLException {
-        String sql = "SELECT * FROM SPONSORS WHERE TEAM_ID = ? OR TEAM_ID = ? OR TEAM_ID = 'A'";
+        String sql = "SELECT * FROM sponsors WHERE team_id = ? OR team_id = ? OR team_id = 'A'";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, teamID);
         if (youth) pstm.setString(2, "U");
@@ -1054,7 +1054,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static Sponsors findSponsor(Connection con, int id) throws SQLException {
-        String sql = "SELECT * FROM SPONSORS WHERE ID = ?";
+        String sql = "SELECT * FROM sponsors WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
@@ -1072,12 +1072,12 @@ public class DBUtils {
     private static Sponsors getSponsorMethod(ResultSet rs) throws SQLException {
         int id;
         String name, website, image, purpose, teamID;
-        id = rs.getInt("ID");
-        name = rs.getString("NAME");
-        website = rs.getString("WEBSITE");
-        image = rs.getString("IMAGE");
-        purpose = rs.getString("PURPOSE");
-        teamID = rs.getString("TEAM_ID");
+        id = rs.getInt("id");
+        name = rs.getString("name");
+        website = rs.getString("website");
+        image = rs.getString("image");
+        purpose = rs.getString("purpose");
+        teamID = rs.getString("team_id");
         return new Sponsors(id, name, website, image, purpose, teamID);
     }
 
@@ -1090,7 +1090,7 @@ public class DBUtils {
      */
     public static void updateSponsor(Connection con, Sponsors sponsor) throws SQLException {
         backupSponsor(con, sponsor.getID(), "UPDATE");
-        String sql = "UPDATE SPONSORS SET NAME = ?, WEBSITE = ?, IMAGE = ?, PURPOSE = ?, TEAM_ID = ? WHERE ID = ?";
+        String sql = "UPDATE sponsors SET name = ?, website = ?, image = ?, purpose = ?, team_id = ? WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setSponsorMethod(pstm, sponsor);
         pstm1.setInt(6, sponsor.getID());
@@ -1105,7 +1105,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertSponsor(Connection con, Sponsors sponsor) throws SQLException {
-        String sql = "INSERT INTO SPONSORS (NAME, WEBSITE, IMAGE, PURPOSE, TEAM_ID) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO sponsors (name, website, image, purpose, team_id) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setSponsorMethod(pstm, sponsor);
         pstm1.executeUpdate();
@@ -1137,7 +1137,7 @@ public class DBUtils {
      */
     public static void deleteSponsor(Connection con, int id) throws SQLException {
         backupSponsor(con, id, "DELETE");
-        String sql = "DELETE FROM SPONSORS WHERE ID = ?";
+        String sql = "DELETE FROM sponsors WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -1152,7 +1152,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupSponsor(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO SPONSORS_BACKUP (ID, NAME, WEBSITE, IMAGE, PURPOSE, TEAM_ID, ACTION) SELECT ID, NAME, WEBSITE, IMAGE, PURPOSE, TEAM_ID, ? FROM SPONSORS WHERE ID = ?";
+        String sql = "INSERT INTO sponsors_backup (id, name, website, image, purpose, team_id, action) SELECT id, name, website, image, purpose, team_id, ? FROM sponsors WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setInt(2, id);
@@ -1167,7 +1167,7 @@ public class DBUtils {
      * @throws SQLException throws SQLException
      */
     public static List<Users> queryUsers(Connection con) throws SQLException {
-        String sql = "SELECT * FROM USERS ORDER BY ROLE";
+        String sql = "SELECT * FROM users ORDER BY role";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getUsersMethod(rs);
@@ -1181,7 +1181,7 @@ public class DBUtils {
      * @throws SQLException throws SQLException
      */
     public static List<Users> queryUsersContacts(Connection con) throws SQLException {
-        String sql = "SELECT * FROM USERS WHERE ROLE IN ('PROGRAMME_EDITOR', 'LEAGUE_SECRETARY', 'TREASURER', 'SAFEGUARDING_OFFICER', 'CLUB_SECRETARY', 'CHAIRPERSON') ORDER BY FIELD(ROLE, 'PROGRAMME_EDITOR', 'LEAGUE_SECRETARY', 'TREASURER', 'SAFEGUARDING_OFFICER', 'CLUB_SECRETARY', 'CHAIRPERSON') DESC";
+        String sql = "SELECT * FROM users WHERE role IN ('PROGRAMME_EDITOR', 'LEAGUE_SECRETARY', 'TREASURER', 'SAFEGUARDING_OFFICER', 'CLUB_SECRETARY', 'CHAIRPERSON') ORDER BY FIELD(role, 'PROGRAMME_EDITOR', 'LEAGUE_SECRETARY', 'TREASURER', 'SAFEGUARDING_OFFICER', 'CLUB_SECRETARY', 'CHAIRPERSON') DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getUsersMethod(rs);
@@ -1196,7 +1196,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Users> queryUsersManagersTeam(Connection con, int teamID) throws SQLException {
-        String sql = "SELECT * FROM USERS WHERE ROLE = 0 AND TEAM_ID = ?";
+        String sql = "SELECT * FROM users WHERE role = 'MANAGER' AND team_id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, teamID);
         ResultSet rs = pstm.executeQuery();
@@ -1228,7 +1228,7 @@ public class DBUtils {
      * @throws SQLException throws SQLException
      */
     public static Users findUser(Connection con, String email) throws SQLException {
-        String sql = "SELECT * FROM USERS WHERE EMAIL = ?";
+        String sql = "SELECT * FROM users WHERE email = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, email);
         ResultSet rs = pstm.executeQuery();
@@ -1246,7 +1246,7 @@ public class DBUtils {
      * @throws Exception throws SQLException
      */
     public static Users login(Connection con, String email, String password) throws Exception {
-        String sql1 = "UPDATE USERS SET TEMP = SHA2(?, 512) WHERE EMAIL = ? AND ROLE != 'MANAGER'", sql2 = "SELECT * FROM USERS WHERE EMAIL = ? AND ROLE != 'MANAGER'", sql3 = "UPDATE USERS SET TEMP = NULL WHERE EMAIL = ? AND ROLE != 'MANAGER'";
+        String sql1 = "UPDATE users SET temp = SHA2(?, 512) WHERE email = ? AND role != 'MANAGER'", sql2 = "SELECT * FROM users WHERE email = ? AND role != 'MANAGER'", sql3 = "UPDATE users SET temp = NULL WHERE email = ? AND role != 'MANAGER'";
         PreparedStatement pstm1 = con.prepareStatement(sql1), pstm2 = con.prepareStatement(sql2), pstm3 = con.prepareStatement(sql3);
         if (email == null) return null;
         pstm1.setString(1, password);
@@ -1262,8 +1262,8 @@ public class DBUtils {
         rs.next();
         String password1 = null, temp = null;
         try {
-        	password1 = rs.getString("PASSWORD");
-        	temp = rs.getString("TEMP");
+        	password1 = rs.getString("password");
+        	temp = rs.getString("temp");
         } catch (Exception e) {
         	e.printStackTrace();
         }
@@ -1273,11 +1273,11 @@ public class DBUtils {
             String name, phone, image;
             int teamID;
             Role role;
-            name = rs.getString("NAME");
-            phone = rs.getString("PHONE");
-            teamID = rs.getInt("TEAM_ID");
-            role = Role.valueOf(rs.getString("ROLE"));
-            image = rs.getString("IMAGE");
+            name = rs.getString("name");
+            phone = rs.getString("phone");
+            teamID = rs.getInt("team_id");
+            role = Role.valueOf(rs.getString("role"));
+            image = rs.getString("image");
             return new Users(name, email, phone, teamID, role, image);
         }
         return null;
@@ -1294,12 +1294,12 @@ public class DBUtils {
         String name, email, phone, image;
         int teamID;
         Role role;
-        name = rs.getString("NAME");
-        email = rs.getString("EMAIL");
-        phone = rs.getString("PHONE");
-        teamID = rs.getInt("TEAM_ID");
-        role = Role.valueOf(rs.getString("ROLE"));
-        image = rs.getString("IMAGE");
+        name = rs.getString("name");
+        email = rs.getString("email");
+        phone = rs.getString("phone");
+        teamID = rs.getInt("team_id");
+        role = Role.valueOf(rs.getString("role"));
+        image = rs.getString("image");
         return new Users(name, email, phone, teamID, role, image);
     }
 
@@ -1313,7 +1313,7 @@ public class DBUtils {
      */
     public static void changePassword(Connection con, String email, String password) throws SQLException {
         backupUser(con, email, "CHANGE_PASSWORD");
-        String sql = "UPDATE USERS SET PASSWORD = SHA2('" + password + "', 512) WHERE EMAIL = ?";
+        String sql = "UPDATE users SET password = SHA2('" + password + "', 512) WHERE email = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, email);
         pstm.executeUpdate();
@@ -1329,7 +1329,7 @@ public class DBUtils {
      * @throws SQLException throws SQLException
      */
     public static boolean checkPassword(Connection con, String email, String password) throws SQLException {
-        String sql1 = "UPDATE USERS SET TEMP = SHA2('" + password + "', 512) WHERE EMAIL = ?", sql2 = "SELECT * FROM USERS WHERE EMAIL = ?", sql3 = "UPDATE USERS SET TEMP = NULL WHERE EMAIL = ?";
+        String sql1 = "UPDATE users SET temp = SHA2('" + password + "', 512) WHERE email = ?", sql2 = "SELECT * FROM users WHERE email = ?", sql3 = "UPDATE users SET temp = NULL WHERE email = ?";
         PreparedStatement pstm1 = con.prepareStatement(sql1), pstm2 = con.prepareStatement(sql2), pstm3 = con.prepareStatement(sql3);
         if (email == null) return false;
         pstm1.setString(1, email);
@@ -1338,7 +1338,7 @@ public class DBUtils {
         pstm3.setString(1, email);
         ResultSet rs = pstm2.executeQuery();
         rs.next();
-        if (rs.getString("PASSWORD").equals(rs.getString("TEMP"))) {
+        if (rs.getString("password").equals(rs.getString("temp"))) {
             pstm3.execute();
             return true;
         }
@@ -1354,7 +1354,7 @@ public class DBUtils {
      */
     public static void resetPassword(Connection con, String email) throws SQLException {
         backupUser(con, email, "RESET_PASSWORD");
-        String sql = "UPDATE USERS SET PASSWORD = SHA2('password', 512) WHERE EMAIL = ?";
+        String sql = "UPDATE users SET password = SHA2('password', 512) WHERE email = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, email);
         pstm.executeUpdate();
@@ -1370,7 +1370,7 @@ public class DBUtils {
      */
     public static void updateUser(Connection con, Users user, String emailOld) throws SQLException {
         backupUser(con, emailOld, "UPDATE");
-        String sql = "UPDATE USERS SET NAME = ?, EMAIL = ?, PHONE = ?, TEAM_ID = ?, ROLE = ?, IMAGE = ? WHERE EMAIL = ?";
+        String sql = "UPDATE users SET name = ?, email = ?, phone = ?, team_id = ?, role = ?, image = ? WHERE email = ?";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setUserMethod(pstm, user);
         pstm1.setString(7, emailOld);
@@ -1386,7 +1386,7 @@ public class DBUtils {
      * @throws SQLException throws SQLException
      */
     public static void insertUser(Connection con, Users user, String password) throws SQLException {
-        String sql = "INSERT INTO USERS (NAME, EMAIL, PHONE, TEAM_ID, ROLE, IMAGE, PASSWORD) VALUES (?, ?, ?, ?, ?, ?, SHA2(?, 512))";
+        String sql = "INSERT INTO users (name, email, phone, team_id, role, image, password) VALUES (?, ?, ?, ?, ?, ?, SHA2(?, 512))";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setUserMethod(pstm, user);
         pstm1.setString(7, password);
@@ -1420,7 +1420,7 @@ public class DBUtils {
      */
     public static void deleteUser(Connection con, String email) throws SQLException {
         backupUser(con, email, "DELETE");
-        String sql = "DELETE FROM USERS WHERE EMAIL = ?";
+        String sql = "DELETE FROM users WHERE email = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, email);
         pstm.executeUpdate();
@@ -1435,7 +1435,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupUser(Connection con, String email, String action) throws SQLException {
-        String sql = "INSERT INTO USERS_BACKUP (NAME, EMAIL, PHONE, TEAM_ID, ROLE, IMAGE, PASSWORD, TEMP, ACTION) SELECT NAME, EMAIL, PHONE, TEAM_ID, ROLE, IMAGE, PASSWORD, TEMP, ? FROM USERS WHERE EMAIL = ?";
+        String sql = "INSERT INTO users_backup (name, email, phone, team_id, role, image, password, temp, action) SELECT name, email, phone, team_id, role, image, password, temp, ? FROM users WHERE email = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setString(2, email);
@@ -1450,7 +1450,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<WhatsOn> queryWhatsOn(Connection con) throws SQLException {
-        String sql = "SELECT * FROM WHATSON";
+        String sql = "SELECT * FROM whatson";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         return getWhatsOnMethodMultiple(rs);
@@ -1464,7 +1464,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<WhatsOn> queryWhatsOnEventDate(Connection con) throws SQLException {
-        String sql = "SELECT * FROM WHATSON WHERE DATE_OF_EVENT >= ?";
+        String sql = "SELECT * FROM whatson WHERE date_of_event >= ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         long epoch = MyUtils.getEpoch();
         pstm.setLong(1, epoch);
@@ -1497,7 +1497,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static WhatsOn findWhatsOn(Connection con, int id) throws SQLException {
-        String sql = "SELECT * FROM WHATSON WHERE ID = ?";
+        String sql = "SELECT * FROM whatson WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         ResultSet rs = pstm.executeQuery();
@@ -1513,7 +1513,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static WhatsOn findWhatsOnLatest(Connection con) throws SQLException {
-        String sql = "SELECT * FROM WHATSON WHERE DATE_OF_EVENT >= ? ORDER BY DATE_OF_EVENT";
+        String sql = "SELECT * FROM whatson WHERE date_of_event >= ? ORDER BY date_of_event";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setLong(1, MyUtils.getEpoch());
         ResultSet rs = pstm.executeQuery();
@@ -1532,12 +1532,12 @@ public class DBUtils {
         int id;
         String title, image, content;
         long date, dateOfEvent;
-        id = rs.getInt("ID");
-        title = rs.getString("TITLE");
-        image = rs.getString("IMAGE");
-        content = rs.getString("CONTENT");
-        date = rs.getLong("DATE");
-        dateOfEvent = rs.getLong("DATE_OF_EVENT");
+        id = rs.getInt("id");
+        title = rs.getString("title");
+        image = rs.getString("image");
+        content = rs.getString("content");
+        date = rs.getLong("date");
+        dateOfEvent = rs.getLong("date_of_event");
         return new WhatsOn(id, title, image, content, date, dateOfEvent);
     }
 
@@ -1550,7 +1550,7 @@ public class DBUtils {
      */
     public static void updateWhatsOn(Connection con, WhatsOn whatsOn) throws SQLException {
         backupWhatsOn(con, whatsOn.getID(), "UPDATE");
-        String sql = "UPDATE WHATSON SET TITLE = ?, IMAGE = ?, CONTENT = ?, DATE = ?, DATE_OF_EVENT = ? WHERE ID = ?";
+        String sql = "UPDATE whatson SET title = ?, image = ?, content = ?, date = ?, date_of_event = ? WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setWhatsOnMethod(pstm, whatsOn);
         pstm1.setInt(6, whatsOn.getID());
@@ -1565,7 +1565,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertWhatsOn(Connection con, WhatsOn whatsOn) throws SQLException {
-        String sql = "INSERT INTO WHATSON (TITLE, IMAGE, CONTENT, DATE, DATE_OF_EVENT) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO whatson (title, image, content, date, date_of_event) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setWhatsOnMethod(pstm, whatsOn);
         pstm1.executeUpdate();
@@ -1597,7 +1597,7 @@ public class DBUtils {
      */
     public static void deleteWhatsOn(Connection con, int id) throws SQLException {
         backupWhatsOn(con, id, "DELETE");
-        String sql = "DELETE FROM WHATSON WHERE ID = ?";
+        String sql = "DELETE FROM whatson WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -1612,7 +1612,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupWhatsOn(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO WHATSON_BACKUP (ID, TITLE, IMAGE, CONTENT, DATE, DATE_OF_EVENT, ACTION) SELECT ID, TITLE, IMAGE, CONTENT, DATE, DATE_OF_EVENT, ? FROM WHATSON WHERE ID = ?";
+        String sql = "INSERT INTO whatson_backup (id, title, image, content, date, date_of_event, action) SELECT id, title, image, content, date, date_of_event, ? FROM whatson WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setInt(2, id);

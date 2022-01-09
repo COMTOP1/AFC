@@ -3,6 +3,9 @@
 <%@ page import="com.bswdi.utils.*, com.bswdi.beans.Users, java.sql.Connection, com.bswdi.beans.Role" %>
 <!DOCTYPE html>
 <html>
+<head>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+</head>
 <body>
 <div id="topPage">
     <img id="mainImage" class="faImage" style="float: right; height: 125px; width: 150px;" src="images/facs.jpeg">

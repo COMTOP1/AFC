@@ -1,3 +1,16 @@
 # Project exclude paths
 /build/classes/
 /build/
+.env
+.idea
+.settings
+target
+out
+.classpath
+.project
+AFC.iml
+/src/com/bswdi/dotenv
+/.idea/
+/.settings/
+pom.xml
+/out/

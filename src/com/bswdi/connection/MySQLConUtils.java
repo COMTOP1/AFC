@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.bswdi.dotenv.Dotenv;
+
 /**
  * MySQL connection utilities
  *
@@ -20,10 +22,12 @@ public class MySQLConUtils {
      * @throws SQLException           throws SQLException
      */
     public static Connection getMySQLConnection() throws SQLException, ClassNotFoundException {
-        String hostName = "localhost";
-        String DBName = "AFC";
-        String username = "websiteAccess";
-        String password = "websitePassword";
+        /*Dotenv dotenv = Dotenv.load();
+        String hostName = dotenv.get("DB_HOSTNAME");
+        String DBName = dotenv.get("DB_NAME");
+        String username = dotenv.get("DB_USERNAME");
+        String password = dotenv.get("DB_PASSWORD");*/
+        String hostName = "localhost", DBName = "AFC", username = "websiteAccess", password = "websitePassword";
         return getMySQLConnection(hostName, DBName, username, password);
     }
 

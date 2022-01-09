@@ -26,7 +26,7 @@
         } catch (Exception ignored) {
 
         }
-        if (list != null) {
+        if (list != null && list.size() != 0) {
         assert list != null;
         boolean first = true;
         for (Programmes programme : list) {
@@ -71,7 +71,6 @@
         } else {%>
     	<p style="color: red; padding: 0; margin: 0;">There are no programmes to display</p>
     <%}
-%>
     %>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>

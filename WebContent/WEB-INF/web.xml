@@ -5,12 +5,12 @@
 	<welcome-file-list>
 		<welcome-file>home</welcome-file>
 	</welcome-file-list>
-	<servlet>
+	<!--<servlet>
 		<servlet-name>SQLTimeZone</servlet-name>
 		<servlet-class>com.bswdi.startup.SQLTimeZone</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	<!--<security-constraint>
+	<security-constraint>
     <web-resource-collection>
         <web-resource-name>AFC</web-resource-name>
         <url-pattern>/*</url-pattern>
