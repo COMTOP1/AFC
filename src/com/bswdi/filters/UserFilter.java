@@ -43,6 +43,16 @@ public class UserFilter implements Filter {
         HttpSession session = req.getSession();
         Users user = MyUtils.getLoggedInUser(session);
         if (MyUtils.getEmailInCookie(req) != null && user == null) MyUtils.deleteUserCookie(res);
-        chain.doFilter(request, response);
+        boolean updatePassword = false;
+        try {
+            updatePassword = (boolean) req.getSession().getAttribute("UPDATE PASSWORD");
+        } catch (Exception ignored) {
+
+        }
+        if (user != null && updatePassword && !req.getServletPath().contains("changepassword")) {
+            res.sendRedirect("changepassword?email=" + user.getEmail());
+        } else {
+            chain.doFilter(request, response);
+        }
     }
 }

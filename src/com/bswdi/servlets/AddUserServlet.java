@@ -91,9 +91,12 @@ public class AddUserServlet extends HttpServlet {
         }
         try {
             Users user = new Users(name, email, phone, teamID, role, image);
-            DBUtils.insertUser(con, user, "password");
-            request.getSession().setAttribute("success", "User successfully added");
-            response.sendRedirect("users");
+            byte[] salt = MyUtils.getNextSalt(), hash = MyUtils.hash("AFCpa£$word".toCharArray(), salt);
+            if (MyUtils.verifyPassword("AFCpa£$word".toCharArray(), salt, hash)) {
+                DBUtils.insertUser(con, user, hash, salt);
+                request.getSession().setAttribute("success", "User successfully added");
+                response.sendRedirect("users");
+            } else throw new Exception("Failed to verify hash!");
         } catch (Exception e) {
             e.printStackTrace();
             request.getSession().setAttribute("error", e.toString());

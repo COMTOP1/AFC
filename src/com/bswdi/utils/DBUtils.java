@@ -9,6 +9,8 @@ import java.util.List;
 
 import com.bswdi.beans.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Utilities for database and queries
  *
@@ -65,7 +67,7 @@ public class DBUtils {
      * Returns affiliation
      *
      * @param con connection
-     * @param id id
+     * @param id  id
      * @return Affiliations affiliation
      * @throws SQLException SQL exception
      */
@@ -80,6 +82,7 @@ public class DBUtils {
 
     /**
      * Get affiliation method
+     *
      * @param rs result set
      * @return Affiliations affiliation
      * @throws SQLException SQL exception
@@ -97,7 +100,7 @@ public class DBUtils {
     /**
      * Update affiliation
      *
-     * @param con connection
+     * @param con         connection
      * @param affiliation affiliation
      * @throws SQLException SQL exception
      */
@@ -115,7 +118,7 @@ public class DBUtils {
     /**
      * Insert affiliation
      *
-     * @param con connection
+     * @param con         connection
      * @param affiliation affiliation
      * @throws SQLException SQL exception
      */
@@ -132,7 +135,7 @@ public class DBUtils {
      * Delete affiliation
      *
      * @param con connection
-     * @param id id
+     * @param id  id
      * @throws SQLException SQL exception
      */
     public static void deleteAffiliation(Connection con, int id) throws SQLException {
@@ -146,8 +149,8 @@ public class DBUtils {
     /**
      * Backup affiliation
      *
-     * @param con connection
-     * @param id id
+     * @param con    connection
+     * @param id     id
      * @param action action
      * @throws SQLException SQL exception
      */
@@ -193,7 +196,7 @@ public class DBUtils {
      * Returns document
      *
      * @param con connection
-     * @param id id
+     * @param id  id
      * @return Documents document
      * @throws SQLException SQL exception
      */
@@ -225,7 +228,7 @@ public class DBUtils {
     /**
      * Update document
      *
-     * @param con connection
+     * @param con      connection
      * @param document document
      * @throws SQLException SQL exception
      */
@@ -242,7 +245,7 @@ public class DBUtils {
     /**
      * Insert document
      *
-     * @param con connection
+     * @param con      connection
      * @param document document
      * @throws SQLException SQL exception
      */
@@ -258,7 +261,7 @@ public class DBUtils {
      * Delete document
      *
      * @param con connection
-     * @param id id
+     * @param id  id
      * @throws SQLException SQL exception
      */
     public static void deleteDocument(Connection con, int id) throws SQLException {
@@ -272,8 +275,8 @@ public class DBUtils {
     /**
      * Backup document
      *
-     * @param con connection
-     * @param id id
+     * @param con    connection
+     * @param id     id
      * @param action action
      * @throws SQLException SQL exception
      */
@@ -380,8 +383,8 @@ public class DBUtils {
     /**
      * Backup image
      *
-     * @param con connection
-     * @param id  id
+     * @param con    connection
+     * @param id     id
      * @param action action
      * @throws SQLException SQL exception
      */
@@ -538,8 +541,8 @@ public class DBUtils {
     /**
      * Backup news
      *
-     * @param con connection
-     * @param id  id
+     * @param con    connection
+     * @param id     id
      * @param action action
      * @throws SQLException SQL exception
      */
@@ -702,8 +705,8 @@ public class DBUtils {
     /**
      * Backup player
      *
-     * @param con connection
-     * @param id  id
+     * @param con    connection
+     * @param id     id
      * @param action action
      * @throws SQLException SQL exception
      */
@@ -749,7 +752,7 @@ public class DBUtils {
      * Returns programme
      *
      * @param con connection
-     * @param id id
+     * @param id  id
      * @return Programme programme
      * @throws SQLException SQL exception
      */
@@ -783,7 +786,7 @@ public class DBUtils {
     /**
      * Insert programme
      *
-     * @param con connection
+     * @param con       connection
      * @param programme programme
      * @throws SQLException SQL exception
      */
@@ -815,7 +818,7 @@ public class DBUtils {
      * Backup programme
      *
      * @param con connection
-     * @param id id
+     * @param id  id
      * @throws SQLException SQL exception
      */
     private static void backupProgramme(Connection con, int id) throws SQLException {
@@ -983,8 +986,8 @@ public class DBUtils {
     /**
      * Backup team
      *
-     * @param con connection
-     * @param id  id
+     * @param con    connection
+     * @param id     id
      * @param action action
      * @throws SQLException SQL exception
      */
@@ -1146,8 +1149,8 @@ public class DBUtils {
     /**
      * Backup sponsor
      *
-     * @param con connection
-     * @param id  id
+     * @param con    connection
+     * @param id     id
      * @param action action
      * @throws SQLException SQL exception
      */
@@ -1242,45 +1245,53 @@ public class DBUtils {
      * @param con      connection
      * @param email    email
      * @param password password
+     * @param request  request
      * @return Users user
      * @throws Exception throws SQLException
      */
-    public static Users login(Connection con, String email, String password) throws Exception {
+    public static Users login(Connection con, String email, String password, HttpServletRequest request) throws Exception {
+        String sql = "SELECT * FROM users WHERE email = ? AND role != 'MANAGER'";
         String sql1 = "UPDATE users SET temp = SHA2(?, 512) WHERE email = ? AND role != 'MANAGER'", sql2 = "SELECT * FROM users WHERE email = ? AND role != 'MANAGER'", sql3 = "UPDATE users SET temp = NULL WHERE email = ? AND role != 'MANAGER'";
-        PreparedStatement pstm1 = con.prepareStatement(sql1), pstm2 = con.prepareStatement(sql2), pstm3 = con.prepareStatement(sql3);
+        PreparedStatement pstm = con.prepareStatement(sql), pstm1 = con.prepareStatement(sql1), pstm2 = con.prepareStatement(sql2), pstm3 = con.prepareStatement(sql3);
         if (email == null) return null;
-        pstm1.setString(1, password);
-        pstm1.setString(2, email);
-        try {
-        	pstm1.executeUpdate();
-        } catch (Exception e) {
-        	e.printStackTrace();
-        }
-        pstm2.setString(1, email);
-        pstm3.setString(1, email);
-        ResultSet rs = pstm2.executeQuery();
+        pstm.setString(1, email);
+        ResultSet rs = pstm.executeQuery();
         rs.next();
-        String password1 = null, temp = null;
-        try {
-        	password1 = rs.getString("password");
-        	temp = rs.getString("temp");
-        } catch (Exception e) {
-        	e.printStackTrace();
+        if (rs.getString("password") == null) {
+            byte[] salt = rs.getBytes("salt");
+            byte[] hash = MyUtils.hash(password.toCharArray(), salt);
+            if (MyUtils.verifyPassword(password.toCharArray(), salt, rs.getBytes("hash")))
+                return getUserMethod(rs);
+            else
+                return null;
+        } else {
+            pstm1.setString(1, password);
+            pstm1.setString(2, email);
+            try {
+                pstm1.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            pstm2.setString(1, email);
+            pstm3.setString(1, email);
+            ResultSet rs1 = pstm2.executeQuery();
+            rs1.next();
+            String password1 = null, temp = null;
+            try {
+                password1 = rs1.getString("password");
+                temp = rs1.getString("temp");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            assert password1 != null;
+            if (password1.equals(temp)) {
+                pstm3.execute();
+                request.getSession().setAttribute("UPDATE PASSWORD", true);
+                request.getSession().setAttribute("UPDATE PASSWORD NOTIFICATION", "We are updating our password encryption algorithms. For security reasons, we ask that you change your password.");
+                return getUserMethod(rs1);
+            }
+            return null;
         }
-        assert password1 != null;
-        if (password1.equals(temp)) {
-            pstm3.execute();
-            String name, phone, image;
-            int teamID;
-            Role role;
-            name = rs.getString("name");
-            phone = rs.getString("phone");
-            teamID = rs.getInt("team_id");
-            role = Role.valueOf(rs.getString("role"));
-            image = rs.getString("image");
-            return new Users(name, email, phone, teamID, role, image);
-        }
-        return null;
     }
 
     /**
@@ -1306,16 +1317,19 @@ public class DBUtils {
     /**
      * Change password
      *
-     * @param con      connection
-     * @param email    email
-     * @param password password
+     * @param con   connection
+     * @param email email
+     * @param hash  hash
+     * @param salt  salt
      * @throws SQLException throws SQLException
      */
-    public static void changePassword(Connection con, String email, String password) throws SQLException {
+    public static void changePassword(Connection con, String email, byte[] hash, byte[] salt) throws SQLException {
         backupUser(con, email, "CHANGE_PASSWORD");
-        String sql = "UPDATE users SET password = SHA2('" + password + "', 512) WHERE email = ?";
+        String sql = "UPDATE users SET password = NULL, temp = NULL, hash = ?, salt = ? WHERE email = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
-        pstm.setString(1, email);
+        pstm.setBytes(1, hash);
+        pstm.setBytes(2, salt);
+        pstm.setString(3, email);
         pstm.executeUpdate();
     }
 
@@ -1329,18 +1343,28 @@ public class DBUtils {
      * @throws SQLException throws SQLException
      */
     public static boolean checkPassword(Connection con, String email, String password) throws SQLException {
-        String sql1 = "UPDATE users SET temp = SHA2('" + password + "', 512) WHERE email = ?", sql2 = "SELECT * FROM users WHERE email = ?", sql3 = "UPDATE users SET temp = NULL WHERE email = ?";
-        PreparedStatement pstm1 = con.prepareStatement(sql1), pstm2 = con.prepareStatement(sql2), pstm3 = con.prepareStatement(sql3);
         if (email == null) return false;
-        pstm1.setString(1, email);
-        pstm1.execute();
-        pstm2.setString(1, email);
-        pstm3.setString(1, email);
-        ResultSet rs = pstm2.executeQuery();
+        String sql = "SELECT * FROM users WHERE email = ?";
+        String sql1 = "UPDATE users SET temp = SHA2(?, 512) WHERE email = ?", sql2 = "SELECT * FROM users WHERE email = ?", sql3 = "UPDATE users SET temp = NULL WHERE email = ?";
+        PreparedStatement pstm = con.prepareStatement(sql), pstm1 = con.prepareStatement(sql1), pstm2 = con.prepareStatement(sql2), pstm3 = con.prepareStatement(sql3);
+        pstm.setString(1, email);
+        ResultSet rs = pstm.executeQuery();
         rs.next();
-        if (rs.getString("password").equals(rs.getString("temp"))) {
-            pstm3.execute();
-            return true;
+        if (rs.getString("password") == null) {
+            byte[] hash = rs.getBytes("hash"), salt = rs.getBytes("salt");
+            return MyUtils.verifyPassword(password.toCharArray(), salt, hash);
+        } else {
+            pstm1.setString(1, password);
+            pstm1.setString(2, email);
+            pstm1.execute();
+            pstm2.setString(1, email);
+            pstm3.setString(1, email);
+            ResultSet rs1 = pstm2.executeQuery();
+            rs1.next();
+            if (rs1.getString("password").equals(rs1.getString("temp"))) {
+                pstm3.execute();
+                return true;
+            }
         }
         return false;
     }
@@ -1354,9 +1378,12 @@ public class DBUtils {
      */
     public static void resetPassword(Connection con, String email) throws SQLException {
         backupUser(con, email, "RESET_PASSWORD");
-        String sql = "UPDATE users SET password = SHA2('password', 512) WHERE email = ?";
+        byte[] salt = MyUtils.getNextSalt(), hash = MyUtils.hash("AFCPa£$word".toCharArray(), salt);
+        String sql = "UPDATE users SET password = null, hash = ?, salt = ?, temp = null WHERE email = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
-        pstm.setString(1, email);
+        pstm.setBytes(1, hash);
+        pstm.setBytes(2, salt);
+        pstm.setString(3, email);
         pstm.executeUpdate();
     }
 
@@ -1380,16 +1407,18 @@ public class DBUtils {
     /**
      * Insert user
      *
-     * @param con      connection
-     * @param user     user
-     * @param password password
+     * @param con  connection
+     * @param user user
+     * @param hash hash
+     * @param salt salt
      * @throws SQLException throws SQLException
      */
-    public static void insertUser(Connection con, Users user, String password) throws SQLException {
-        String sql = "INSERT INTO users (name, email, phone, team_id, role, image, password) VALUES (?, ?, ?, ?, ?, ?, SHA2(?, 512))";
+    public static void insertUser(Connection con, Users user, byte[] hash, byte[] salt) throws SQLException {
+        String sql = "INSERT INTO users (name, email, phone, team_id, role, image, hash, salt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql), pstm1;
         pstm1 = setUserMethod(pstm, user);
-        pstm1.setString(7, password);
+        pstm1.setBytes(7, hash);
+        pstm1.setBytes(8, salt);
         pstm1.executeUpdate();
     }
 
@@ -1429,13 +1458,13 @@ public class DBUtils {
     /**
      * Backup user
      *
-     * @param con   connection
-     * @param email email
+     * @param con    connection
+     * @param email  email
      * @param action action
      * @throws SQLException SQL exception
      */
     private static void backupUser(Connection con, String email, String action) throws SQLException {
-        String sql = "INSERT INTO users_backup (name, email, phone, team_id, role, image, password, temp, action) SELECT name, email, phone, team_id, role, image, password, temp, ? FROM users WHERE email = ?";
+        String sql = "INSERT INTO users_backup (name, email, phone, team_id, role, image, password, hash, salt, temp, action) SELECT name, email, phone, team_id, role, image, password, hash, salt, temp, ? FROM users WHERE email = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setString(2, email);
@@ -1606,8 +1635,8 @@ public class DBUtils {
     /**
      * Backup what's on
      *
-     * @param con connection
-     * @param id  id
+     * @param con    connection
+     * @param id     id
      * @param action action
      * @throws SQLException SQL exception
      */

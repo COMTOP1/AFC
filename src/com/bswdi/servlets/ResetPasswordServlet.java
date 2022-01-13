@@ -40,7 +40,7 @@ public class ResetPasswordServlet extends HttpServlet {
                 if (email1 == null) response.sendRedirect("users");
                 else {
                     DBUtils.resetPassword(con, email1);
-                    request.getSession().setAttribute("success", "Password changed successfully");
+                    request.getSession().setAttribute("success", "Password reset successfully to \"AFCPa£$word\"");
                     response.sendRedirect("users");
                 }
             }

@@ -43,11 +43,20 @@
     <div style="background-color: white; margin: 10px 0 0 0; padding: 5px 0 0 0;">
         <h2 style="text-decoration: underline; text-decoration-color: red; width: 100%; text-align: center;">Change
             password</h2>
-        <p style="padding: 0; margin: 0; height: auto;">Please enter your email and password to login<br>
-            Enter your old password and new password then confirm it<br>
+        <p style="padding: 0; margin: 0; height: auto;">Enter your old password and new password then confirm it<br>
             Changing your password</p>
         <p style="color: red; padding: 0; margin: 0;" id="error">${error}</p>
-        <%request.getSession().setAttribute("error", null);%>
+        <%
+            request.getSession().setAttribute("error", null);
+            String notification = (String) request.getSession().getAttribute("UPDATE PASSWORD NOTIFICATION");
+            if (notification != null) {
+        %>
+        <p style="color: red; padding: 0; margin: 0;" id="passwordUpdate"><%=notification%>
+        </p>
+        <%
+            }
+            request.getSession().setAttribute("error", null);
+        %>
         <form id="edit" method="POST" action="changepassword">
             <div>
                 <label for="passwordold">Old password: </label>

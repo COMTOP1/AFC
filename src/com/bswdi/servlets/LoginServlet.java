@@ -54,10 +54,10 @@ public class LoginServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             try {
                 try {
-                    user = DBUtils.login(con, email, password);
+                    user = DBUtils.login(con, email, password, request);
                 } catch (Exception ignored) {
                 }
-                if (password.equals("password")) change = true;
+                if (password.equals("AFCpa£$word")) change = true;
 				if (user == null) {
                     error = true;
                     errorString = "Email or password are incorrect";

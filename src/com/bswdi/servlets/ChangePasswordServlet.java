@@ -2,7 +2,9 @@ package com.bswdi.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Arrays;
 
+import javax.management.BadStringOperationException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +35,17 @@ public class ChangePasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            if ((boolean) request.getSession().getAttribute("allowedOwnUserModification")) {
+            boolean modification = false, update = false;
+            try {
+                modification = (boolean) request.getSession().getAttribute("allowedOwnUserModification");
+            } catch (Exception ignored) {
+
+            } try {
+                update = (boolean) request.getSession().getAttribute("UPDATE PASSWORD");
+            } catch (Exception ignored) {
+
+            }
+            if (modification || update) {
                 request.getSession().setAttribute("allowedOwnUserModification", false);
                 Connection con = MyUtils.getStoredConnection(request);
                 String email = request.getParameter("email");
@@ -65,18 +77,31 @@ public class ChangePasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection con = MyUtils.getStoredConnection(request);
-        String email = MyUtils.getEmailInCookie(request), passwordOld, passwordNew1, passwordNew2, errorString = null;
+        String email = MyUtils.getEmailInCookie(request), passwordOld = "", passwordNew1 = "", passwordNew2 = "", errorString = null;
+        byte[] hash, salt;
         try {
             passwordOld = request.getParameter("passwordold");
             if (DBUtils.checkPassword(con, email, passwordOld)) {
                 passwordNew1 = request.getParameter("passwordnew1");
                 passwordNew2 = request.getParameter("passwordnew2");
                 if (passwordNew1.equals(passwordNew2)) {
-                    DBUtils.changePassword(con, email, passwordNew1);
-                    request.getSession().setAttribute("passwordchanged", "Password has been changed");
+                    salt = MyUtils.getNextSalt();
+                    hash = MyUtils.hash(passwordNew1.toCharArray(), salt);
+                    if (MyUtils.verifyPassword(passwordNew1.toCharArray(), salt, hash)) {
+                        Arrays.fill(passwordOld.toCharArray(), Character.MIN_VALUE);
+                        Arrays.fill(passwordNew1.toCharArray(), Character.MIN_VALUE);
+                        Arrays.fill(passwordNew2.toCharArray(), Character.MIN_VALUE);
+                        DBUtils.changePassword(con, email, hash, salt);
+                        request.getSession().setAttribute("passwordchanged", "Password has been changed");
+                        request.getSession().setAttribute("UPDATE PASSWORD", false);
+                        request.getSession().setAttribute("UPDATE PASSWORD NOTIFICATION", null);
+                    } else throw new Exception("Failed to verify new hash!");
                 } else request.getSession().setAttribute("error", "Can't change password");
             } else request.getSession().setAttribute("error", "Can't change password");
         } catch (Exception e) {
+            Arrays.fill(passwordOld.toCharArray(), Character.MIN_VALUE);
+            Arrays.fill(passwordNew1.toCharArray(), Character.MIN_VALUE);
+            Arrays.fill(passwordNew2.toCharArray(), Character.MIN_VALUE);
             errorString = e.getMessage();
             e.printStackTrace();
         }
