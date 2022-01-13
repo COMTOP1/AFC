@@ -14,3 +14,4 @@ AFC.iml
 /.settings/
 pom.xml
 /out/
+/.env

@@ -5,7 +5,7 @@
 <html>
 <head>
 	<link href="style.css" rel="stylesheet" type="text/css">
-    <link rel='icon' type='image/x-icon' href='https://raw.githubusercontent.com/COMTOP1/AFC-LOGO/main/AFC.ico'/>
+    <link rel='icon' type='image/x-icon' href='images/AFC.ico'/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
     <meta name="keywords" content="afc,A.F.C.,AFC,aldermaston,football">
