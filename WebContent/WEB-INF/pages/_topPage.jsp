@@ -50,7 +50,7 @@
             <%}%>
             <a href="players">Players</a>
             <a href="account">Account</a>
-            <a href="logout">Logout</a>
+            <a href="logout">Log out</a>
             <%}%>
         </div>
     </div>
