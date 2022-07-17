@@ -773,14 +773,15 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static Programmes getProgrammeMethod(ResultSet rs) throws SQLException {
-        int id;
+        int id, programmeSeasonID;
         String name, fileName;
         long dateOfProgramme;
         id = rs.getInt("id");
         name = rs.getString("name");
         fileName = rs.getString("file_name");
         dateOfProgramme = rs.getLong("date_of_programme");
-        return new Programmes(id, name, fileName, dateOfProgramme);
+        programmeSeasonID = rs.getInt("programme_season_id");
+        return new Programmes(id, name, fileName, dateOfProgramme, programmeSeasonID);
     }
 
     /**
@@ -825,6 +826,142 @@ public class DBUtils {
         String sql = "INSERT INTO programmes_backup (id, name, file_name, date_of_programme, action) SELECT id, name, file_name, date_of_programme, 'DELETE' FROM programmes WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Return programme seasons
+     *
+     * @param con connection
+     * @return List<ProgrammeSeasons> list
+     * @throws SQLException SQL exception
+     */
+    public static List<ProgrammeSeasons> queryProgrammeSeasons(Connection con) throws SQLException {
+        String sql = "SELECT * FROM programme_seasons";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        return getProgrammeSeasonsMethod(rs);
+    }
+
+    /**
+     * Get programme seasons method
+     *
+     * @param rs result set
+     * @return List<ProgrammeSeasons> list
+     * @throws SQLException SQL exception
+     */
+    private static List<ProgrammeSeasons> getProgrammeSeasonsMethod(ResultSet rs) throws SQLException {
+        List<ProgrammeSeasons> list = new ArrayList<>();
+        while (rs.next()) {
+            ProgrammeSeasons programmeSeason = getProgrammeSeasonMethod(rs);
+            list.add(programmeSeason);
+        }
+        return list;
+    }
+
+    /**
+     * Returns programme season
+     *
+     * @param con connection
+     * @param id  id
+     * @return ProgrammeSeasons programme season
+     * @throws SQLException SQL exception
+     */
+    public static ProgrammeSeasons findProgrammeSeason(Connection con, int id) throws SQLException {
+        String sql = "SELECT * FROM programme_seasons WHERE id = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setInt(1, id);
+        ResultSet rs = pstm.executeQuery();
+        if (rs.next()) return getProgrammeSeasonMethod(rs);
+        else return null;
+    }
+
+    /**
+     * Get programme season method
+     *
+     * @param rs result set
+     * @return ProgrammeSeasons programmeSeason
+     * @throws SQLException SQL exception
+     */
+    private static ProgrammeSeasons getProgrammeSeasonMethod(ResultSet rs) throws SQLException {
+        int id;
+        String season;
+        id = rs.getInt("id");
+        season = rs.getString("season");
+        return new ProgrammeSeasons(id, season);
+    }
+
+    /**
+     * Update programme season
+     *
+     * @param con  connection
+     * @param programmeSeason programme season
+     * @throws SQLException SQL exception
+     */
+    public static void updateProgrammeSeason(Connection con, ProgrammeSeasons programmeSeason) throws SQLException {
+        backupProgrammeSeason(con, programmeSeason.getID(), "UPDATE");
+        String sql = "UPDATE programme_seasons SET season = ? WHERE id = ?";
+        PreparedStatement pstm = con.prepareStatement(sql), pstm1;
+        pstm1 = setProgrammeSeasonMethod(pstm, programmeSeason);
+        pstm1.setInt(2, programmeSeason.getID());
+        pstm1.executeUpdate();
+    }
+
+    /**
+     * Insert programme season
+     *
+     * @param con  connection
+     * @param programmeSeason programme season
+     * @throws SQLException SQL exception
+     */
+    public static void insertProgrammeSeason(Connection con, ProgrammeSeasons programmeSeason) throws SQLException {
+        String sql = "INSERT INTO programme_seasons (season) VALUES (?)";
+        PreparedStatement pstm = con.prepareStatement(sql), pstm1;
+        pstm1 = setProgrammeSeasonMethod(pstm, programmeSeason);
+        pstm1.executeUpdate();
+    }
+
+    /**
+     * Set programme season method
+     *
+     * @param pstm prepared statement
+     * @param programmeSeason programme season
+     * @return PreparedStatement pstm
+     * @throws SQLException SQL exception
+     */
+    private static PreparedStatement setProgrammeSeasonMethod(PreparedStatement pstm, ProgrammeSeasons programmeSeason) throws SQLException {
+        pstm.setString(1, programmeSeason.getSeason());
+        return pstm;
+    }
+
+    /**
+     * Delete programme season
+     *
+     * @param con connection
+     * @param id  id
+     * @throws SQLException SQL exception
+     */
+    public static void deleteProgrammeSeason(Connection con, int id) throws SQLException {
+        backupProgrammeSeason(con, id, "DELETE");
+        String sql = "DELETE FROM programme_seasons WHERE id = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setInt(1, id);
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Backup programme season
+     *
+     * @param con    connection
+     * @param id     id
+     * @param action action
+     * @throws SQLException SQL exception
+     */
+    private static void backupProgrammeSeason(Connection con, int id, String action) throws SQLException {
+        String sql = "INSERT INTO programme_seasons_backup (id, season, action) SELECT id, season, ? FROM programme_seasons WHERE id = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, action);
+        pstm.setInt(2, id);
         pstm.executeUpdate();
     }
 
@@ -1435,7 +1572,7 @@ public class DBUtils {
         pstm.setString(2, user.getEmail());
         pstm.setString(3, user.getPhone());
         pstm.setInt(4, user.getTeam());
-        pstm.setString(5, user.getRole().toString());
+        pstm.setString(5, user.getRole().getRole());
         pstm.setString(6, user.getImage());
         return pstm;
     }
