@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.bswdi.dotenv.Dotenv;
+//import com.bswdi.dotenv.Dotenv;
 
 /**
  * MySQL connection utilities
@@ -27,7 +27,7 @@ public class MySQLConUtils {
         String DBName = dotenv.get("DB_NAME");
         String username = dotenv.get("DB_USERNAME");
         String password = dotenv.get("DB_PASSWORD");*/
-        String hostName = "localhost", DBName = "AFC", username = "websiteAccess", password = "websitePassword";
+        String hostName = "localhost", DBName = "afc", username = "websiteAccess", password = "websitePa$sw0rd";
         return getMySQLConnection(hostName, DBName, username, password);
     }
 
