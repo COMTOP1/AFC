@@ -16,14 +16,16 @@
         Users user = null;
         try {
             user = DBUtils.findUser(con, email);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            System.out.println("USER");
+            e.printStackTrace();
         }
         List<News> list = null;
         try {
             list = DBUtils.queryNews(con);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            System.out.println("LIST");
+            e.printStackTrace();
         }
         assert list != null;
         for (News news : list) {
