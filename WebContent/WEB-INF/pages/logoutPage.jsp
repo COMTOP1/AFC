@@ -4,7 +4,7 @@
 <html>
 <head>
     <jsp:include page="_headerPage.jsp"/>
-    <title>Official website of AFC Aldermaston - Logout</title>
+    <title>Official website of AFC Aldermaston - Log out</title>
     <style>
         form {
             margin: auto;
@@ -42,13 +42,13 @@
 <main class="main" style="text-align: center;">
     <div style="background-color: white; margin: 10px 0 0 0; padding: 5px 0 0 0;">
         <h2 style="text-decoration: underline; text-decoration-color: red; width: 100%; text-align: center;">
-            Logout</h2>
-        <p style="padding: 0; margin: 0; height: auto;">Are you sure you want to logout?</p>
+            Log out</h2>
+        <p style="padding: 0; margin: 0; height: auto;">Are you sure you want to log out?</p>
         <p style="color: red; padding: 0; margin: 0;" id="error">${error}</p><br>
         <form id="logout" method="POST" action="logout">
             <div class="button" id="container">
                 <div id="translate"></div>
-                <a onclick="document.getElementById('logout').submit();" href="javascript:{}">Logout</a>
+                <a onclick="document.getElementById('logout').submit();" href="javascript:{}">Log out</a>
             </div>
             <div class="button" id="container">
                 <div id="translate"></div>
