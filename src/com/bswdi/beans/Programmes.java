@@ -8,7 +8,7 @@ package com.bswdi.beans;
  */
 public class Programmes {
 	
-	private int id = 0;
+	private int id = 0, programmeSeasonID = 0;
 	private String name = null, fileName = null;
 	private long dateOfProgramme = 0L;
 
@@ -26,12 +26,14 @@ public class Programmes {
 	 * @param name name
 	 * @param fileName file name
 	 * @param date date
+	 * @param programmeSeasonID programme season id
 	 */
-	public Programmes(int id, String name, String fileName, long date) {
+	public Programmes(int id, String name, String fileName, long date, int programmeSeasonID) {
 		this.id = id;
 		this.name = name;
 		this.fileName = fileName;
 		this.dateOfProgramme = date;
+		this.programmeSeasonID = programmeSeasonID;
 	}
 
 	/**
@@ -104,5 +106,21 @@ public class Programmes {
 	 */
 	public void setDateOfProgramme(Long dateOfProgramme) {
 		this.dateOfProgramme = dateOfProgramme;
+	}
+
+	/**
+	 * Return programme season id
+	 * @return programmeSeasonID
+	 */
+	public int getProgrammeSeasonID() {
+		return programmeSeasonID;
+	}
+
+	/**
+	 * Sets programme season id
+	 * @param programmeSeasonID programme season id
+	 */
+	public void setProgrammeSeasonID(int programmeSeasonID) {
+		this.programmeSeasonID = programmeSeasonID;
 	}
 }

@@ -32,12 +32,15 @@
         for (Programmes programme : list) {
             if (first) {
                 first = false;%>
-    <h2><%=programme.getName()%>
+    <h2>Latest programme - <%=programme.getName()%>
     </h2><%
     Date date = new Date(programme.getDateOfProgramme());
     String[] dateArray = date.toString().split(" ");
     String dateString = String.format("%s %s %s %s", dateArray[0], dateArray[2], dateArray[1], dateArray[5]);
-    %>
+    if (programme.getProgrammeSeasonID() != -1) {
+        ProgrammeSeasons programmeSeason = DBUtils.findProgrammeSeason(con, programme.getProgrammeSeasonID());%>
+    <p>Season - <%=programmeSeason.getSeason()%></p>
+    <%}%>
     <p>Date of programme - <%=dateString%></p>
     <iframe src="FileStore/<%=programme.getFileName()%>" width="75%" height="500px"></iframe>
     <br><br><br>
@@ -50,13 +53,17 @@
     <%
     } else {
     %>
+
     <div id="listItem" style="display: block; cursor: pointer;"
          onclick="location.href('download?id=<%=programme.getID()%>&s=p');">
         <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=programme.getName()%></span><%
         Date date = new Date(programme.getDateOfProgramme());
         String[] dateArray = date.toString().split(" ");
         String dateString = String.format("%s %s %s %s", dateArray[0], dateArray[2], dateArray[1], dateArray[5]);
-        %>
+        if (programme.getProgrammeSeasonID() != -1) {
+            ProgrammeSeasons programmeSeason = DBUtils.findProgrammeSeason(con, programme.getProgrammeSeasonID());%>
+        <p>Season - <%=programmeSeason.getSeason()%></p>
+        <%}%>
         <p>Date of programme - <%=dateString%></p>
         <p>Click to download</p>
         <%if (user != null && user.getRole() != Role.MANAGER) {%>
@@ -76,7 +83,8 @@
 </main>
 <%if (user != null && user.getRole() != Role.MANAGER) {%>
 <p style="width: 96%;">
-    <a href="addprogramme">Add programme</a>
+    <a href="addprogramme">Add programme</a><br>
+    <a href="addprogrammeseason">Add programme season</a>
 </p>
 <%}%>
 <div id="socialBar">

@@ -68,7 +68,8 @@ public class AddProgrammeSecondServlet extends HttpServlet {
             throw new ServletException("Content type is not multipart/form-data");
         Connection con = MyUtils.getStoredConnection(request);
         String name = (String) request.getSession().getAttribute("programmeName"), fileName = null;
-        long dateOfProgramme = (long) request.getSession().getAttribute("programmeDate");
+        int programmeSeasonID = (int) request.getSession().getAttribute("programmeSeasonID");
+        long dateOfProgramme = Long.parseLong(request.getSession().getAttribute("programmeDate").toString());
         if (name == null || name.equals("")) {
             request.getSession().setAttribute("error", "Name must not be empty");
             response.sendRedirect("addprogramme");
@@ -84,12 +85,12 @@ public class AddProgrammeSecondServlet extends HttpServlet {
                 e.printStackTrace();
             }
             if (fileName == null || fileName.equals("")) {
-                request.getSession().setAttribute("error", "Name and file must not be empty");
+                request.getSession().setAttribute("error", "Name, programme season and file must not be empty");
                 System.out.println(name + " ~ " + fileName);
                 response.sendRedirect("addprogramme");
             } else
                 try {
-                    Programmes programme = new Programmes(0, name, fileName, dateOfProgramme);
+                    Programmes programme = new Programmes(0, name, fileName, dateOfProgramme, programmeSeasonID);
                     DBUtils.insertProgramme(con, programme);
                     response.sendRedirect("programmes");
                 } catch (Exception e) {

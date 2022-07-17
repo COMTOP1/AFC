@@ -52,6 +52,7 @@ public class AddProgrammeFirstServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         long dateOfProgramme = 0L;
+        int programmeSeasonID = 0;
         if (name == null || name.equals("")) {
             request.getSession().setAttribute("error", "Name must not be empty");
             response.sendRedirect("addprogramme");
@@ -65,9 +66,16 @@ public class AddProgrammeFirstServlet extends HttpServlet {
                 request.getSession().setAttribute("error", "Please enter a date");
                 response.sendRedirect("addprogramme");
             }
+            try {
+                programmeSeasonID = Integer.parseInt(request.getParameter("programmeSeason"));
+            } catch (Exception e) {
+                request.getSession().setAttribute("error", "Please select a season");
+                response.sendRedirect("addprogramme");
+            }
             if (dateOfProgramme > 0) {
                 request.getSession().setAttribute("programmeName", name);
                 request.getSession().setAttribute("programmeDate", dateOfProgramme);
+                request.getSession().setAttribute("programmeSeasonID", programmeSeasonID);
                 request.getSession().setAttribute("allowProgrammeSecond", true);
                 response.sendRedirect("addprogrammesecond");
             } else {

@@ -1,6 +1,6 @@
 <%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.LocalDate, com.bswdi.beans.ProgrammeSeasons, java.util.List, com.bswdi.utils.*, java.sql.Connection" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +24,27 @@
             <div>
                 <label for="dateOfProgramme">Date of programme: </label>
                 <%LocalDate date = LocalDate.now();%>
-                <input type="date" id="dateOfProgramme" name="dateOfProgramme" max="<%=date%>">
+                <input type="date" id="dateOfProgramme" name="dateOfProgramme" value="<%=date.now()%>">
+            </div>
+            <div>
+                <label for="programmeSeason"></label>
+                <select form="add" name="programmeSeason" id="programmeSeason">
+                    <option id="programmeSeason" value="-1">No season</option>
+                    <%List<ProgrammeSeasons> list = null;
+                        request.getSession().setAttribute("error", null);
+                        Connection con = MyUtils.getStoredConnection(request);
+                    try {
+                        list = DBUtils.queryProgrammeSeasons(con);
+                    } catch (Exception ignored) {
+
+                    }
+                    if (list != null) {
+                    for (ProgrammeSeasons programmeSeason : list) {%>
+                    <option id="programmeSeason" value="<%=programmeSeason.getID()%>"><%=programmeSeason.getSeason()%>
+                    </option>
+                    <%}
+                    }%>
+                </select>
             </div>
             <p><a onclick="validateFunction()" href="javascript:{}">Next</a></p>
             <br>
@@ -32,10 +52,11 @@
             <script>
                 function validateFunction() {
                     const name = document.getElementById('name').value.length;
-                    if (name > 0) {
+                    const programmeSeason = document.getElementById('programmeSeason').value.length;
+                    if (name > 0 && programmeSeason > 0) {
                         add.submit();
                     } else {
-                        document.getElementById("error").innerHTML = "Name is required!";
+                        document.getElementById("error").innerHTML = "Name and programme season are required!";
                     }
                 }
             </script>
