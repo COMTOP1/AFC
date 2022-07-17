@@ -119,7 +119,7 @@
         </div>
         |
         <div class="button" align="right">
-            <a href="logout" style="color: white;">Logout</a>
+            <a href="logout" style="color: white;">Log out</a>
         </div>
         <%}%>
 
