@@ -35,7 +35,7 @@
                      style="border: 5px; max-height: 200px; max-width: 200px;">
         </div>
 		<a href="<%=sponsor.getWebsite()%>" target="_blank"><%=sponsor.getName()%></a><br><br><br>
-        <div style="min-height: 60px;"><a href="<%=sponsor.getWebsite()%>" target="_blank"><%=sponsor.getPurpose()%></a>
+        <div style="min-height: 60px;"><%if (sponsor.getWebsite() != null) {%><a href="<%=sponsor.getWebsite()%>" target="_blank"><%}%><%=sponsor.getPurpose()%><%if (sponsor.getWebsite() != null) {%></a><%}%>
         </div>
         <br><br>
         <%if (user != null && user.getRole() != Role.MANAGER) {%>
