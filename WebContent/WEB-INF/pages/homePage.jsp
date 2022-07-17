@@ -52,7 +52,7 @@
 
         #container {
             width: 100%;
-            height: 250px;
+            height: 270px;
             overflow: hidden;
             margin: 50px auto;
             background: white;
@@ -220,7 +220,7 @@
                 for (Sponsors sponsor : listSponsors) {
             %>
             <a href="<%=sponsor.getWebsite()%>" target="_blank" style="width: 350px; height: 250px;">
-                <img <%if (i == 0) {%>class="first"<%}%> style="width: 350px; height: 250px;"
+                <img <%if (i == 0) {%>class="first"<%}%> style="width: 350px; max-height: 250px;"
                      src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';">
             </a>
@@ -229,8 +229,8 @@
                 }
                 for (Sponsors sponsor : listSponsors) {
             %>
-            <a href="<%=sponsor.getWebsite()%>" target="_blank">
-                <img style="width: 350px; height: 250px;" src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
+            <a href="<%=sponsor.getWebsite()%>" target="_blank" style="width: 350px; height: 250px;">
+                <img style="width: 350px; max-height: 250px;" src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';">
             </a>
             <%}%>
@@ -245,10 +245,11 @@
                 for (Affiliations affiliation : listAffiliations) {%>
             <div id="listItemAffiliation">
                 <div class="imgContainer">
-                    <a href="<%=affiliation.getWebsite()%>" target="_blank">
+                    <%if (affiliation.getWebsite() != null) {%>
+                    <a href="<%=affiliation.getWebsite()%>" target="_blank"><%}%>
                         <img id="affiliationImage" src="data:image/jpg;base64,<%=affiliation.getImage()%>" alt=""
                              onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
-                    </a>
+                    <%if (affiliation.getWebsite() != null) {%></a><%}%>
                     <%if (user != null && user.getRole() != Role.MANAGER) {%>
                     <p style="padding: 0; margin: 0;">
                         <a href="deleteaffiliation?id=<%=affiliation.getID()%>">Delete</a>
