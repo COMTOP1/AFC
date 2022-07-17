@@ -40,22 +40,20 @@
             <%=manager.getName()%>
             <%}%><br><br>
             <h3>Team Coach</h3>
-            <%=team.getCoach()%><br><br>
+            <%if (team.getCoach() != null) {%><%=team.getCoach()%><%} else {%>Ask the webmaster to add this information<%}%><br><br>
             <h3>Physio</h3>
-            <%=team.getPhysio()%><br><br>
+            <%if (team.getPhysio() != null) {%><%=team.getPhysio()%><%} else {%>Ask the webmaster to add this information<%}%><br><br>
             <h3>Training Location</h3>
             Aldermaston Recreational Society<br><br>
             <%if (team.getAges() >= 13) {%>
             <h3>League</h3>
-            <%=team.getLeague()%><br><br>
+            <%if (team.getLeague() != null) {%><%=team.getLeague()%><%} else {%>Ask the webmaster to add this information<%}%><br><br>
             <h3>Division</h3>
-            <%=team.getDivision()%><br><br>
-            <h3>League Table</h3>
-            <a href="<%=team.getLeagueTable()%>" target="_blank" style="text-decoration: underline;">League
-                Table</a><br><br>
-            <h3>Fixtures</h3>
-            <a href="<%=team.getFixtures()%>" target="_blank"
-               style="text-decoration: underline;">Fixtures</a><br><br><br>
+            <%if (team.getDivision() != null) {%><%=team.getDivision()%><%} else {%>Ask the webmaster to add this information<%}%><br><br>
+            <%if (team.getLeagueTable() != null) {%><h3>League Table</h3>
+            <a href="<%=team.getLeagueTable()%>" target="_blank" style="text-decoration: underline;">League Table</a><br><br><%}%>
+            <%if (team.getFixtures() != null) {%><h3>Fixtures</h3>
+            <a href="<%=team.getFixtures()%>" target="_blank" style="text-decoration: underline;">Fixtures</a><br><br><br><%}%>
             <%}%>
         </div>
         <div style="float:right; text-align: right; width: 50%;">
