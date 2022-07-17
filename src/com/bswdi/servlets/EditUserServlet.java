@@ -77,7 +77,7 @@ public class EditUserServlet extends HttpServlet {
         } catch (Exception e) {
             teamID = 0;
         }
-        role = Role.valueOf(request.getParameter("role"));
+        role = Role.getRole(request.getParameter("role"));
         InputStream inputStream;
         Part filePart;
         try {
