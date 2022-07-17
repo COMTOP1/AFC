@@ -94,7 +94,7 @@ public class EditTeamServlet extends HttpServlet {
             while ((bytesRead = inputStream.read(buffer)) != -1) outputStream.write(buffer, 0, bytesRead);
             byte[] imageBytes = outputStream.toByteArray();
             teamPhoto = Base64.getEncoder().encodeToString(imageBytes);
-            if (teamPhoto.equals("") || teamPhoto.length() == 0) {
+            if (teamPhoto.length() == 0) {
             	try {
                     assert teamOld != null;
                     teamPhoto = teamOld.getTeamPhoto();
