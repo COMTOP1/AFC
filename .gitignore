@@ -9,9 +9,9 @@ out
 .classpath
 .project
 AFC.iml
-/src/com/bswdi/dotenv
 /.idea/
 /.settings/
 pom.xml
 /out/
 /.env
+build
