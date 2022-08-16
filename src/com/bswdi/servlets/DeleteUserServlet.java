@@ -34,10 +34,10 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = MyUtils.getEmailInCookie(request), email1 = request.getParameter("email");
+        String email = request.getParameter("email");
         try {
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = DBUtils.findUser(con, email);
+            Users user = MyUtils.getUser(request, con);
             assert user != null;
             if ((user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) && !Objects.equals(email, "liamb1216@gmail.com")) {
                 request.setAttribute("email", email1);

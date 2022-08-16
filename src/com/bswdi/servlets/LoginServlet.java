@@ -33,8 +33,14 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = MyUtils.getEmailInCookie(request);
-        if (email == null) {
+        Connection con = MyUtils.getStoredConnection(request);
+        Users user = null;
+        try {
+            user = MyUtils.getUser(request, con);
+        } catch (Exception ignored) {
+
+        }
+        if (user == null) {
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/loginPage.jsp");
             dispatcher.forward(request, response);
         } else response.sendRedirect("home");
@@ -42,6 +48,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Connection con = MyUtils.getStoredConnection(request);
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         Users user = null;
@@ -51,7 +58,6 @@ public class LoginServlet extends HttpServlet {
             error = true;
             errorString = "An email and password are required!";
         } else {
-            Connection con = MyUtils.getStoredConnection(request);
             try {
                 try {
                     user = DBUtils.login(con, email, password, request);
@@ -61,10 +67,6 @@ public class LoginServlet extends HttpServlet {
 				if (user == null) {
                     error = true;
                     errorString = "Email or password are incorrect";
-                } else {
-                    HttpSession session = request.getSession();
-                    MyUtils.storeLoggedInUser(session, user);
-                    request.getSession().setAttribute("loggedInUser", user);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,7 +79,7 @@ public class LoginServlet extends HttpServlet {
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/loginPage.jsp");
             dispatcher.forward(request, response);
         } else {
-            MyUtils.storeUserCookie(response, user);
+            MyUtils.storeUser(request, response, con, user);
             if (change) response.sendRedirect("changepassword?email=" + user.getEmail());
             else response.sendRedirect("home");
         }

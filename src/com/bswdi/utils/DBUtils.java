@@ -396,6 +396,97 @@ public class DBUtils {
         pstm.executeUpdate();
     }
 
+    public static List<JWTToken> queryJWToken(Connection con) throws SQLException {
+        String sql = "SELECT * FROM jwt_tokens";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        return getJWTTokenMethodMultiple(rs);
+    }
+
+    private static List<JWTToken> getJWTTokenMethodMultiple(ResultSet rs) throws SQLException {
+        List<JWTToken> list = new ArrayList<>();
+        while (rs.next()) {
+            JWTToken jwtToken = getJWTTokenMethodSingle(rs);
+            list.add(jwtToken);
+        }
+        return list;
+    }
+
+    public static JWTToken findJWTToken(Connection con, long id) throws SQLException {
+        String sql = "SELECT * FROM jwt_tokens WHERE id = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setLong(1, id);
+        ResultSet rs = pstm.executeQuery();
+        if (rs.next()) return getJWTTokenMethodSingle(rs);
+        return null;
+    }
+
+    private static JWTToken getJWTTokenMethodSingle(ResultSet rs) throws SQLException {
+        long id, iat, exp;
+        String email, userAgent;
+        id = rs.getLong("id");
+        email = rs.getString("email");
+        iat = rs.getLong("iat");
+        exp = rs.getLong("exp");
+        userAgent = rs.getString("user_agent");
+        return new JWTToken(id, email, iat, exp, userAgent);
+    }
+
+    public static long insertJWTToken(Connection con, JWTToken jwtToken) throws SQLException {
+        String sql1 = "INSERT INTO jwt_tokens (email, iat, exp, user_agent) VALUES (?, ?, ?, ?)", sql2 = "SELECT id FROM jwt_tokens WHERE email = ? AND iat = ? AND exp = ? AND user_agent = ?";
+        PreparedStatement pstm1 = con.prepareStatement(sql1), pstm2 = con.prepareStatement(sql2);
+        pstm1.setString(1, jwtToken.getEmail());
+        pstm1.setLong(2, jwtToken.getIat());
+        pstm1.setLong(3, jwtToken.getExp());
+        pstm1.setString(4, jwtToken.getUserAgent());
+        pstm1.executeUpdate();
+        pstm2.setString(1, jwtToken.getEmail());
+        pstm2.setLong(2, jwtToken.getIat());
+        pstm2.setLong(3, jwtToken.getExp());
+        pstm2.setString(4, jwtToken.getUserAgent());
+        ResultSet rs = pstm2.executeQuery();
+        rs.next();
+        return rs.getLong("id");
+    }
+
+    /**
+     * Delete jwt token
+     *
+     * @param con connection
+     * @param id  id
+     * @throws SQLException SQL exception
+     */
+    public static void deleteJWTToken(Connection con, long id) throws SQLException {
+        backupJWTToken(con, id, "DELETE");
+        String sql = "DELETE FROM jwt_tokens WHERE id = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setLong(1, id);
+        pstm.executeUpdate();
+    }
+
+    public static void deleteJWTTokenExpired(Connection con, long exp) throws SQLException {
+        String sql = "DELETE FROM jwt_tokens WHERE exp <= ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setLong(1, exp);
+        pstm.executeUpdate();
+    }
+
+    /**
+     * Backup jwt token
+     *
+     * @param con    connection
+     * @param id     id
+     * @param action action
+     * @throws SQLException SQL exception
+     */
+    private static void backupJWTToken(Connection con, long id, String action) throws SQLException {
+        String sql = "INSERT INTO jwt_tokens_backup (id, email, iat, exp, user_agent, action) SELECT id, email, iat, exp, user_agent, ? FROM jwt_tokens WHERE id = ?";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        pstm.setString(1, action);
+        pstm.setLong(2, id);
+        pstm.executeUpdate();
+    }
+
     /**
      * Returns all news articles
      *

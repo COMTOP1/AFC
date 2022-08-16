@@ -33,8 +33,7 @@ public class ResetPasswordServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Connection con = MyUtils.getStoredConnection(request);
-            String email = MyUtils.getEmailInCookie(request);
-            Users user = DBUtils.findUser(con, email);
+            Users user = MyUtils.getUser(request, con);
             if (user != null && (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER)) {
                 String email1 = request.getParameter("email");
                 if (email1 == null) response.sendRedirect("users");

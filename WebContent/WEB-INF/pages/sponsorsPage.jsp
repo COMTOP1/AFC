@@ -12,13 +12,7 @@
 <main class="main" style="text-align: center;">
     <%
         Connection con = MyUtils.getStoredConnection(request);
-        String email = MyUtils.getEmailInCookie(request);
-        Users user = null;
-        try {
-            user = DBUtils.findUser(con, email);
-        } catch (Exception ignored) {
-
-        }
+        Users user = MyUtils.getUser(request, con);
         List<Sponsors> list = null;
         try {
             list = DBUtils.querySponsors(con);

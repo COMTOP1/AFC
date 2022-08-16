@@ -33,11 +33,10 @@ public class DeleteDocumentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = MyUtils.getEmailInCookie(request);
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = DBUtils.findUser(con, email);
+            Users user = MyUtils.getUser(request, con);
             assert user != null;
             if (user.getRole() != Role.MANAGER) {
                 request.setAttribute("id", id);
@@ -58,9 +57,9 @@ public class DeleteDocumentServlet extends HttpServlet {
 //            String filepath = "C:\\Users\\Administrator.LIAM-ACER-SERVE\\Desktop\\Code\\Java\\AFC\\FileStore\\";
 //            String filepath = System.getProperty("catalina.home") + "/FileStore/";
 //            String filepath = "/Users/liam/Desktop/Code/Java/AFC/FileStore/";
-            String filepath = "/FileStore/";
+//            String filepath = "/FileStore/";
             assert document != null;
-            File file = new File(filepath + document.getFileName());
+            File file = new File(request.getServletContext().getAttribute("FILES_DIR") + document.getFileName());
             boolean deleted;
             deleted = file.delete();
             if (!deleted) request.getSession().setAttribute("error", "Couldn't delete file from file system");

@@ -34,15 +34,12 @@ public class PlayersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String email = MyUtils.getEmailInCookie(request);
             Connection con = MyUtils.getStoredConnection(request);
-            if (email == null) response.sendRedirect("home");
+            Users user = MyUtils.getUser(request, con);
+            if (user == null) response.sendRedirect("home");
             else {
-                Users user = DBUtils.findUser(con, email);
-                if (user != null) {
-                    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/playersPage.jsp");
-                    dispatcher.forward(request, response);
-                } else response.sendRedirect("home");
+                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/playersPage.jsp");
+                dispatcher.forward(request, response);
             }
         } catch (Exception e) {
             response.sendRedirect("home");

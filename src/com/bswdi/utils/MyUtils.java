@@ -15,9 +15,14 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.auth0.jwt.*;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.bswdi.beans.JWTToken;
 import com.bswdi.beans.Users;
+import com.bswdi.connection.ConnectionUtils;
+import com.bswdi.dotenv.Dotenv;
 
 /**
  * Utilities for java and user data
@@ -29,12 +34,9 @@ public class MyUtils {
     /**
      * Attribute for connection
      */
-    public static final String ATT_NAME_CONNECTION = "ATTRIBUTE_FOR_CONNECTION";
-
-    private static final String ATT_NAME_EMAIL = "ATTRIBUTE_FOR_STORE_EMAIL_IN_COOKIE";
+    private static final String ATT_NAME_CONNECTION = "Q09OTkVDVElPTl9BVFRSSUJVVEU";                // Base64 encoded
+    private static final String ATT_JWT_TOKEN = "SldUX1RPS0VOX0FUVFJJQlVURQ";
     private static final Random secureRandom = new SecureRandom();
-    private static final int ITERATIONS = 500000;
-    private static final int KEY_LENGTH = 512;
 
     /**
      * Sets connection in attributes
@@ -57,35 +59,40 @@ public class MyUtils {
     }
 
     /**
-     * Sets user in attributes
-     *
-     * @param session session
-     * @param user    user
-     */
-    public static void storeLoggedInUser(HttpSession session, Users user) {
-        session.setAttribute("loggedInUser", user);
-    }
-
-    /**
-     * Return user from attributes
-     *
-     * @param session session
-     * @return Users loggedInUser
-     */
-    public static Users getLoggedInUser(HttpSession session) {
-        return (Users) session.getAttribute("loggedInUser");
-    }
-
-    /**
      * Sets user in cookies
      *
      * @param response response
      * @param user     user
      */
-    public static void storeUserCookie(HttpServletResponse response, Users user) {
-        Cookie cookieUserName = new Cookie(ATT_NAME_EMAIL, user.getEmail());
-        cookieUserName.setMaxAge(24 * 60 * 60);
-        response.addCookie(cookieUserName);
+    public static void storeUser(HttpServletRequest request, HttpServletResponse response, Connection con, Users user) {
+        try {
+            if (con == null)
+                con = ConnectionUtils.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Dotenv dotenv = Dotenv.load();
+        JWTToken jwtToken = new JWTToken(0, user.getEmail(), getTime(), getTime1Day(), request.getHeader("user-agent"));
+        try {
+            try {
+                jwtToken.setId(DBUtils.insertJWTToken(con, jwtToken));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Algorithm algorithm = Algorithm.HMAC512(dotenv.get("JWT_SECRET"));
+            String token = JWT.create()
+                    .withIssuer("BSWDI")
+                    .withAudience("AFC")
+                    .withExpiresAt(new Date(jwtToken.getExp()))
+                    .withIssuedAt(new Date(jwtToken.getIat()))
+                    .withKeyId(String.valueOf(jwtToken.getId()))
+                    .sign(algorithm);
+            Cookie cookieJWT = new Cookie(ATT_JWT_TOKEN, Base64.getEncoder().encodeToString(token.getBytes()));
+            cookieJWT.setMaxAge(24 * 60 * 60);
+            response.addCookie(cookieJWT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -103,28 +110,22 @@ public class MyUtils {
     }
 
     /**
-     * Return email from cookies
-     *
-     * @param request request
-     * @return String email
-     */
-    public static String getEmailInCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null)
-            for (Cookie cookie : cookies)
-                if (ATT_NAME_EMAIL.equals(cookie.getName())) return cookie.getValue();
-        return null;
-    }
-
-    /**
      * Delete user from cookies
      *
      * @param response response
      */
     public static void deleteUserCookie(HttpServletResponse response) {
-        Cookie cookieUserName = new Cookie(ATT_NAME_EMAIL, null);
+        Cookie cookieUserName = new Cookie(ATT_JWT_TOKEN, null);
         cookieUserName.setMaxAge(0);
         response.addCookie(cookieUserName);
+    }
+
+    public static long getTime1Day() {
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, 1);
+        return cal.getTime().getTime();
     }
 
     /**

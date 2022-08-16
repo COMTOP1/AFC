@@ -38,10 +38,9 @@ public class AddUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = MyUtils.getEmailInCookie(request);
         try {
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = DBUtils.findUser(con, email);
+            Users user = MyUtils.getUser(request, con);
             assert user != null;
             if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addUserPage.jsp");

@@ -38,10 +38,9 @@ public class EditSponsorServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = MyUtils.getEmailInCookie(request);
         try {
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = DBUtils.findUser(con, email);
+            Users user = MyUtils.getUser(request, con);
             assert user != null;
             if (user.getRole() != Role.MANAGER) {
                 int id = Integer.parseInt(request.getParameter("id"));

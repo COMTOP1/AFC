@@ -19,13 +19,7 @@
         } catch (Exception ignored) {
 
         }
-        String email = MyUtils.getEmailInCookie(request);
-        Users user = null;
-        try {
-            user = DBUtils.findUser(con, email);
-        } catch (Exception ignored) {
-
-        }
+        Users user = MyUtils.getUser(request, con);
         assert list != null;
         for (WhatsOn whatsOn : list) {
     %>

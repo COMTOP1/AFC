@@ -16,13 +16,7 @@
         <div style="float:left; width: 50%">
             <%
                 Connection con = MyUtils.getStoredConnection(request);
-                String email = MyUtils.getEmailInCookie(request);
-                Users user = null;
-                try {
-                    user = DBUtils.findUser(con, email);
-                } catch (Exception ignored) {
-
-                }
+                Users user = MyUtils.getUser(request, con);
             %>
             <h2><%=team.getName()%>
             </h2>

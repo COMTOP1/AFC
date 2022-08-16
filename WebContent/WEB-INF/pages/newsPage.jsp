@@ -12,19 +12,11 @@
 <main class="main" style="text-align: center;">
     <%
         Connection con = MyUtils.getStoredConnection(request);
-        String email = MyUtils.getEmailInCookie(request);
-        Users user = null;
-        try {
-            user = DBUtils.findUser(con, email);
-        } catch (Exception e) {
-            System.out.println("USER");
-            e.printStackTrace();
-        }
+        Users user = MyUtils.getUser(request, con);
         List<News> list = null;
         try {
             list = DBUtils.queryNews(con);
         } catch (Exception e) {
-            System.out.println("LIST");
             e.printStackTrace();
         }
         assert list != null;

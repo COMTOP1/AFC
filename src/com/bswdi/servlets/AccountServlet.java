@@ -34,10 +34,9 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String email = MyUtils.getEmailInCookie(request);
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = DBUtils.findUser(con, email);
-            if (email == null || user == null) response.sendRedirect("home");
+            Users user = MyUtils.getUser(request, con);
+            if (user == null) response.sendRedirect("home");
             else {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/accountPage.jsp");
                 dispatcher.forward(request, response);

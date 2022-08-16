@@ -38,8 +38,7 @@ public class TeamServlet extends HttpServlet {
             else {
                 Connection con = MyUtils.getStoredConnection(request);
                 Teams team = DBUtils.findTeam(con, id);
-                String email = MyUtils.getEmailInCookie(request);
-                Users user = DBUtils.findUser(con, email);
+                Users user = MyUtils.getUser(request, con);
                 assert user != null;
                 if (team == null || !(team.getActive() || user.getRole() == Role.WEBMASTER)) response.sendRedirect("teams");
                 else {

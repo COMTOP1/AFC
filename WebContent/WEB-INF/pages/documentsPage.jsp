@@ -11,13 +11,7 @@
 <jsp:include page="_topPage.jsp"/>
 <%
     Connection con = MyUtils.getStoredConnection(request);
-    String email = MyUtils.getEmailInCookie(request);
-    Users user = null;
-    try {
-        user = DBUtils.findUser(con, email);
-    } catch (Exception ignored) {
-
-    }
+    Users user = MyUtils.getUser(request, con);
 %>
 <main class="main" style="padding: 0 0 0 10px">
 	<p style="color: red; padding: 0; margin: 0;" id="error">${error}</p><br>

@@ -25,13 +25,7 @@
         <%
             Date date = new Date(whatsOn.getDate());
             String[] dateArray = date.toString().split(" ");
-            String email = MyUtils.getEmailInCookie(request);
-            Users user = null;
-            try {
-                user = DBUtils.findUser(con, email);
-            } catch (Exception ignored) {
-
-            }
+            Users user = MyUtils.getUser(request, con);
             String dateString = String.format("%s %s %s %s", dateArray[0], dateArray[2], dateArray[1], dateArray[5]);
             String dateOfEvent = "";
             try {

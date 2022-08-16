@@ -6,13 +6,7 @@
 <footer>
 	<%
 		Connection con = MyUtils.getStoredConnection(request);
-        String email = MyUtils.getEmailInCookie(request);
-        Users user = null;
-        try {
-            user = DBUtils.findUser(con, email);
-        } catch (Exception ignored) {
-
-        }
+        Users user = MyUtils.getUser(request, con);
 	%>
     <img src="https://hitwebcounter.com/counter/counter.php?page=7737765&style=0024&nbdigits=5&type=ip&initCount=0" title="Free Counter" Alt="web counter" border="0" <%if (user == null) {%>style="visibility: hidden;"<%}%> /><br><small>&copy; Copyright 2020 - <%=MyUtils.getYear()%>, AFC Aldermaston, website provided by <a href="https://bswdi.co.uk" style="text-decoration: underline; font-weight: 900;" target="_blank">BSWDI</a></small>
 </footer>

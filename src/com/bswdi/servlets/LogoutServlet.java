@@ -2,6 +2,7 @@
 package com.bswdi.servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bswdi.beans.Users;
 import com.bswdi.utils.*;
 
 /**
@@ -31,8 +33,14 @@ public class LogoutServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = MyUtils.getEmailInCookie(request);
-        if (email != null) {
+        Connection con = MyUtils.getStoredConnection(request);
+        Users user = null;
+        try {
+            user = MyUtils.getUser(request, con);
+        } catch (Exception ignored) {
+
+        }
+        if (user != null) {
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/logoutPage.jsp");
             dispatcher.forward(request, response);
         } else response.sendRedirect("home");
@@ -41,10 +49,6 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            request.getSession().removeAttribute("loggedInUser");
-            request.getSession().removeAttribute("loggedInUserName");
-            request.removeAttribute("loggedInUser");
-            request.removeAttribute("loggedInUserName");
             MyUtils.deleteUserCookie(response);
             response.sendRedirect("home");
         } catch (Exception e) {

@@ -77,11 +77,13 @@ public class ChangePasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection con = MyUtils.getStoredConnection(request);
-        String email = MyUtils.getEmailInCookie(request), passwordOld = "", passwordNew1 = "", passwordNew2 = "", errorString = null;
+        String passwordOld = "", passwordNew1 = "", passwordNew2 = "", errorString = null;
         byte[] hash, salt;
         try {
             passwordOld = request.getParameter("passwordold");
-            if (DBUtils.checkPassword(con, email, passwordOld)) {
+            Users user = MyUtils.getUser(request, con);
+            assert user != null;
+            if (DBUtils.checkPassword(con, user.getEmail(), passwordOld)) {
                 passwordNew1 = request.getParameter("passwordnew1");
                 passwordNew2 = request.getParameter("passwordnew2");
                 if (passwordNew1.equals(passwordNew2)) {
@@ -91,7 +93,7 @@ public class ChangePasswordServlet extends HttpServlet {
                         Arrays.fill(passwordOld.toCharArray(), Character.MIN_VALUE);
                         Arrays.fill(passwordNew1.toCharArray(), Character.MIN_VALUE);
                         Arrays.fill(passwordNew2.toCharArray(), Character.MIN_VALUE);
-                        DBUtils.changePassword(con, email, hash, salt);
+                        DBUtils.changePassword(con, user.getEmail(), hash, salt);
                         request.getSession().setAttribute("passwordchanged", "Password has been changed");
                         request.getSession().setAttribute("UPDATE PASSWORD", false);
                         request.getSession().setAttribute("UPDATE PASSWORD NOTIFICATION", null);

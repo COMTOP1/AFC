@@ -35,11 +35,10 @@ public class UsersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String email = MyUtils.getEmailInCookie(request);
             Connection con = MyUtils.getStoredConnection(request);
-            if (email == null) response.sendRedirect("home");
+            Users user = MyUtils.getUser(request, con);
+            if (user == null) response.sendRedirect("home");
             else {
-                Users user = DBUtils.findUser(con, email);
                 assert user != null;
                 if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {
                     RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/usersPage.jsp");

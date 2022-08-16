@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
 
 /**
  * User filter
@@ -40,9 +41,9 @@ public class UserFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpServletRequest req = (HttpServletRequest) request;
-        HttpSession session = req.getSession();
-        Users user = MyUtils.getLoggedInUser(session);
-        if (MyUtils.getEmailInCookie(req) != null && user == null) MyUtils.deleteUserCookie(res);
+        Connection con = MyUtils.getStoredConnection(req);
+        Users user = MyUtils.getUser(req, con);
+        if (MyUtils.getUser(req, con) != null && user == null) MyUtils.deleteUserCookie(res);
         boolean updatePassword = false;
         try {
             updatePassword = (boolean) req.getSession().getAttribute("UPDATE PASSWORD");

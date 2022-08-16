@@ -16,14 +16,11 @@
     webmaster@afcaldermaston.co.uk
 </div>-->
 <%
-    String email = MyUtils.getEmailInCookie(request);
     Connection con = MyUtils.getStoredConnection(request);
-    Users user = null;
-    try {
-        user = DBUtils.findUser(con, email);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+    System.out.println("Test1");
+    Users user = MyUtils.getUser(request, con);
+    System.out.println(user);
+    System.out.println("Test2");
 %>
 <div id="menuBar" style="z-index: 1">
     <div id="mobileMenu">
@@ -39,7 +36,7 @@
             <a href="sponsors">Sponsors</a>
             <a href="info">Info</a>
             <a href="contact">Contact</a>
-            <%if (email == null || email.equals("")) {%>
+            <%if (user == null) {%>
             <a href="login">Login</a>
             <%
             } else {
@@ -96,8 +93,8 @@
         </div>
     </div>
     <div id="rightSide"
-         style="color: white;<%if (email != null && !email.equals("")) {%> width: <%if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {%>280px;<%} else {%>150px;<%}}%>">
-        <%if (email == null || email.equals("")) {%>
+         style="color: white;<%if (user != null) {%> width: <%if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {%>281px;<%} else {%>150px;<%}}%>">
+        <%if (user == null) {%>
         <div class="button" align="right">
             <a href="login" style="color: white;">Login</a>
         </div>

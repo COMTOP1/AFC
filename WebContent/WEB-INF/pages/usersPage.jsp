@@ -8,13 +8,7 @@
     <title>Official website of AFC Aldermaston - Users</title>
     <%
         Connection con = MyUtils.getStoredConnection(request);
-        String email = MyUtils.getEmailInCookie(request);
-        Users user = null;
-        try {
-            user = DBUtils.findUser(con, email);
-        } catch (Exception e) {
-        	e.printStackTrace();
-        }
+        Users user = MyUtils.getUser(request, con);
         List<Users> list = null;
         try {
             list = DBUtils.queryUsers(con);

@@ -46,21 +46,13 @@ public class CookieFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession();
-        Users userInSession = MyUtils.getLoggedInUser(session);
-        if (userInSession != null) {
-            session.setAttribute("COOKIE_CHECKED", "CHECKED");
-            chain.doFilter(request, response);
-            return;
-        }
         Connection con = MyUtils.getStoredConnection(request);
         String checked = (String) session.getAttribute("COOKIE_CHECKED");
         if (checked == null && con != null) {
-            String email = MyUtils.getEmailInCookie(req);
             Users user = null;
             try {
-                user = DBUtils.findUser(con, email);
+                user = MyUtils.getUser(req, con);
                 req.setAttribute("loggedInUser", user);
-                MyUtils.storeLoggedInUser(session, user);
             } catch (Exception e) {
                 if (user != null) e.printStackTrace();
             }

@@ -16,14 +16,8 @@
         <p style="color: red; padding: 0; margin: 0;" id="error">${error}</p>
         <%
             request.getSession().setAttribute("error", null);
-            String email = MyUtils.getEmailInCookie(request);
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = null;
-            try {
-                user = DBUtils.findUser(con, email);
-            } catch (Exception ignored) {
-
-            }
+            Users user = MyUtils.getUser(request, con);
         %>
         <form id="add" method="POST" action="adduser" enctype="multipart/form-data">
             <div>

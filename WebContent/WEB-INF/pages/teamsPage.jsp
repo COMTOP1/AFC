@@ -12,13 +12,7 @@
 <main class="main">
     <%
         Connection con = MyUtils.getStoredConnection(request);
-        String email = MyUtils.getEmailInCookie(request);
-        Users user = null;
-        try {
-            user = DBUtils.findUser(con, email);
-        } catch (Exception ignored) {
-
-        }
+        Users user = MyUtils.getUser(request, con);
         List<Teams> list = null;
         if (user != null && user.getRole() != Role.MANAGER) {
             try {
