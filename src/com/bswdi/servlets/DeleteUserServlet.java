@@ -39,10 +39,15 @@ public class DeleteUserServlet extends HttpServlet {
             Connection con = MyUtils.getStoredConnection(request);
             Users user = MyUtils.getUser(request, con);
             assert user != null;
-            if ((user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) && !Objects.equals(email, "liamb1216@gmail.com")) {
-                request.setAttribute("email", email1);
-                RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/deleteUserConfirmationPage.jsp");
-                dispatcher.forward(request, response);
+            if ((user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER)) {
+                if (user.getRole() == Role.WEBMASTER || Objects.requireNonNull(DBUtils.findUser(con, email)).getRole() != Role.WEBMASTER) {
+                    request.setAttribute("email", email);
+                    RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/deleteUserConfirmationPage.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("error", "Deleting a webmaster is not allowed!");
+                    response.sendRedirect("users");
+                }
             } else response.sendRedirect("users");
         } catch (Exception e) {
             response.sendRedirect("users");
