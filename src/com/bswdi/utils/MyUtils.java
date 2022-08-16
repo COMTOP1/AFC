@@ -5,9 +5,7 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -31,6 +29,7 @@ import com.bswdi.dotenv.Dotenv;
  * @version 1.0
  */
 public class MyUtils {
+
     /**
      * Attribute for connection
      */
@@ -93,6 +92,51 @@ public class MyUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static Users getUser(HttpServletRequest request, Connection con) {
+        try {
+            if (con == null)
+                con = ConnectionUtils.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Dotenv dotenv = Dotenv.load();
+        Algorithm algorithm = Algorithm.HMAC512(dotenv.get("JWT_SECRET"));
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null)
+            for (Cookie cookie : cookies)
+                if (ATT_JWT_TOKEN.equals(cookie.getName()))
+                    try {
+                        String token = new String(Base64.getDecoder().decode(cookie.getValue()));
+                        JWTVerifier verifier = JWT.require(algorithm)
+                                .withIssuer("BSWDI")
+                                .withAudience("AFC")
+                                .build();
+                        DecodedJWT jwt = verifier.verify(token);
+                        JWTToken jwtToken = null;
+                        try {
+                            jwtToken = DBUtils.findJWTToken(con, Long.parseLong(jwt.getHeaderClaim("kid").asString()));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        assert jwtToken != null;
+                        if (!jwtToken.validate(request.getHeader("user-agent")))
+                            return null;
+                        return DBUtils.findUser(con, jwtToken.getEmail());
+                    } catch (Exception e) {
+                        String[] fullException = e.getClass().getCanonicalName().split("\\.");
+                        String exception = fullException[fullException.length - 1];
+                        String error = null;
+                        try {
+                            error = e.toString().split("\n")[0].split(":")[1].trim();
+                        } catch (Exception f) {
+                            e.printStackTrace();
+                        }
+                        System.out.printf("%s with error message \"%s\"\nINVALID", exception, error);
+                        return null;
+                    }
+        return null;
     }
 
     /**
@@ -165,7 +209,9 @@ public class MyUtils {
      * @return a random salt with specified length
      */
     public static byte[] getNextSalt() {
-        byte[] salt = new byte[KEY_LENGTH / 8];
+        Dotenv dotenv = Dotenv.load();
+        int keyLengthBytes = Integer.parseInt(dotenv.get("KEY_LENGTH_BYTES"));
+        byte[] salt = new byte[keyLengthBytes];
         secureRandom.nextBytes(salt);
         return salt;
     }
@@ -176,11 +222,12 @@ public class MyUtils {
      *
      * @param password the password to be hashed
      * @param salt     a 64 bytes salt, ideally obtained with the getNextSalt method
-     *
      * @return the hashed password with a pinch of salt
      */
     public static byte[] hash(char[] password, byte[] salt) {
-        PBEKeySpec spec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
+        Dotenv dotenv = Dotenv.load();
+        int iterations = Integer.parseInt(dotenv.get("ITERATIONS")), keyLengthBits = Integer.parseInt(dotenv.get("KEY_LENGTH_BITS"));
+        PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, keyLengthBits);
         Arrays.fill(password, Character.MIN_VALUE);
         try {
             return SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512").generateSecret(spec).getEncoded();
@@ -198,7 +245,6 @@ public class MyUtils {
      * @param password     the password to check
      * @param salt         the salt used to hash the password
      * @param expectedHash the expected hashed value of the password
-     *
      * @return true if the given password and salt match the hashed value, false otherwise
      */
     public static boolean verifyPassword(char[] password, byte[] salt, byte[] expectedHash) {
