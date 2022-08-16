@@ -5,8 +5,9 @@
 <html>
 <head>
     <link href="styleGallery.css" rel="stylesheet" type="text/css">
-    <link rel='icon' type='image/x-icon' href='images/AFC.ico'/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="images/AFC.ico" rel="icon" type="image/x-icon"/>
+    <link rel="apple-touch-icon" sizes="256x256" href="images/AFC-256.png">
+    <link href="font-awesome.min.css" rel="stylesheet" type="text/css">
     <meta charset="UTF-8">
     <meta name="keywords" content="afc,A.F.C.,AFC,aldermaston,football">
     <meta name="description" content="AFC Aldermaston Football Club website">
@@ -17,6 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="copyright"
           content="© Copyright 2020 - <%=MyUtils.getYear()%>, AFC Aldermaston, website provided by BSWDI">
+    <script src="lazy.js"></script>
     <title>Official website of AFC Aldermaston - Gallery</title>
     <style>
         .row > .column {
@@ -162,7 +164,7 @@
             Users user = MyUtils.getUser(request, con);
             List<Images> list = null;
             try {
-                list = DBUtils.queryImages(con);
+                list = DBUtils.queryImagesIDCaption(con);
             } catch (Exception ignored) {
 
             }
@@ -172,8 +174,8 @@
                 i++;
         %>
         <div class="column" style="display: inline-block; float: none;">
-            <img src="data:image/jpg;base64,<%=image.getImage()%>" style="width:100%"
-                 onclick="openModal();currentSlide(<%=i%>)" class="hover-shadow cursor" alt="<%=image.getCaption()%>">
+            <img data-src="download?s=g&id=<%=image.getID()%>" style="width:100%"
+                 onclick="openModal();currentSlide(<%=i%>)" class="hover-shadow cursor lazy" alt="<%=image.getCaption()%>">
             <%if (user != null && user.getRole() != Role.MANAGER) {%>
             <div class="button" id="container">
                 <div id="translate"></div>
@@ -212,7 +214,7 @@
                     i++;
             %>
             <div class="column">
-                <img class="demo cursor" src="data:image/jpg;base64,<%=image.getImage()%>" style="width:100%" 
+                <img class="demo cursor lazy" data-src="data:image/jpg;base64,<%=image.getImage()%>" style="width:100%"
                 onclick="currentSlide(<%=i%>)" alt="<%=image.getCaption()%>">
             </div>
             <%}%>

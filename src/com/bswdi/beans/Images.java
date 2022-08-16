@@ -32,6 +32,17 @@ public class Images {
     }
 
     /**
+     * Constructed for id and caption only
+     *
+     * @param id id
+     * @param caption caption
+     */
+    public Images(int id, String caption) {
+        this.id = id;
+        this.caption = caption;
+    }
+
+    /**
      * Return id
      *
      * @return int id

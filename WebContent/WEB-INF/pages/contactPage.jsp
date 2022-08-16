@@ -25,7 +25,7 @@
     <div id="listItemContact" style="display: inline-block; float: none;">
         <div>
             <div style="height: 200px;">
-                <img src="data:image/jpg;base64,<%=user.getImage()%>" alt=""
+                <img src="download?s=u&email=<%=user.getEmail()%>" alt="images/default.png"
                      onerror="this.onerror=null;this.src='images/default.png';"
                      style="padding: 5px; max-height: 200px;">
             </div>

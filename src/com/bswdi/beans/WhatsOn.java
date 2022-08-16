@@ -39,6 +39,23 @@ public class WhatsOn {
     }
 
     /**
+     * Constructor without image
+     *
+     * @param id          id
+     * @param title       title
+     * @param content     content
+     * @param date        date
+     * @param dateOfEvent date of event
+     */
+    public WhatsOn(int id, String title, String content, long date, long dateOfEvent) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.date = date;
+        this.dateOfEvent = dateOfEvent;
+    }
+
+    /**
      * Get id
      *
      * @return int id

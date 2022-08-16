@@ -27,6 +27,7 @@ public class Users {
      * @param phone  phone
      * @param teamID teamID
      * @param role   role
+     * @param image image
      */
     public Users(String name, String email, String phone, int teamID, Role role, String image) {
         this.name = name;
@@ -35,6 +36,19 @@ public class Users {
         this.teamID = teamID;
         this.role = role;
         this.image = image;
+    }
+
+    /**
+     * Constructor name, email and role only
+     *
+     * @param name   name
+     * @param email  email
+     * @param role   role
+     */
+    public Users(String name, String email, Role role) {
+        this.name = name;
+        this.email = email;
+        this.role = role;
     }
 
     /**
@@ -143,5 +157,17 @@ public class Users {
      */
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", image='" + image + '\'' +
+                ", phone='" + phone + '\'' +
+                ", teamID=" + teamID +
+                ", role=" + role +
+                '}';
     }
 }

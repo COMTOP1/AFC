@@ -28,6 +28,7 @@ import java.util.List;
  * @version 1.0
  */
 @WebServlet(urlPatterns = {"/addprogrammesecond"})
+@MultipartConfig(maxFileSize = 67108864)
 public class AddProgrammeSecondServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ServletFileUpload uploader = null;
@@ -78,7 +79,7 @@ public class AddProgrammeSecondServlet extends HttpServlet {
                 List<FileItem> fileItemsList = uploader.parseRequest(request);
                 for (FileItem fileItem : fileItemsList) {
                     fileName = fileItem.getName();
-                    File file = new File(request.getServletContext().getAttribute("FILES_DIR") + File.separator + fileName);
+                    File file = new File(request.getServletContext().getAttribute("FILES_DIR") + fileName);
                     fileItem.write(file);
                 }
             } catch (Exception e) {
@@ -86,7 +87,6 @@ public class AddProgrammeSecondServlet extends HttpServlet {
             }
             if (fileName == null || fileName.equals("")) {
                 request.getSession().setAttribute("error", "Name, programme season and file must not be empty");
-                System.out.println(name + " ~ " + fileName);
                 response.sendRedirect("addprogramme");
             } else
                 try {

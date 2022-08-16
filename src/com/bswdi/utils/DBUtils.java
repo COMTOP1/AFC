@@ -48,6 +48,29 @@ public class DBUtils {
     }
 
     /**
+     * Returns affiliations ID, name and website only
+     *
+     * @param con connection
+     * @return List<Affiliations> list
+     * @throws SQLException SQL exception
+     */
+    public static List<Affiliations> queryAffiliationsIDNameWebsite(Connection con) throws SQLException {
+        String sql = "SELECT id, name, website FROM affiliations";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        List<Affiliations> list = new ArrayList<>();
+        while (rs.next()) {
+            int id;
+            String name, website;
+            id = rs.getInt("id");
+            name = rs.getString("name");
+            website = rs.getString("website");
+            list.add(new Affiliations(id, name, website));
+        }
+        return list;
+    }
+
+    /**
      * Get affiliations method
      *
      * @param rs result set
@@ -313,6 +336,29 @@ public class DBUtils {
     }
 
     /**
+     * Returns images only ID and caption
+     *
+     * @param con connection
+     * @return List<Images> list
+     * @throws SQLException SQL exception
+     */
+    public static List<Images> queryImagesIDCaption(Connection con) throws SQLException {
+        String sql = "SELECT id, caption FROM images";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        List<Images> list = new ArrayList<>();
+        while (rs.next()) {
+            int id;
+            String image1, caption;
+            id = rs.getInt("id");
+            caption = rs.getString("caption");
+            Images image = new Images(id, caption);
+            list.add(image);
+        }
+        return list;
+    }
+
+    /**
      * Returns image
      *
      * @param con connection
@@ -389,7 +435,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupImage(Connection con, int id, String action) throws SQLException {
-        String sql = "INSERT INTO images_BACKUP (id, image, caption, action) SELECT id, image, caption, ? FROM images WHERE id = ?";
+        String sql = "INSERT INTO images_backup (id, image, caption, action) SELECT id, image, caption, ? FROM images WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setInt(2, id);
@@ -542,10 +588,19 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static News findNewsLatest(Connection con) throws SQLException {
-        String sql = "SELECT * FROM news ORDER BY id DESC";
+        String sql = "SELECT id, title, content, date FROM news ORDER BY id DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
-        if (rs.next()) return getNewsMethodSingle(rs);
+        if (rs.next()) {
+            int id;
+            String title, content;
+            long date;
+            id = rs.getInt("id");
+            title = rs.getString("title");
+            content = rs.getString("content");
+            date = rs.getLong("date");
+            return new News(id, title, content, date);
+        }
         else return null;
     }
 
@@ -668,7 +723,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static List<Players> queryPlayersTeam(Connection con, int teamID) throws SQLException {
-        String sql = "SELECT * FROM players WHERE team_id = ?";
+        String sql = "SELECT * FROM players WHERE team_id = ? ORDER BY captain DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, teamID);
         ResultSet rs = pstm.executeQuery();
@@ -883,11 +938,12 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static void insertProgramme(Connection con, Programmes programme) throws SQLException {
-        String sql = "INSERT INTO programmes (name, file_name, date_of_programme) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO programmes (name, file_name, date_of_programme, programme_season_id) VALUES (?, ?, ?, ?)";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, programme.getName());
         pstm.setString(2, programme.getFileName());
         pstm.setLong(3, programme.getDateOfProgramme());
+        pstm.setInt(4, programme.getProgrammeSeasonID());
         pstm.executeUpdate();
     }
 
@@ -914,7 +970,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupProgramme(Connection con, int id) throws SQLException {
-        String sql = "INSERT INTO programmes_backup (id, name, file_name, date_of_programme, action) SELECT id, name, file_name, date_of_programme, 'DELETE' FROM programmes WHERE id = ?";
+        String sql = "INSERT INTO programmes_backup (id, name, file_name, date_of_programme, programme_season_id, action) SELECT id, name, file_name, date_of_programme, programme_season_id, 'DELETE' FROM programmes WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setInt(1, id);
         pstm.executeUpdate();
@@ -1242,6 +1298,30 @@ public class DBUtils {
     }
 
     /**
+     * Returns sponsors ID and website only
+     *
+     * @param con connection
+     * @return List<Sponsors> list
+     * @throws SQLException SQL exception
+     */
+    public static List<Sponsors> querySponsorsIDWebsite(Connection con) throws SQLException {
+        String sql = "SELECT id, website FROM sponsors ORDER BY team_id, name";
+        PreparedStatement pstm = con.prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        List<Sponsors> list = new ArrayList<>();
+        while (rs.next()) {
+            int id;
+            String website;
+            id = rs.getInt("id");
+            website = rs.getString("website");
+            list.add(new Sponsors(id, website));
+        }
+        if (list.size() == 0)
+            return null;
+        return list;
+    }
+
+    /**
      * Returns sponsors for team
      *
      * @param con    connection
@@ -1412,10 +1492,19 @@ public class DBUtils {
      * @throws SQLException throws SQLException
      */
     public static List<Users> queryUsersContacts(Connection con) throws SQLException {
-        String sql = "SELECT * FROM users WHERE role IN ('PROGRAMME_EDITOR', 'LEAGUE_SECRETARY', 'TREASURER', 'SAFEGUARDING_OFFICER', 'CLUB_SECRETARY', 'CHAIRPERSON') ORDER BY FIELD(role, 'PROGRAMME_EDITOR', 'LEAGUE_SECRETARY', 'TREASURER', 'SAFEGUARDING_OFFICER', 'CLUB_SECRETARY', 'CHAIRPERSON') DESC";
+        String sql = "SELECT name, email, role FROM users WHERE role IN ('PROGRAMME_EDITOR', 'LEAGUE_SECRETARY', 'TREASURER', 'SAFEGUARDING_OFFICER', 'CLUB_SECRETARY', 'CHAIRPERSON') ORDER BY FIELD(role, 'PROGRAMME_EDITOR', 'LEAGUE_SECRETARY', 'TREASURER', 'SAFEGUARDING_OFFICER', 'CLUB_SECRETARY', 'CHAIRPERSON') DESC";
         PreparedStatement pstm = con.prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
-        return getUsersMethod(rs);
+        List<Users> list = new ArrayList<>();
+        while (rs.next()) {
+            String name, email;
+            Role role;
+            name = rs.getString("name");
+            email = rs.getString("email");
+            role = Role.valueOf(rs.getString("role"));
+            list.add(new Users(name, email, role));
+        }
+        return list;
     }
 
     /**
@@ -1770,11 +1859,21 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     public static WhatsOn findWhatsOnLatest(Connection con) throws SQLException {
-        String sql = "SELECT * FROM whatson WHERE date_of_event >= ? ORDER BY date_of_event";
+        String sql = "SELECT id, title, content, date, date_of_event FROM whatson WHERE date_of_event >= ? ORDER BY date_of_event";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setLong(1, MyUtils.getEpoch());
         ResultSet rs = pstm.executeQuery();
-        if (rs.next()) return getWhatsOnMethodSingle(rs);
+        if (rs.next()) {
+            int id;
+            String title, content;
+            long date, dateOfEvent;
+            id = rs.getInt("id");
+            title = rs.getString("title");
+            content = rs.getString("content");
+            date = rs.getLong("date");
+            dateOfEvent = rs.getLong("date_of_event");
+            return new WhatsOn(id, title, content, date, dateOfEvent);
+        }
         else return null;
     }
 

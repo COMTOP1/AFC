@@ -5,6 +5,7 @@
 <html>
 <head>
     <jsp:include page="_headerPage.jsp"/>
+    <script src="lazy.js"></script>
     <title>Official website of AFC Aldermaston - Sponsors</title>
 </head>
 <body>
@@ -15,7 +16,7 @@
         Users user = MyUtils.getUser(request, con);
         List<Sponsors> list = null;
         try {
-            list = DBUtils.querySponsors(con);
+            list = DBUtils.querySponsorsIDWebsite(con);
         } catch (Exception ignored) {
 
         }
@@ -24,9 +25,9 @@
     %>
     <div id="listItemContact" style="display: inline-block; float: none; cursor: pointer;" onclick="location.href='<%=sponsor.getWebsite()%>';">
         <div style="height: 200px;">
-                <img src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
+                <img data-src="download?s=s&id=<%=sponsor.getID()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';"
-                     style="border: 5px; max-height: 200px; max-width: 200px;">
+                     style="border: 5px; max-height: 200px; max-width: 200px;" class="lazy">
         </div>
 		<a href="<%=sponsor.getWebsite()%>" target="_blank"><%=sponsor.getName()%></a><br><br><br>
         <div style="min-height: 60px;"><%if (sponsor.getWebsite() != null) {%><a href="<%=sponsor.getWebsite()%>" target="_blank"><%}%><%=sponsor.getPurpose()%><%if (sponsor.getWebsite() != null) {%></a><%}%>

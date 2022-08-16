@@ -37,6 +37,21 @@ public class News {
     }
 
     /**
+     * Constructor except image
+     *
+     * @param id      id
+     * @param title   title
+     * @param content content
+     * @param date    date
+     */
+    public News(int id, String title, String content, long date) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.date = date;
+    }
+
+    /**
      * Get id
      *
      * @return int id

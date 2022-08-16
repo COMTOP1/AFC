@@ -6,8 +6,9 @@
 <html>
 <head>
     <link href="styleHome.css" rel="stylesheet" type="text/css">
-    <link rel='icon' type='image/x-icon' href='images/AFC.ico'/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="images/AFC.ico" rel="icon" type="image/x-icon"/>
+    <link rel="apple-touch-icon" sizes="256x256" href="images/AFC-256.png">
+    <link href="font-awesome.min.css" rel="stylesheet" type="text/css">
     <meta charset="UTF-8">
     <meta name="keywords" content="afc,A.F.C.,AFC,aldermaston,football">
     <meta name="description" content="AFC Aldermaston Football Club website">
@@ -18,6 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="copyright"
           content="© Copyright 2020 - <%=MyUtils.getYear()%>, AFC Aldermaston, website provided by BSWDI">
+    <script src="lazy.js"></script>
     <title>Official website of AFC Aldermaston - Home</title>
     <%
         Connection con = MyUtils.getStoredConnection(request);
@@ -30,12 +32,12 @@
         List<Sponsors> listSponsors = null;
         List<Affiliations> listAffiliations = null;
         try {
-            listSponsors = DBUtils.querySponsors(con);
+            listSponsors = DBUtils.querySponsorsIDWebsite(con);
         } catch (Exception ignored) {
-
+        	
         }
         try {
-            listAffiliations = DBUtils.queryAffiliations(con);
+            listAffiliations = DBUtils.queryAffiliationsIDNameWebsite(con);
         } catch (Exception ignored) {
 
         }
@@ -167,9 +169,9 @@
          style="position: absolute; bottom: 0; background-color: white; left: 0; text-align: center; cursor: pointer;"
          onclick="location.href='news?id=<%=news.getID()%>';">
         Latest from news
-        <img src="data:image/jpg;base64,<%=news.getImage()%>" alt=""
+        <img data-src="download?s=n&id=<%=news.getID()%>" alt="images/default.png"
              onerror="this.onerror=null;this.src='images/default.png';"
-             style="padding: 5px; max-height: 150px; max-width: 150px;">
+             style="padding: 5px; max-height: 150px; max-width: 150px;" class="lazy">
         <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=news.getTitle()%></span>
         <%Date date = new Date(news.getDate());%>
         <p style="text-align: left; padding: 10px 10px 10px 0;"><%=date.toString()%>
@@ -188,9 +190,9 @@
     <div id="listItem" class="latest"
          style="position: absolute; bottom: 0; background-color: white; left: 190px; text-align: center; cursor: pointer;" onclick="location.href='whatson?id=<%=whatsOn.getID()%>';">
         Latest from what's on
-        <img src="data:image/jpg;base64,<%=whatsOn.getImage()%>" alt=""
+        <img data-src="download?s=w&id=<%=whatsOn.getID()%>" alt="images/default.png"
              onerror="this.onerror=null;this.src='images/default.png';"
-             style="padding: 5px; max-height: 150px; max-width: 150px;">
+             style="padding: 5px; max-height: 150px; max-width: 150px;" class="lazy">
         <span style="margin: 0.83em 0 0.83em 0; display: block; font-size: 1.5em; font-weight: bold;"><%=whatsOn.getTitle()%></span>
         <%
             Date date1 = new Date(whatsOn.getDate());
@@ -219,9 +221,8 @@
                 for (Sponsors sponsor : listSponsors) {
             %>
             <a href="<%=sponsor.getWebsite()%>" target="_blank" style="width: 350px; height: 250px;">
-                <img <%if (i == 0) {%>class="first"<%}%> style="width: 350px; max-height: 250px;"
-                     src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
-                     onerror="this.onerror=null;this.src='images/default.png';">
+                <img style="width: 350px; max-height: 250px;" data-src="download?s=s&id=<%=sponsor.getID()%>" alt="images/default.png"
+                     onerror="this.onerror=null;this.src='images/default.png';" class="<%if (i == 0) {%>first <%}%>lazy">
             </a>
             <%
                     i++;
@@ -229,8 +230,8 @@
                 for (Sponsors sponsor : listSponsors) {
             %>
             <a href="<%=sponsor.getWebsite()%>" target="_blank" style="width: 350px; height: 250px;">
-                <img style="width: 350px; max-height: 250px;" src="data:image/jpg;base64,<%=sponsor.getImage()%>" alt=""
-                     onerror="this.onerror=null;this.src='images/default.png';">
+                <img style="width: 350px; max-height: 250px;" data-src="download?s=s&id=<%=sponsor.getID()%>" alt="images/default.png"
+                     onerror="this.onerror=null;this.src='images/default.png';" class="lazy">
             </a>
             <%}%>
         </div>
@@ -246,8 +247,8 @@
                 <div class="imgContainer">
                     <%if (affiliation.getWebsite() != null) {%>
                     <a href="<%=affiliation.getWebsite()%>" target="_blank"><%}%>
-                        <img id="affiliationImage" src="data:image/jpg;base64,<%=affiliation.getImage()%>" alt=""
-                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;">
+                        <img id="affiliationImage" data-src="download?s=a&id=<%=affiliation.getID()%>" alt="images/default.png"
+                             onerror="this.onerror=null;this.src='images/default.png';" style="padding: 5px;" class="lazy">
                     <%if (affiliation.getWebsite() != null) {%></a><%}%>
                     <%if (user != null && user.getRole() != Role.MANAGER) {%>
                     <p style="padding: 0; margin: 0;">
@@ -263,8 +264,7 @@
             <a href="addaffiliation">Add affiliation</a>
         </p>
         <%}%>
-    </div>
-    <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
+    </div><p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>
 <div id="socialBar">
     <a href="https://www.facebook.com/AFC-Aldermaston-114651238068/" target="_blank" class="fa fa-facebook"></a>

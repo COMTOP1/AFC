@@ -34,6 +34,19 @@ public class Affiliations {
     }
 
     /**
+     * Constructor id, name and website only
+     *
+     * @param id id
+     * @param name name
+     * @param website website
+     */
+    public Affiliations(int id, String name, String website) {
+        this.id = id;
+        this.name = name;
+        this.website = website;
+    }
+
+    /**
      * Returns id
      *
      * @return int id

@@ -38,6 +38,17 @@ public class Sponsors {
     }
 
     /**
+     * Constructor for id and website only
+     *
+     * @param id      id
+     * @param website website
+     */
+    public Sponsors(int id, String website) {
+        this.id = id;
+        this.website = website;
+    }
+
+    /**
      * Return id
      *
      * @return id id

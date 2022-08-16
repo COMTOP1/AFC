@@ -33,13 +33,13 @@ public class FileStoreServlet extends HttpServlet {
         String pathInfo;
 //        String filepath = "C:\\Users\\Administrator.LIAM-ACER-SERVE\\Desktop\\Code\\Java\\AFC\\FileStore\\";
 //        String filepath = System.getProperty("catalina.home") + "/FileStore";
-        String filepath = "/Users/liam/Desktop/Desktop - Liam’s MacBook Pro/Code/Java/AFC/WebContent/FileStore/";
+//        String filepath = "/Users/liam/Desktop/Desktop - Liam’s MacBook Pro/Code/Java/AFC/WebContent/FileStore/";
 //        String filepath = "/FileStore/";
         try {
             pathInfo = request.getPathInfo();
 //            response.setHeader("Content-Disposition", "attachment; filename=\"" + pathInfo + "\"");
 //            FileInputStream fileInputStream = new FileInputStream(filepath + pathInfo.replaceAll("%20", " "));
-            FileInputStream fileInputStream = new FileInputStream(filepath + pathInfo.replaceAll("%20", "\\ "));
+            FileInputStream fileInputStream = new FileInputStream(request.getServletContext().getAttribute("FILES_DIR") + pathInfo.replaceAll("%20", "\\ "));
             int i;
             while ((i = fileInputStream.read()) != -1) out.write(i);
             fileInputStream.close();
