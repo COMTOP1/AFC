@@ -1,6 +1,7 @@
 <%--suppress ALL --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.bswdi.beans.*, java.sql.Connection, com.bswdi.utils.*, java.util.List, java.time.LocalDate, java.util.Date" %>
+<%@ page
+        import="com.bswdi.beans.*, java.sql.Connection, com.bswdi.utils.*, java.util.List, java.time.LocalDate, java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,28 +22,32 @@
 
         }
         if (list != null && list.size() != 0) {
-        assert list != null;
-        boolean first = true;
-        for (Programmes programme : list) {
-            if (first) {
-                first = false;%>
+            assert list != null;
+            boolean first = true;
+            for (Programmes programme : list) {
+                if (first) {
+                    first = false;%>
     <h2>Latest programme - <%=programme.getName()%>
     </h2><%
-    Date date = new Date(programme.getDateOfProgramme());
-    String[] dateArray = date.toString().split(" ");
-    String dateString = String.format("%s %s %s %s", dateArray[0], dateArray[2], dateArray[1], dateArray[5]);
-    if (programme.getProgrammeSeasonID() != -1) {
-        ProgrammeSeasons programmeSeason = DBUtils.findProgrammeSeason(con, programme.getProgrammeSeasonID());%>
-    <p>Season - <%=programmeSeason.getSeason()%></p>
+        Date date = new Date(programme.getDateOfProgramme());
+        String[] dateArray = date.toString().split(" ");
+        String dateString = String.format("%s %s %s %s", dateArray[0], dateArray[2], dateArray[1], dateArray[5]);
+        if (programme.getProgrammeSeasonID() != -1) {
+            ProgrammeSeasons programmeSeason = DBUtils.findProgrammeSeason(con, programme.getProgrammeSeasonID());
+            if (programmeSeason != null)
+    %>
+    <p>Season - <%=programmeSeason.getSeason()%>
+    </p>
     <%}%>
-    <p>Date of programme - <%=dateString%></p>
+    <p>Date of programme - <%=dateString%>
+    </p>
     <iframe src="FileStore/<%=programme.getFileName()%>" width="75%" height="500px"></iframe>
     <br><br><br>
     <%if (user != null && user.getRole() != Role.MANAGER) {%>
-        <div class="button">
-            <a href="deleteprogramme?id=<%=programme.getID()%>">Delete</a>
-        </div>
-        <%}%>
+    <div class="button">
+        <a href="deleteprogramme?id=<%=programme.getID()%>">Delete</a>
+    </div>
+    <%}%>
     <br><br><br>
     <%
     } else {
@@ -56,9 +61,11 @@
         String dateString = String.format("%s %s %s %s", dateArray[0], dateArray[2], dateArray[1], dateArray[5]);
         if (programme.getProgrammeSeasonID() != -1) {
             ProgrammeSeasons programmeSeason = DBUtils.findProgrammeSeason(con, programme.getProgrammeSeasonID());%>
-        <p>Season - <%=programmeSeason.getSeason()%></p>
+        <p>Season - <%=programmeSeason.getSeason()%>
+        </p>
         <%}%>
-        <p>Date of programme - <%=dateString%></p>
+        <p>Date of programme - <%=dateString%>
+        </p>
         <p>Click to download</p>
         <%if (user != null && user.getRole() != Role.MANAGER) {%>
         <div class="button">
@@ -69,9 +76,10 @@
     <%
             }
         }
-        } else {%>
-    	<p style="color: red; padding: 0; margin: 0;">There are no programmes to display</p>
-    <%}
+    } else {%>
+    <p style="color: red; padding: 0; margin: 0;">There are no programmes to display</p>
+    <%
+        }
     %>
     <p style="z-index: -1; opacity: 0; float: left; width: 96%;">AFC</p>
 </main>

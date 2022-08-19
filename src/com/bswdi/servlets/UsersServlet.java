@@ -45,7 +45,7 @@ public class UsersServlet extends HttpServlet {
                     dispatcher.forward(request, response);
                 } else response.sendRedirect("home");
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             response.sendRedirect("home");
         }
     }

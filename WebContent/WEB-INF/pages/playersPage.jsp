@@ -57,11 +57,7 @@
             %>
             <th><%=dateString%>
             </th>
-            <%
-                String captain = "No";
-                if (player.getCaptain()) captain = "Captain";
-            %>
-            <th><%=captain%>
+            <th><%=player.getCaptain() ? "Captain" : "No"%>
             </th>
             <%
                 String team;
@@ -71,10 +67,8 @@
                 } catch (Exception ignored) {
 
                 }
-                assert team1 != null;
-                team = team1.getName();
             %>
-            <th><%=team%>
+            <th><%=(team1 != null) ? team1.getName() : "!TEAM NOT FOUND!"%>
             </th>
             <th>
                 <div class="button" id="container">

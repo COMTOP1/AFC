@@ -58,8 +58,10 @@
                     } catch (Exception ignored) {
 
                     }
-                    assert team1 != null;
-                    team = team1.getName();
+                    if (team1 == null)
+                        team = "!TEAM NOT FOUND!";
+                    else
+                        team = team1.getName();
                 }%>
             <th><%=team%>
             </th>
@@ -68,7 +70,7 @@
             <th><img src="data:image/jpg;base64,<%=user1.getImage()%>" alt=""
                      onerror="this.onerror=null;this.src='images/default.png';"
                      style="max-width: 150px; max-height: 150px;"/></th>
-            <%if ((user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) && user1.getEmail() != "liamb1216@gmail.com") {%>
+            <%if (((user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON) && user1.getRole() !=  Role.WEBMASTER) || user.getRole() == Role.WEBMASTER) {%>
             <th>
                 <div class="button" id="container">
                     <div id="translate"></div>
