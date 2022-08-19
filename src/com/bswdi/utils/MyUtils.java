@@ -71,9 +71,14 @@ public class MyUtils {
             e.printStackTrace();
         }
         Dotenv dotenv = Dotenv.load();
-        JWTToken jwtToken = new JWTToken(0, user.getEmail(), getTime(), getTime1Day(), request.getHeader("user-agent"));
+        String sessionID = null;
+        for (Cookie findSession : request.getCookies())
+            if ("JSESSIONID".equals(findSession.getName()))
+                sessionID = findSession.getValue();
+        JWTToken jwtToken = new JWTToken(0, user.getEmail(), getTime(), getTime1Day(), request.getHeader("user-agent"), sessionID);
         try {
             try {
+                assert con != null;
                 jwtToken.setId(DBUtils.insertJWTToken(con, jwtToken));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,7 +92,8 @@ public class MyUtils {
                     .withKeyId(String.valueOf(jwtToken.getId()))
                     .sign(algorithm);
             Cookie cookieJWT = new Cookie(ATT_JWT_TOKEN, Base64.getEncoder().encodeToString(token.getBytes()));
-            cookieJWT.setMaxAge(24 * 60 * 60);
+            cookieJWT.setMaxAge((int) (jwtToken.getExp() - jwtToken.getIat()));
+            cookieJWT.setHttpOnly(true);
             response.addCookie(cookieJWT);
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +112,8 @@ public class MyUtils {
         Cookie[] cookies = request.getCookies();
         if (cookies != null)
             for (Cookie cookie : cookies)
-                if (ATT_JWT_TOKEN.equals(cookie.getName()))
+                if (ATT_JWT_TOKEN.equals(cookie.getName())) {
+                    JWTToken jwtToken = null;
                     try {
                         String token = new String(Base64.getDecoder().decode(cookie.getValue()));
                         JWTVerifier verifier = JWT.require(algorithm)
@@ -114,18 +121,33 @@ public class MyUtils {
                                 .withAudience("AFC")
                                 .build();
                         DecodedJWT jwt = verifier.verify(token);
-                        JWTToken jwtToken = null;
                         try {
+                            assert con != null;
                             jwtToken = DBUtils.findJWTToken(con, Long.parseLong(jwt.getHeaderClaim("kid").asString()));
                         } catch (Exception e) {
                             deleteUserCookie(response);
                             e.printStackTrace();
+                            throw new Exception("Find JWT error");
                         }
                         assert jwtToken != null;
-                        if (!jwtToken.validate(request.getHeader("user-agent")))
+                        String sessionID = null;
+                        for (Cookie findSession : cookies)
+                            if ("JSESSIONID".equals(findSession.getName()))
+                                sessionID = findSession.getValue();
+                        if (!jwtToken.validate(request.getHeader("user-agent"), sessionID)) {
+                            deleteUserCookie(response);
+                            DBUtils.deleteJWTToken(con, jwtToken.getId());
                             return null;
+                        }
                         return DBUtils.findUser(con, jwtToken.getEmail());
                     } catch (Exception e) {
+                        if (jwtToken != null)
+                            try {
+                                DBUtils.deleteJWTToken(con, jwtToken.getId());
+                            } catch (Exception f) {
+                                f.printStackTrace();
+                            }
+                        deleteUserCookie(response);
                         String[] fullException = e.getClass().getCanonicalName().split("\\.");
                         String exception = fullException[fullException.length - 1];
                         String error = null;
@@ -137,6 +159,7 @@ public class MyUtils {
                         System.out.printf("%s with error message \"%s\"\nINVALID", exception, error);
                         return null;
                     }
+                }
         return null;
     }
 
@@ -160,9 +183,9 @@ public class MyUtils {
      * @param response response
      */
     public static void deleteUserCookie(HttpServletResponse response) {
-        Cookie cookieUserName = new Cookie(ATT_JWT_TOKEN, null);
-        cookieUserName.setMaxAge(0);
-        response.addCookie(cookieUserName);
+        Cookie cookieJWTToken = new Cookie(ATT_JWT_TOKEN, null);
+        cookieJWTToken.setMaxAge(0);
+        response.addCookie(cookieJWTToken);
     }
 
     public static long getTime1Day() {

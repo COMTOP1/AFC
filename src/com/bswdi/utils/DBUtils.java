@@ -469,27 +469,30 @@ public class DBUtils {
 
     private static JWTToken getJWTTokenMethodSingle(ResultSet rs) throws SQLException {
         long id, iat, exp;
-        String email, userAgent;
+        String email, userAgent, sessionID;
         id = rs.getLong("id");
         email = rs.getString("email");
         iat = rs.getLong("iat");
         exp = rs.getLong("exp");
         userAgent = rs.getString("user_agent");
-        return new JWTToken(id, email, iat, exp, userAgent);
+        sessionID = rs.getString("session_id");
+        return new JWTToken(id, email, iat, exp, userAgent, sessionID);
     }
 
     public static long insertJWTToken(Connection con, JWTToken jwtToken) throws SQLException {
-        String sql1 = "INSERT INTO jwt_tokens (email, iat, exp, user_agent) VALUES (?, ?, ?, ?)", sql2 = "SELECT id FROM jwt_tokens WHERE email = ? AND iat = ? AND exp = ? AND user_agent = ?";
+        String sql1 = "INSERT INTO jwt_tokens (email, iat, exp, user_agent, session_id) VALUES (?, ?, ?, ?, ?)", sql2 = "SELECT id FROM jwt_tokens WHERE email = ? AND iat = ? AND exp = ? AND user_agent = ? AND session_id = ?";
         PreparedStatement pstm1 = con.prepareStatement(sql1), pstm2 = con.prepareStatement(sql2);
         pstm1.setString(1, jwtToken.getEmail());
         pstm1.setLong(2, jwtToken.getIat());
         pstm1.setLong(3, jwtToken.getExp());
         pstm1.setString(4, jwtToken.getUserAgent());
+        pstm1.setString(5, jwtToken.getSessionID());
         pstm1.executeUpdate();
         pstm2.setString(1, jwtToken.getEmail());
         pstm2.setLong(2, jwtToken.getIat());
         pstm2.setLong(3, jwtToken.getExp());
         pstm2.setString(4, jwtToken.getUserAgent());
+        pstm2.setString(5, jwtToken.getSessionID());
         ResultSet rs = pstm2.executeQuery();
         rs.next();
         return rs.getLong("id");
@@ -526,7 +529,7 @@ public class DBUtils {
      * @throws SQLException SQL exception
      */
     private static void backupJWTToken(Connection con, long id, String action) throws SQLException {
-        String sql = "INSERT INTO jwt_tokens_backup (id, email, iat, exp, user_agent, action) SELECT id, email, iat, exp, user_agent, ? FROM jwt_tokens WHERE id = ?";
+        String sql = "INSERT INTO jwt_tokens_backup (id, email, iat, exp, user_agent, session_id, action) SELECT id, email, iat, exp, user_agent, session_id, ? FROM jwt_tokens WHERE id = ?";
         PreparedStatement pstm = con.prepareStatement(sql);
         pstm.setString(1, action);
         pstm.setLong(2, id);

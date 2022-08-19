@@ -1,5 +1,7 @@
 package com.bswdi.filters;
 
+import com.bswdi.connection.ConnectionUtils;
+import com.bswdi.connection.MySQLConUtils;
 import com.bswdi.utils.*;
 
 import javax.servlet.*;
@@ -39,6 +41,8 @@ public class JWTTokenFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         Connection con = MyUtils.getStoredConnection(req);
         try {
+            if (con == null)
+                con = ConnectionUtils.getConnection();
             DBUtils.deleteJWTTokenExpired(con, MyUtils.getTime());
         } catch (Exception e) {
             e.printStackTrace();

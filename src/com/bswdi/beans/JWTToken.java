@@ -2,21 +2,23 @@ package com.bswdi.beans;
 
 import com.bswdi.utils.MyUtils;
 
+@SuppressWarnings("unused")
 public class JWTToken {
 
     long id, iat, exp;
-    String email, userAgent;
+    String email, userAgent, sessionID;
 
     public JWTToken() {
 
     }
 
-    public JWTToken(long id, String email, long iat, long exp, String userAgent) {
+    public JWTToken(long id, String email, long iat, long exp, String userAgent, String sessionID) {
         this.id = id;
         this.email = email;
         this.iat = iat;
         this.exp = exp;
         this.userAgent = userAgent;
+        this.sessionID = sessionID;
     }
 
     public long getId() {
@@ -59,14 +61,22 @@ public class JWTToken {
         this.userAgent = userAgent;
     }
 
-    public boolean validate(String userAgent) {
+    public String getSessionID() {
+        return sessionID;
+    }
+
+    public void setSessionID(String sessionID) {
+        this.sessionID = sessionID;
+    }
+
+    public boolean validate(String userAgent, String sessionID) {
         if (this.id != -1)
             if (this.iat != -1)
                 if (this.exp != -1)
                     if (this.userAgent.equals(userAgent))
-                        if (MyUtils.getTime() >= this.iat)
-                            if (MyUtils.getTime() <= this.exp)
-                                return true;
+                        if (this.sessionID.equals(sessionID))
+                            if (MyUtils.getTime() >= this.iat)
+                                return MyUtils.getTime() <= this.exp;
         return false;
     }
 
@@ -78,6 +88,7 @@ public class JWTToken {
                 ", exp=" + exp +
                 ", email='" + email + '\'' +
                 ", userAgent='" + userAgent + '\'' +
+                ", sessionID='" + sessionID + '\'' +
                 '}';
     }
 }
