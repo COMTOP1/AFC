@@ -40,7 +40,7 @@ public class AddUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = MyUtils.getUser(request, con);
+            Users user = MyUtils.getUser(request, response, con);
             assert user != null;
             if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addUserPage.jsp");

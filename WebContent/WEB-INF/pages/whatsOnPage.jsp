@@ -19,7 +19,7 @@
         } catch (Exception ignored) {
 
         }
-        Users user = MyUtils.getUser(request, con);
+        Users user = MyUtils.getUser(request, response, con);
         assert list != null;
         for (WhatsOn whatsOn : list) {
     %>

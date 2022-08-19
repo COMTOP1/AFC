@@ -41,7 +41,7 @@ public class EditUserServlet extends HttpServlet {
         String email = request.getParameter("email");
         try {
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = MyUtils.getUser(request, con);
+            Users user = MyUtils.getUser(request, response, con);
             assert user != null;
             if (user.getRole() == Role.CLUB_SECRETARY || user.getRole() == Role.CHAIRPERSON || user.getRole() == Role.WEBMASTER) {
                 Users user1 = DBUtils.findUser(con, email);

@@ -25,7 +25,7 @@
         Connection con = MyUtils.getStoredConnection(request);
         Users user = null;
         try {
-        	user = MyUtils.getUser(request, con);
+        	user = MyUtils.getUser(request, response, con);
         } catch (Exception e) {
         	e.printStackTrace();
         }

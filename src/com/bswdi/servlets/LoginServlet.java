@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         Connection con = MyUtils.getStoredConnection(request);
         Users user = null;
         try {
-            user = MyUtils.getUser(request, con);
+            user = MyUtils.getUser(request, response, con);
         } catch (Exception ignored) {
 
         }

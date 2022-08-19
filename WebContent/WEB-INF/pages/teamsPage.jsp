@@ -12,7 +12,7 @@
 <main class="main">
     <%
         Connection con = MyUtils.getStoredConnection(request);
-        Users user = MyUtils.getUser(request, con);
+        Users user = MyUtils.getUser(request, response, con);
         List<Teams> list = null;
         if (user != null && user.getRole() != Role.MANAGER) {
             try {

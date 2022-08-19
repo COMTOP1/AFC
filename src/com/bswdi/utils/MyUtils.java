@@ -94,7 +94,7 @@ public class MyUtils {
         }
     }
 
-    public static Users getUser(HttpServletRequest request, Connection con) {
+    public static Users getUser(HttpServletRequest request, HttpServletResponse response, Connection con) {
         try {
             if (con == null)
                 con = ConnectionUtils.getConnection();
@@ -118,6 +118,7 @@ public class MyUtils {
                         try {
                             jwtToken = DBUtils.findJWTToken(con, Long.parseLong(jwt.getHeaderClaim("kid").asString()));
                         } catch (Exception e) {
+                            deleteUserCookie(response);
                             e.printStackTrace();
                         }
                         assert jwtToken != null;

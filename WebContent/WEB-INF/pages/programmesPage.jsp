@@ -13,7 +13,7 @@
     <%
         request.getSession().setAttribute("error", null);
         Connection con = MyUtils.getStoredConnection(request);
-        Users user = MyUtils.getUser(request, con);
+        Users user = MyUtils.getUser(request, response, con);
         List<Programmes> list = null;
         try {
             list = DBUtils.queryProgrammes(con);

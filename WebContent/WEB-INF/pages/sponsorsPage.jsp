@@ -13,7 +13,7 @@
 <main class="main" style="text-align: center;">
     <%
         Connection con = MyUtils.getStoredConnection(request);
-        Users user = MyUtils.getUser(request, con);
+        Users user = MyUtils.getUser(request, response, con);
         List<Sponsors> list = null;
         try {
             list = DBUtils.querySponsorsIDWebsite(con);

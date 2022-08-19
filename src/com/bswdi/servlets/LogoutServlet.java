@@ -3,15 +3,13 @@ package com.bswdi.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
-import com.bswdi.beans.Users;
+import com.bswdi.beans.*;
 import com.bswdi.utils.*;
 
 /**
@@ -36,7 +34,7 @@ public class LogoutServlet extends HttpServlet {
         Connection con = MyUtils.getStoredConnection(request);
         Users user = null;
         try {
-            user = MyUtils.getUser(request, con);
+            user = MyUtils.getUser(request, response, con);
         } catch (Exception ignored) {
 
         }
@@ -49,6 +47,13 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            Connection con = MyUtils.getStoredConnection(request);
+            Users user = MyUtils.getUser(request, response, con);
+            List<JWTToken> list = DBUtils.queryJWToken(con);
+            assert user != null;
+            for (JWTToken token : list)
+                if (user.getEmail().equals(token.getEmail()))
+                    DBUtils.deleteJWTToken(con, token.getId());
             MyUtils.deleteUserCookie(response);
             response.sendRedirect("home");
         } catch (Exception e) {

@@ -16,7 +16,7 @@
         <div style="float:left; width: 50%">
             <%
                 Connection con = MyUtils.getStoredConnection(request);
-                Users user = MyUtils.getUser(request, con);
+                Users user = MyUtils.getUser(request, response, con);
             %>
             <h2><%=team.getName()%>
             </h2>

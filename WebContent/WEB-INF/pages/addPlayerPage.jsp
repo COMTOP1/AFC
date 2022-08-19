@@ -17,7 +17,7 @@
         <%
             request.getSession().setAttribute("error", null);
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = MyUtils.getUser(request, con);
+            Users user = MyUtils.getUser(request, response, con);
         %>
         <form id="add" method="POST" action="addplayer" enctype="multipart/form-data">
             <div>

@@ -34,7 +34,7 @@ public class AddProgrammeSeasonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = MyUtils.getUser(request, con);
+            Users user = MyUtils.getUser(request, response, con);
             assert user != null;
             if (user.getRole() != Role.MANAGER) {
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/addProgrammeSeasonPage.jsp");

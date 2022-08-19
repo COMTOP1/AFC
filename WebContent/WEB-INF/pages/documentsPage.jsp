@@ -11,7 +11,7 @@
 <jsp:include page="_topPage.jsp"/>
 <%
     Connection con = MyUtils.getStoredConnection(request);
-    Users user = MyUtils.getUser(request, con);
+    Users user = MyUtils.getUser(request, response, con);
 %>
 <main class="main" style="padding: 0 0 0 10px">
 	<p style="color: red; padding: 0; margin: 0;" id="error">${error}</p><br>

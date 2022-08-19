@@ -36,7 +36,7 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = MyUtils.getUser(request, con);
+            Users user = MyUtils.getUser(request, response, con);
             if (user == null) response.sendRedirect("home");
             else {
                 assert user != null;

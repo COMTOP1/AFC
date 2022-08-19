@@ -36,7 +36,7 @@ public class DeleteProgrammeSeasonServlet extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             Connection con = MyUtils.getStoredConnection(request);
-            Users user = MyUtils.getUser(request, con);
+            Users user = MyUtils.getUser(request, response, con);
             assert user != null;
             if (user.getRole() != Role.MANAGER) {
                 request.setAttribute("id", id);

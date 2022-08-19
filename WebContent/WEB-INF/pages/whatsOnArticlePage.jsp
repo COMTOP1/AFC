@@ -25,7 +25,7 @@
         <%
             Date date = new Date(whatsOn.getDate());
             String[] dateArray = date.toString().split(" ");
-            Users user = MyUtils.getUser(request, con);
+            Users user = MyUtils.getUser(request, response, con);
             String dateString = String.format("%s %s %s %s", dateArray[0], dateArray[2], dateArray[1], dateArray[5]);
             String dateOfEvent = "";
             try {

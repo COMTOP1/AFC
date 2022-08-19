@@ -8,7 +8,7 @@
     <title>Official website of AFC Aldermaston - Users</title>
     <%
         Connection con = MyUtils.getStoredConnection(request);
-        Users user = MyUtils.getUser(request, con);
+        Users user = MyUtils.getUser(request, response, con);
         List<Users> list = null;
         try {
             list = DBUtils.queryUsers(con);

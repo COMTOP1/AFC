@@ -81,7 +81,7 @@ public class ChangePasswordServlet extends HttpServlet {
         byte[] hash, salt;
         try {
             passwordOld = request.getParameter("passwordold");
-            Users user = MyUtils.getUser(request, con);
+            Users user = MyUtils.getUser(request, response, con);
             assert user != null;
             if (DBUtils.checkPassword(con, user.getEmail(), passwordOld)) {
                 passwordNew1 = request.getParameter("passwordnew1");

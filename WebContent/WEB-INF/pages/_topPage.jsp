@@ -18,10 +18,7 @@
 </div>-->
 <%
     Connection con = MyUtils.getStoredConnection(request);
-    System.out.println("Test1");
-    Users user = MyUtils.getUser(request, con);
-    System.out.println(user);
-    System.out.println("Test2");
+    Users user = MyUtils.getUser(request, response, con);
 %>
 <div id="menuBar" style="z-index: 1">
     <div id="mobileMenu">

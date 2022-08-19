@@ -11,6 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bswdi.beans.Users;
@@ -45,13 +46,14 @@ public class CookieFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         Connection con = MyUtils.getStoredConnection(request);
         String checked = (String) session.getAttribute("COOKIE_CHECKED");
         if (checked == null && con != null) {
             Users user = null;
             try {
-                user = MyUtils.getUser(req, con);
+                user = MyUtils.getUser(req, res, con);
                 req.setAttribute("loggedInUser", user);
             } catch (Exception e) {
                 if (user != null) e.printStackTrace();

@@ -42,8 +42,8 @@ public class UserFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpServletRequest req = (HttpServletRequest) request;
         Connection con = MyUtils.getStoredConnection(req);
-        Users user = MyUtils.getUser(req, con);
-        if (MyUtils.getUser(req, con) != null && user == null) MyUtils.deleteUserCookie(res);
+        Users user = MyUtils.getUser(req, res, con);
+        if (MyUtils.getUser(req, res, con) != null && user == null) MyUtils.deleteUserCookie(res);
         boolean updatePassword = false;
         try {
             updatePassword = (boolean) req.getSession().getAttribute("UPDATE PASSWORD");
