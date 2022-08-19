@@ -14,4 +14,5 @@ AFC.iml
 pom.xml
 /out/
 /.env
-build
+build/classes/com/bswdi/*
+/WebContent/FileStore/
